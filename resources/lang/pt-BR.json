@@ -1,0 +1,7 @@
+{
+  "User does not have the right roles.": "Usuário não possui as permissões necessárias.",
+  "User does not have the right permissions.": "Usuário não possui as permissões necessárias.",
+  "User does not have any of the necessary access rights.": "Usuário não possui os direitos de acesso necessários.",
+  "User is not logged in.": "Usuário não está logado.",
+  "This action is unauthorized.": "Esta ação não é autorizada."
+}

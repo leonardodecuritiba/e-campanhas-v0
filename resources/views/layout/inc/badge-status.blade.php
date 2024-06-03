@@ -1,0 +1,1 @@
+<span class="ml-2 badge badge-{{$status['color']}}">{{$status['text']}}</span>
