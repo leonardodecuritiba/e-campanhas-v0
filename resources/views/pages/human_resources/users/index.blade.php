@@ -14,11 +14,6 @@
 
     <div class="main-content">
 
-<!--
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-| Zero configuration
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-!-->
         <div class="card">
             <h4 class="card-title">
                 <strong>{{count($Page->response)}}</strong> {{$Page->names}}
@@ -28,7 +23,7 @@
             <div class="card-content">
                 <div class="card-body">
 
-                    <table class="table table-striped table-bordered table-responsive-sm" cellspacing="0" data-provide="datatables">
+                    <table class="table table-striped table-bordered table-responsive-sm" data-provide="datatables">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -52,7 +47,7 @@
                         <tbody>
                         @foreach($Page->response as $sel)
                             <tr>
-                                <td>@include('layout.inc.buttons.show')</td>
+                                <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['email']}}</td>

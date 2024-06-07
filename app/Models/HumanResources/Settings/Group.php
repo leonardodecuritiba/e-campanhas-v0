@@ -2,24 +2,25 @@
 
 namespace App\Models\HumanResources\Settings;
 
-use App\Traits\OLD\DateTimeTrait;
-use App\Traits\OLD\StringTrait;
+use App\Traits\Commons\ActiveTrait;
+use App\Traits\Commons\DateTimeTrait;
+use App\Traits\Commons\StringTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model {
-	use DateTimeTrait;
 	use StringTrait;
+	use DateTimeTrait;
+    use ActiveTrait;
+    use SoftDeletes;
+    use HasFactory;
+
 	public $timestamps = true;
 	protected $fillable = [
 		'description',
+        'status',
 	];
-
-	protected $appends = [
-		'created_at_formatted',
-		'created_at_human_formatted',
-		'short_description',
-	];
-
 
 	//============================================================
 	//======================== FUNCTIONS =========================
@@ -38,21 +39,9 @@ class Group extends Model {
 	//============================================================
 	//======================== SCOPE =============================
 	//============================================================
-	public function scopeActive($query)
-	{
-		return $query;
-	}
+
 
 	//============================================================
 	//======================== RELASHIONSHIP =====================
 	//============================================================
-	/**
-	 * The entities that belong to the group.
-	 */
-//	public function voters()
-//	{
-//		return $this->belongsToMany(Voter::class)
-//		            ->using(EntityGroup::class)
-//		            ->withTimestamps();
-//	}
 }

@@ -26,7 +26,7 @@ trait DateTimeTrait {
         return DataHelper::getFullPrettyDateTime($this->getAttribute('created_at'));
     }
 
-    public function getDeletedAtTimeAttribute()
+    public function getDeletedAtTimeFormattedAttribute()
     {
         return strtotime( $this->getAttribute('deleted_at') );
     }

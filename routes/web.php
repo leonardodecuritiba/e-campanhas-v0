@@ -41,6 +41,16 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
 
     Route::resource( 'users', 'UserController' );
 
+    Route::group( [ 'namespace' => 'Settings','prefix' => 'settings' ], function () {
+
+        Route::group( ['prefix' => 'groups'], function () {
+            Route::get( 'removeds', 'GroupController@removeds' )->name( 'groups.removeds' );
+            Route::get( 'restore/{group}', 'GroupController@restore' )->name( 'groups.restore' );
+        } );
+
+        Route::resource( 'groups', 'GroupController' );
+
+    } );
 
 
 
@@ -50,7 +60,6 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
 	Route::resource( 'voters', 'VoterController' );
 
 	Route::group( [ 'namespace' => 'Settings','prefix' => 'settings' ], function () {
-		Route::resource( 'groups', 'GroupController' );
 
         Route::group(['middleware' => ['role:root']], function () {
             Route::get( 'permissions', 'PermissionController@index' )->name( 'permissions.index' );

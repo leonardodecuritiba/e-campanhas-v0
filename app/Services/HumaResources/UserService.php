@@ -26,11 +26,6 @@ class UserService{
         return $user;
     }
 
-    public function findUser( int $id): User
-    {
-        return User::findOrFail( $id );
-    }
-
     public function updateUserPassword(User $user, $password): User
     {
         $user->updatePassword( $password );

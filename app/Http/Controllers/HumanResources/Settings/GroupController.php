@@ -5,10 +5,15 @@ namespace App\Http\Controllers\HumanResources\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HumanResources\Settings\GroupRequest;
 use App\Models\HumanResources\Settings\Group;
-use App\Models\HumanResources\Voter;
+use App\Services\HumaResources\Settings\GroupService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller {
 
@@ -18,8 +23,9 @@ class GroupController extends Controller {
     public $names = "Grupos";
     public $main_folder = 'pages.human_resources.settings.groups';
     public $page = [];
+    protected $groupService;
 
-    public function __construct( Route $route ) {
+    public function __construct( Route $route, GroupService $groupService) {
         $this->page = (object) [
             'entity'      => $this->entity,
             'main_folder' => $this->main_folder,
@@ -29,34 +35,36 @@ class GroupController extends Controller {
             'auxiliar'    => array(),
             'response'    => array(),
             'has_menu'    => 1,
-            'title'       => '',
+            'page_title'  => 'Grupos',
+            'title'       => 'Grupos',
+            'subtitle'    => 'Grupos',
             'create_option' => 0,
-            'subtitle'    => '',
             'noresults'   => '',
             'tab'         => 'data',
             'breadcrumb'  => array(),
         ];
         $this->breadcrumb( $route );
+        $this->groupService = $groupService;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
+     * @throws AuthorizationException
      */
 
-    public function index() {
-        $data = Group::get()->map( function ( $s ) {
+    public function index()
+    {
+        $this->page->response = Group::get()->map( function ( $s ) {
             return [
                 'id'                => $s->id,
-                'name'              => $s->getName(),
-                'description'       => $s->getName(),
+                'name'              => $s->description,
+                'description'       => $s->description,
                 'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time
+                'created_at_time'   => $s->created_at_time_formatted,
             ];
         } );
-
-        $this->page->response = $data;
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.index' )
             ->with( 'Page', $this->page );
@@ -66,60 +74,55 @@ class GroupController extends Controller {
      * Create the specified resource.
      *
      *
-     * @return Response
+     * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function create( ) {
-        return view('pages.human_resources.settings.groups.master' )
+    public function create()
+    {
+        $this->page->create_option = 0;
+        return view('pages.human_resources.settings.groups.create' )
             ->with( 'Page', $this->page );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  $id
-     *
-     * @return Response
+     * @param Group $group
+     * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function edit( $id ) {
-        $data = Group::findOrFail( $id );
-        $this->page->auxiliar = [
-            'voters' => Voter::getAlltoSelectList(),
-        ];
+    public function edit( Group $group )
+    {
         $this->page->create_option = 1;
-        return view('pages.human_resources.settings.groups.master' )
+        return view('pages.human_resources.settings.groups.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $data );
+            ->with( 'Data', $group );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param Group $group
      *
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function show( $id )
+    public function show( Group $group )
     {
-        $this->authorize('groups.show');
-        $data = Group::findOrFail( $id );
-        $this->page->auxiliar = [
-            'voters' => Voter::getAlltoSelectList(),
-        ];
         $this->page->create_option = 1;
-        return view('pages.human_resources.settings.groups.master' )
+        return view('pages.human_resources.settings.groups.show' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $data );
+            ->with( 'Data', $group );
     }
+
     /**
      * Store the specified resource in storage.
      *
      * @param GroupRequest $request
      *
-     * @return Response
+     * @return string
      */
-    public function store( GroupRequest $request ) {
-        $data = Group::create( $request->all() );
+    public function store( GroupRequest $request )
+    {
+        $data = $this->groupService->createGroup( $request->all() );
         return $this->redirect( 'STORE', $data );
     }
 
@@ -127,14 +130,13 @@ class GroupController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  GroupRequest $request
-     * @param  $id
-     *
-     * @return Response
+     * @param GroupRequest $request
+     * @param Group $group
+     * @return string
      */
-    public function update( GroupRequest $request, $id ) {
-        $data = Group::findOrFail( $id );
-        $data->update( $request->all() );
+    public function update( GroupRequest $request, Group $group)
+    {
+        $data = $this->groupService->updateGroup( $group, $request->all() );
         return $this->redirect( 'UPDATE', $data );
     }
 
@@ -145,11 +147,48 @@ class GroupController extends Controller {
      *
      * @return JsonResponse
      */
-    public function destroy( Group $group ) {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $group->getShortName() );
+    public function destroy( Group $group )
+    {
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $group->short_description );
         return new JsonResponse( [
             'status'  => $group->delete(),
             'message' => $message,
         ], 200 );
+    }
+    /**
+     * Display a listing of the removed resource.
+     *
+     * @return Application|Factory|View
+     * @throws AuthorizationException
+     */
+    public function removeds()
+    {
+        $this->page->response = Group::onlyTrashed()->get()->map( function ( $s ) {
+            return [
+                'id'              => $s->id,
+                'description'     => $s->description,
+                'created_at'      => $s->created_at_formatted,
+                'created_at_time' => $s->created_at_time_formatted,
+                'deleted_at'      => $s->deleted_at_formatted,
+                'deleted_at_time' => $s->deleted_at_time_formatted,
+            ];
+        } );
+
+        $this->page->create_option = 1;
+        return view( 'pages.human_resources.settings.groups.removeds' )
+            ->with( 'Page', $this->page );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     *
+     * @return RedirectResponse
+     */
+    public function restore( $id )
+    {
+        $this->groupService->restoreGroup( $id );
+        return Redirect::route('groups.edit', $id);
     }
 }

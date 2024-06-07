@@ -1,14 +1,3 @@
-<!--
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-| Form row
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-!-->
-@if(isset($Data))
-    <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_name}} ({{$Data->role_name}})</strong></h4>
-@else
-    <h4 class="card-title"><strong>Dados do Usuário</strong></h4>
-@endif
-
 <div class="card-body">
 
     <h6 class="text-uppercase mt-3">Dados de Acesso</h6>

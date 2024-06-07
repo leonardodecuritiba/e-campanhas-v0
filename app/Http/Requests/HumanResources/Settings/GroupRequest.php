@@ -38,7 +38,7 @@ class GroupRequest extends FormRequest {
             case 'PATCH':
             {
                 return [
-                    'description'          => 'unique:'.$this->table.',description,'.$this->group.',id',
+                    'description'          => 'unique:'.$this->table.',description,'.$this->group->id.',id',
                 ];
             }
             default:

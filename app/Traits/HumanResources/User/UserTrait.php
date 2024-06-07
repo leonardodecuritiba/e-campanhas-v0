@@ -26,6 +26,11 @@ trait UserTrait
         return Str::limit($this->getName(), 20 );
     }
 
+    public function getShortDescriptionAttribute()
+    {
+        return $this->short_name;
+    }
+
     public function updatePassword( $password )
     {
         $this->password = bcrypt( $password );

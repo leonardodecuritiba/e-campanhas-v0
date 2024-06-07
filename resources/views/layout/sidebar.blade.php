@@ -21,9 +21,9 @@
             !-->
             <li class="menu-item @if(Menu::isRoute(
             [
-            'users.index','users.create','users.edit',
+            'users.index','users.create','users.edit','users.show','users.removeds',
             'voters.index','voters.create','voters.edit',
-            'groups.index','groups.create','groups.edit',
+            'groups.index','groups.create','groups.edit','groups.show','groups.removeds',
             'permissions.index',
             'roles.index','roles.create','roles.edit'
             ])) active open @endif">
@@ -35,7 +35,7 @@
 
                 <ul class="menu-submenu">
                     @can('users.menu')
-                        <li class="menu-item @if(Menu::isRoute(['users.index','users.create','users.edit'])) active @endif">
+                        <li class="menu-item @if(Menu::isRoute(['users.index','users.create','users.edit','users.show','users.removeds'])) active @endif">
                             <a class="menu-link" href="{{route('users.index')}}">
                                 <span class="icon ti-user"></span>
                                 <span class="title">Usuários</span>
@@ -67,7 +67,7 @@
                     @endcan
 
                     @can('groups.menu')
-                        <li class="menu-item @if(Menu::isRoute(['groups.index','groups.create','groups.edit'])) active @endif">
+                        <li class="menu-item @if(Menu::isRoute(['groups.index','groups.create','groups.edit','groups.show','groups.removeds'])) active @endif">
                             <a class="menu-link" href="{{route('groups.index')}}">
                                 <span class="icon ti-id-badge"></span>
                                 <span class="title">Grupos</span>

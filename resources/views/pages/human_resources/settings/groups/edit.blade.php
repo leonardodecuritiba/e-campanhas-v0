@@ -11,6 +11,7 @@
 @endsection
 
 @section('page_content')
+    
     <!-- Main container -->
     <div class="main-content">
 
@@ -18,17 +19,20 @@
 
         <div class="card">
 
-            <h4 class="card-title"><strong>Dados do {{$Page->name}}</strong></h4>
+            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}}</strong></h4>
 
-            {{Form::open(array(
-                'route' => ['users.store'],
-                'method'=>'POST',
-                'data-provide'=> "validation",
-                'data-disable'=>'false'
-            )
-            )}}
-                @include('pages.human_resources.users.form.data')
+
+            {{Form::model($Data,
+                array(
+                    'route' => ['groups.update', $Data->id],
+                    'method'=>'PATCH',
+                    'data-provide'=> "validation",
+                    'data-disable'=>'false'
+                )
+                )}}
+                @include('pages.human_resources.settings.groups.form.data')
             {{Form::close()}}
+
         </div>
 
     </div><!--/.main-content -->
@@ -38,6 +42,6 @@
 @section('script_content')
 
     <!-- Jquery Validation Plugin Js -->
-    @include('layout.inc.inputmask.js')
+    @include('layout.inc.validation.js')
 
 @endsection

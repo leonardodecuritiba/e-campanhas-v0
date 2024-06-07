@@ -11,23 +11,25 @@
 @endsection
 
 @section('page_content')
-    <!-- Main container -->
 
     <div class="main-content">
 
         <div class="card">
-            <h4 class="card-title"><strong>{{count($Page->response)}}</strong> {{$Page->names}}</h4>
+            <h4 class="card-title">
+                <strong>{{count($Page->response)}}</strong> {{$Page->names}}
+
+            </h4>
 
             <div class="card-content">
                 <div class="card-body">
 
-                    <table class="table table-striped table-bordered table-responsive-sm" data-provide="datatables">
+                    <table class="table table-striped table-bordered table-responsive-sm" cellspacing="0" data-provide="datatables">
                         <thead>
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Removido</th>
                             <th>Descrição</th>
-{{--                            <th>Clientes</th>--}}
                             <th>Ações</th>
                         </tr>
                         </thead>
@@ -35,21 +37,20 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Removido</th>
                             <th>Descrição</th>
-{{--                            <th>Clientes</th>--}}
                             <th>Ações</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($Page->response as $sel)
                             <tr>
-                                <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
+                                <td data-order="{{$sel['id']}}">{{$sel['id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
+                                <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['description']}}</td>
-{{--                                <td>{{$sel['n_clients']}}</td>--}}
                                 <td>
-                                    @include('layout.inc.buttons.edit')
-                                    @include('layout.inc.buttons.delete')
+                                    @include('layout.inc.buttons.restore')
                                 </td>
                             </tr>
                         @endforeach
@@ -63,8 +64,8 @@
 
 @endsection
 
-
 @section('script_content')
+{{--    @include('admin.layout.inc.active.js')--}}
 
     <!-- Sample data to populate jsGrid demo tables -->
     @include('layout.inc.datatable.js')

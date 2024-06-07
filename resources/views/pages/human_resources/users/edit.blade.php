@@ -74,17 +74,16 @@
 @endsection
 
 @section('page_content')
+
     <!-- Main container -->
     <div class="main-content">
 
     @include('layout.inc.alerts')
 
-    <!--
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        | Zero configuration
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        !-->
         <div class="card">
+
+            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}} ({{$Data->role_name}})</strong></h4>
+
             {{Form::model($Data,
             array(
                 'route' => ['users.update', $Data->id],

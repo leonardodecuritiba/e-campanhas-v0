@@ -17,13 +17,9 @@
 
     @include('layout.inc.alerts')
 
-    <!--
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        | Zero configuration
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        !-->
         <div class="card">
-            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_name}} ({{$Data->role_name}})</strong></h4>
+
+            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}} ({{$Data->role_name}})</strong></h4>
 
             <div class="card-body">
 
@@ -60,8 +56,8 @@
                 </div>
         </div>
 
-
     </div><!--/.main-content -->
+
 @endsection
 
 
