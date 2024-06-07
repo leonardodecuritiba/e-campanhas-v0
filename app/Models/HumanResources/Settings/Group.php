@@ -2,9 +2,8 @@
 
 namespace App\Models\HumanResources\Settings;
 
-use App\Models\Moviments\Commons\Entity;
-use App\Traits\DateTimeTrait;
-use App\Traits\StringTrait;
+use App\Traits\OLD\DateTimeTrait;
+use App\Traits\OLD\StringTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model {
@@ -50,10 +49,10 @@ class Group extends Model {
 	/**
 	 * The entities that belong to the group.
 	 */
-	public function entities()
-	{
-		return $this->belongsToMany(Entity::class)
-		            ->using(EntityGroup::class)
-		            ->withTimestamps();
-	}
+//	public function voters()
+//	{
+//		return $this->belongsToMany(Voter::class)
+//		            ->using(EntityGroup::class)
+//		            ->withTimestamps();
+//	}
 }

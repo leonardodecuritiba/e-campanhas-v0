@@ -11,7 +11,7 @@
 
             {{Form::open(
             array(
-                'route' => 'change.password',
+                'route' => 'users.change.my.password',
                 'method'=>'POST',
                 'id' => 'form_validation',
                 'class'=>'form-horizontal'
@@ -25,7 +25,7 @@
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     {!! Html::decode(Form::label('password', 'Nova Senha *', array('class' => 'col-md-4 control-label'))) !!}
                     <div class="col-md-12">
-                        {{Form::password('password', ['id'=>'password','class'=>'form-control','minlength'=>'3', 'required'])}}
+                        {{Form::password('password', ['id'=>'password','class'=>'form-control','minlength'=>'6', 'required'])}}
                         @if ($errors->has('password'))
                             <span class="help-block">
                                     <strong>{{ $errors->first('password') }}</strong>
@@ -37,7 +37,7 @@
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                     {!! Html::decode(Form::label('password_confirmation', 'Confirmar Senha *', array('class' => 'col-md-4 control-label'))) !!}
                     <div class="col-md-12">
-                        {{Form::password('password_confirmation', ['id'=>'password_confirmation','class'=>'form-control','minlength'=>'3', 'required'])}}
+                        {{Form::password('password_confirmation', ['id'=>'password_confirmation','class'=>'form-control','minlength'=>'6', 'required'])}}
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">
                                     <strong>{{ $errors->first('password_confirmation') }}</strong>

@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return Redirect::route('profile.my');
+        return Redirect::route('users.my.profile');
     }
 }

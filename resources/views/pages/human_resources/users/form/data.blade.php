@@ -4,7 +4,7 @@
 |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
 !-->
 @if(isset($Data))
-    <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->getShortName()}} ({{$Data->type_formatted}})</strong></h4>
+    <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_name}} ({{$Data->role_name}})</strong></h4>
 @else
     <h4 class="card-title"><strong>Dados do Usuário</strong></h4>
 @endif
@@ -53,7 +53,7 @@
     <hr class="hr-sm mb-2">
     @hasanyrole('root|admin')
 
-        @if(Route::current()->getName() != 'profile.my')
+        @if(Route::current()->getName() != 'users.my.profile')
             <div class="form-row">
                 <div class="form-group col-md-12">
                     {!! Html::decode(Form::label('role_id', 'Tipo de Usuário *', array('class' => 'col-form-label'))) !!}

@@ -31,12 +31,20 @@ Auth::routes();
 */
 Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', 'middleware' => 'auth' ], function () {
 
-	Route::resource( 'users', 'UserController' );
-	Route::get( 'my-profile', 'UserController@profile' )->name( 'profile.my' );
-	Route::post( 'password-change', 'UserController@updatePassword' )->name( 'change.password' );
-	Route::get( 'removeds', 'UserController@removeds' )->name( 'users.removeds' );
-	Route::get( 'restore/{user}', 'UserController@restore' )->name( 'users.restore' );
-	Route::post( 'user-password-change', 'UserController@updateUserPassword' )->name( 'users.change.password' );
+    Route::group( ['prefix' => 'users'], function () {
+        Route::get( 'profile', 'UserController@profile' )->name( 'users.my.profile' );
+        Route::post( 'change-my-password', 'UserController@updateMyPassword' )->name( 'users.change.my.password' );
+        Route::get( 'removeds', 'UserController@removeds' )->name( 'users.removeds' );
+        Route::get( 'restore/{user}', 'UserController@restore' )->name( 'users.restore' );
+        Route::post( 'change-user-password', 'UserController@updateUserPassword' )->name( 'users.change.password' );
+    } );
+
+    Route::resource( 'users', 'UserController' );
+
+
+
+
+
 
 	Route::resource( 'notifications', 'NotificationController' );
 	Route::resource( 'voters', 'VoterController' );

@@ -36,8 +36,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {!! Html::decode(Form::label('entity_id', 'Cliente *', array('class' => 'col-form-label'))) !!}
-                                    {{Form::select('entity_id', $Page->auxiliar["entities"], "", ['placeholder' => 'Escolha o Cliente', 'class'=>'form-control select2_single', 'required'])}}
+                                    {!! Html::decode(Form::label('voter_id', 'Eleitores *', array('class' => 'col-form-label'))) !!}
+                                    {{Form::select('voter_id', $Page->auxiliar["voters"], "", ['placeholder' => 'Escolha o Eleitor', 'class'=>'form-control select2_single', 'required'])}}
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -111,21 +111,21 @@
             </div>
         </div>
 
-        @if(isset($Data))
+        @if(0 && isset($Data))
 
             <div class="card">
-                <h4 class="card-title"><strong>{{count($Data->entities)}}</strong> Clientes Associados
+                <h4 class="card-title"><strong>{{count($Data->voters)}}</strong> Eleitores Associados
                     <button class="btn btn-info btn-label pull-right"
                             type="button"
-                            data-toggle="modal" data-target="#modal-entities">
-                        <label><i class="ti-plus"></i></label>Associar Cliente
+                            data-toggle="modal" data-target="#modal-voters">
+                        <label><i class="ti-plus"></i></label>Associar Eleitor
                     </button>
                 </h4>
 
                 <div class="card-content">
                     <div class="card-body">
 
-                        <table class="table table-striped table-bordered table-entities" cellspacing="0" data-provide="datatables">
+                        <table class="table table-striped table-bordered table-voters" cellspacing="0" data-provide="datatables">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -143,7 +143,7 @@
                             </tr>
                             </tfoot>
                             <tbody>
-                            @foreach($Data->entities as $sel)
+                            @foreach($Data->voters as $sel)
                                 <tr>
                                     <td>{{$sel['id']}}</td>
                                     <td>{{$sel['short_description']}}</td>

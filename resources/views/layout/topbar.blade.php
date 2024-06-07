@@ -21,7 +21,7 @@
                     <span class="text-default fw-200 ml-2">{{Auth::user()->getName()}}</span>
                 </span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{route('profile.my')}}"><i class="ti-user"></i> Perfil</a>
+                    <a class="dropdown-item" href="{{route('users.my.profile')}}"><i class="ti-user"></i> Perfil</a>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePassword"><i class="ti-key"></i> Mudar Senha</a>
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

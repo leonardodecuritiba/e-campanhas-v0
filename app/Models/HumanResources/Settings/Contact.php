@@ -3,10 +3,10 @@
 namespace App\Models\HumanResources\Settings;
 
 use App\Helpers\DataHelper;
-use App\Traits\ActiveTrait;
-use App\Traits\DateTimeTrait;
-use App\Traits\StringTrait;
-use Database\Factories\ContactFactory;
+use App\Traits\Commons\ActiveTrait;
+use App\Traits\OLD\DateTimeTrait;
+use App\Traits\OLD\StringTrait;
+use Database\Factories\old\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

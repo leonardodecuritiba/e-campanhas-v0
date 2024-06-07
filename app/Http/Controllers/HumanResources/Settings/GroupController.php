@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HumanResources\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HumanResources\Settings\GroupRequest;
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Voter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
@@ -49,10 +50,9 @@ class GroupController extends Controller {
             return [
                 'id'                => $s->id,
                 'name'              => $s->getName(),
-                'content'           => $s->getContent(),
+                'description'       => $s->getName(),
                 'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time,
-                'active'            => $s->getActiveFullResponse()
+                'created_at_time'   => $s->created_at_time
             ];
         } );
 
@@ -82,6 +82,30 @@ class GroupController extends Controller {
      */
     public function edit( $id ) {
         $data = Group::findOrFail( $id );
+        $this->page->auxiliar = [
+            'voters' => Voter::getAlltoSelectList(),
+        ];
+        $this->page->create_option = 1;
+        return view('pages.human_resources.settings.groups.master' )
+            ->with( 'Page', $this->page )
+            ->with( 'Data', $data );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     *
+     * @return Application|Factory|View
+     * @throws AuthorizationException
+     */
+    public function show( $id )
+    {
+        $this->authorize('groups.show');
+        $data = Group::findOrFail( $id );
+        $this->page->auxiliar = [
+            'voters' => Voter::getAlltoSelectList(),
+        ];
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.master' )
             ->with( 'Page', $this->page )

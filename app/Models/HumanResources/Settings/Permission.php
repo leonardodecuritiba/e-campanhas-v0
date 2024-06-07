@@ -2,7 +2,7 @@
 
 namespace App\Models\HumanResources\Settings;
 
-use App\Traits\DateTimeTrait;
+use App\Traits\OLD\DateTimeTrait;
 use Spatie\Permission\Models\Permission as PermissionSpatie;
 
 class Permission extends PermissionSpatie

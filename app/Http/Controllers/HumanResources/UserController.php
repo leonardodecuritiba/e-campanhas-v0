@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\HumanResources;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HumanResources\User\UpdateMyPasswordRequest;
 use App\Http\Requests\HumanResources\User\UpdatePasswordRequest;
 use App\Http\Requests\HumanResources\User\UserRequest;
 use App\Models\HumanResources\Settings\Role;
 use App\Models\HumanResources\User;
+use App\Services\HumaResources\UserService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Redirect;
-use Zizaco\Entrust\Entrust;
 
 class UserController extends Controller {
 
@@ -21,8 +27,9 @@ class UserController extends Controller {
     public $names = "Usuários";
     public $main_folder = 'pages.human_resources.users';
     public $page = [];
+    protected $userService;
 
-    public function __construct( Route $route ) {
+    public function __construct( Route $route, UserService $userService ) {
         parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,
@@ -31,9 +38,10 @@ class UserController extends Controller {
             'names'       => $this->names,
             'sex'         => $this->sex,
             'auxiliar'    => array(),
+
             'response'    => array(),
             'has_menu'    => 1,
-            'page_title'  => '',
+            'page_title'  => 'Usuários',
             'title'       => 'Usuários',
             'subtitle'    => 'Usuários',
             'noresults'   => '',
@@ -41,28 +49,29 @@ class UserController extends Controller {
             'breadcrumb'  => array(),
         ];
         $this->breadcrumb( $route );
+
+        $this->userService = $userService;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View
+     * @throws AuthorizationException
      */
 
-    public function index() {
+    public function index()
+    {
         $user_id = $this->user->id;
         $this->page->response = User::get()->map( function ( $s ) use ($user_id) {
             return [
-
                 'id'              => $s->id,
-                'type_formatted'  => $s->type_formatted,
-                'name'            => $s->getShortName(),
-                'email'           => $s->getEmail(),
+                'role_name'       => $s->role_name_formatted,
+                'name'            => $s->name,
+                'email'           => $s->email,
                 'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time,
-
+                'created_at_time' => $s->created_at_time_formatted,
                 'its_me'          => $s->itsMe($user_id)
-//				'active'          => $s->getActiveFullResponse()
             ];
         } );
 
@@ -71,14 +80,37 @@ class UserController extends Controller {
             ->with( 'Page', $this->page );
     }
 
+    public function removeds()
+    {
+        $this->page->response = User::onlyTrashed()->get()->map( function ( $s ) {
+            return [
+                'id'              => $s->id,
+//				'type_formatted'  => $s->type_formatted,
+                'name'            => $s->short_name,
+                'email'           => $s->email,
+                'created_at'      => $s->created_at_formatted,
+                'created_at_time' => $s->created_at_time,
+                'deleted_at'      => $s->deleted_at_formatted,
+                'deleted_at_time' => $s->deleted_at_time,
+
+//				'status'          => $s->getActiveFullResponse()
+            ];
+        } );
+
+        $this->page->create_option = 1;
+        return view( 'pages.human_resources.users.removeds' )
+            ->with( 'Page', $this->page );
+    }
+
     /**
      * Show the application dashboard.
      *
-     * @return Response
+     * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function profile() {
+    public function profile()
+    {
         $this->page->create_option = 0;
-        return view(  'pages.human_resources.users.master' )
+        return view(  'pages.human_resources.users.edit' )
             ->with( 'Page', $this->page )
             ->with( 'Data', $this->user );
     }
@@ -86,16 +118,18 @@ class UserController extends Controller {
      * Display the specified resource.
      *
      *
-     * @return Response
+     * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function create() {
+    public function create()
+    {
+        $this->authorize('users.create');
         $this->page->create_option = 0;
-        if($this->user->hasRole('admin','root')){
+        if($this->user->hasRole('admin') || $this->user->hasRole('root')){
             $this->page->auxiliar = [
                 'roles' => Role::getAlltoSelectList(),
             ];
         }
-        return view(  'pages.human_resources.users.master' )
+        return view(  'pages.human_resources.users.create' )
             ->with( 'Page', $this->page );
     }
 
@@ -104,39 +138,55 @@ class UserController extends Controller {
      *
      * @param  $id
      *
-     * @return Response
+     * @return Application|Factory|RedirectResponse|\Illuminate\View\View|View
      */
-    public function edit( $id ) {
+    public function edit( $id )
+    {
         if($this->user->itsMe($id)){
-            return Redirect::route('profile.my');
+            return Redirect::route('users.my.profile');
         }
-        $user = User::findOrFail( $id );
-        if($this->user->hasRole('admin','root')){
-            $this->page->create_option = 1;
-            $this->page->auxiliar = [
-                'roles' => Role::getAlltoSelectList(),
-            ];
-        }
+        $this->page->create_option = 1;
+        $this->page->auxiliar = [
+            'roles' => Role::getAlltoSelectList(),
+        ];
+        $user = $this->userService->findUser( $id );
 
-        return view( 'pages.human_resources.users.master' )
+        return view( 'pages.human_resources.users.edit' )
             ->with( 'Page', $this->page )
             ->with( 'Data', $user );
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Display the specified resource.
      *
-     * @param UserRequest $request
      * @param  $id
      *
-     * @return Response
+     * @return Application|Factory|RedirectResponse|\Illuminate\View\View|View
      */
-    public function update( UserRequest $request, $id )
+    public function show( $id )
     {
-        $data = User::findOrFail( $id );
-        $data->update( $request->all() );
-        return $this->redirect( 'UPDATE', $data );
+        if($this->user->itsMe($id)){
+            return Redirect::route('users.my.profile');
+        }
+        $this->page->create_option = 1;
+        $user = $this->userService->findUser( $id );
+        return view( 'pages.human_resources.users.show' )
+            ->with( 'Page', $this->page )
+            ->with( 'Data', $user );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     *
+     * @return RedirectResponse
+     */
+    public function restore( $id )
+    {
+        $this->authorize('users.edit');
+        $this->userService->restoreUser( $id );
+        return Redirect::route('users.edit', $id);
     }
 
     /**
@@ -144,26 +194,41 @@ class UserController extends Controller {
      *
      * @param UserRequest $request
      *
-     * @return Response
+     * @return string
      */
     public function store( UserRequest $request )
     {
-        $data = User::create( $request->all() );
-        $data->attachRole($request->get('role_id'));
+        $this->authorize('users.create');
+        $data = $this->userService->createUser( $request->all() );
         return $this->redirect( 'STORE', $data );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param UserRequest $request
+     * @param User $user
+     * @return string
+     */
+    public function update( UserRequest $request, User $user)
+    {
+        $this->authorize('users.edit');
+        $data = $this->userService->updateUser( $user, $request->all() );
+        return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HumanResources\User $user
+     * @param User $user
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy( User $user ) {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $user->getShortName() );
+    public function destroy( User $user )
+    {
+        $this->authorize('users.delete');
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $user->name );
         $user->delete();
-
         return new JsonResponse( [
             'status'  => 1,
             'message' => $message,
@@ -172,14 +237,28 @@ class UserController extends Controller {
     /**
      * Show the application dashboard.
      *
-     * @param \App\Http\Requests\HumanResources\User\UpdatePasswordRequest $request
+     * @param UpdateMyPasswordRequest $request
      *
      * @return Response
      */
-    public function updatePassword( UpdatePasswordRequest $request )
+    public function updateMyPassword( UpdateMyPasswordRequest $request )
     {
-        $this->user->updatePassword( $request->get( 'password' ) );
-        $route = route( 'profile.my' );
+        $this->userService->updateUserPassword( $this->user, $request->get( 'password' ) );
+        $route = route( 'users.my.profile' );
+        return response()->success( trans( 'messages.password_ok' ), NULL, $route );
+    }
+    /**
+     * Show the application dashboard.
+     *
+     * @param UpdatePasswordRequest $request
+     *
+     * @return Response
+     */
+    public function updateUserPassword( UpdatePasswordRequest $request )
+    {
+        $user = User::findOrFail( $request->get( 'id' ) );
+        $data = $this->userService->updateUserPassword( $user, $request->get( 'user_password' ) );
+        $route = route( 'users.edit', $data->id );
         return response()->success( trans( 'messages.password_ok' ), NULL, $route );
     }
 }

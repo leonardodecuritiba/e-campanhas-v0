@@ -6,9 +6,9 @@ use App\Helpers\DataHelper;
 use App\Models\HumanResources\Settings\Address;
 use App\Models\HumanResources\Settings\Contact;
 use App\Models\Transactions\Request;
-use App\Traits\ActiveTrait;
-use App\Traits\DateTimeTrait;
-use App\Traits\StringTrait;
+use App\Traits\Commons\ActiveTrait;
+use App\Traits\OLD\DateTimeTrait;
+use App\Traits\OLD\StringTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,7 +33,7 @@ class Voter extends Model
         'cpf',
         'cnpj',
 
-		'active',
+		'status',
 	];
 
 	protected $appends = [

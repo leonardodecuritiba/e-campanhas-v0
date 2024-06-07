@@ -31,7 +31,7 @@ class CreateVotersTable extends Migration
             $table->string('cpf',20)->nullable();
             $table->string('cnpj',20)->nullable();
 
-            $table->boolean( 'active' )->default( 1 );
+            $table->boolean( 'status' )->default( 1 );
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,32 +2,26 @@
 
 namespace App\Models\HumanResources;
 
-use App\Models\Commons\Expense;
-use App\Models\Commons\Observation;
-use App\Models\Moviments\Contract;
-use App\Traits\StringTrait;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
-use App\Traits\ActiveTrait;
-use App\Traits\AddressTrait;
-use App\Traits\DateTimeTrait;
-use App\Traits\User\NotificationTrait;
-use App\Traits\UserTrait;
+use App\Traits\Commons\ActiveTrait;
+use App\Traits\Commons\DateTimeTrait;
+use App\Traits\HumanResources\User\NotificationTrait;
+use App\Traits\HumanResources\User\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+//    use StringTrait;
+    use UserTrait;
     use HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
     use DateTimeTrait;
-    use StringTrait;
-    use UserTrait;
-    use AddressTrait;
     use ActiveTrait;
     use Notifiable;
     use NotificationTrait;
@@ -42,7 +36,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'active',
+        'status',
     ];
 
     /**
@@ -72,6 +66,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The relationships that should be brought.
+     *
+     * @var array<int, string>
+     */
+    protected $with = [
+        'roles',
+    ];
+
 
 	//============================================================
 	//======================== FUNCTIONS =========================
@@ -99,6 +102,7 @@ class User extends Authenticatable
     //============================================================
     //======================== ACCESSORS =========================
     //============================================================
+
     //============================================================
     //======================== MUTATORS ==========================
     //============================================================
@@ -115,25 +119,5 @@ class User extends Authenticatable
 
     //======================== HASMANY ===========================
     //============================================================
-
-    public function contracts()
-    {
-        return $this->hasMany(Contract::class, 'owner_id');
-    }
-
-    public function owner_expenses()
-    {
-        return $this->hasMany(Expense::class, 'owner_id');
-    }
-
-    public function approver_expenses()
-    {
-        return $this->hasMany(Expense::class, 'approver_id');
-    }
-
-    public function observations()
-    {
-        return $this->hasMany(Observation::class, 'owner_id');
-    }
 
 }

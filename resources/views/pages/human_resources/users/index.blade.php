@@ -4,8 +4,6 @@
 
 @section('page_header-title',   $Page->title)
 
-
-
 @section('page_header-nav')
 
     @include('layout.inc.defaultsubmenu',['entity'=>$Page->entity, 'removeds' => true])
@@ -58,8 +56,9 @@
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['email']}}</td>
-                                <td>{{$sel['type_formatted']}}</td>
+                                <td>{{$sel['role_name']}}</td>
                                 <td>
+                                    @include('layout.inc.buttons.edit')
                                     @if(!$sel['its_me'])
                                         @include('layout.inc.buttons.delete')
                                     @endif

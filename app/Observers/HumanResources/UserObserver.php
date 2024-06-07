@@ -11,7 +11,15 @@ class UserObserver {
 	protected $request;
 	protected $table = 'users';
 
-	public function __construct( Request $request ) {
+    /**
+     * Listen to the Provider created event.
+     *
+     * @param Request $request
+     *
+     */
+
+	public function __construct( Request $request )
+    {
 		$this->request = $request;
 	}
 	/**
@@ -21,9 +29,15 @@ class UserObserver {
 	 *
 	 * @return void
 	 */
-	public function creating( User $user ) {
-		$user->password = Hash::make($this->request->get('password'));
-	}
+	public function creating( User $user ): void
+    {
+        if($this->request->has('password')){
+            $password = $this->request->get('password');
+        } else {
+            $password = $user->password;
+        }
+        $user->password = Hash::make($password);
+    }
 
 
 	/**
@@ -33,7 +47,8 @@ class UserObserver {
 	 *
 	 * @return void
 	 */
-	public function saving( User $user ) {
+	public function saving( User $user ): void
+    {
 		if(isset($user->id) && $this->request->has('role_id')){
 			$role_id = $this->request->get('role_id');
 			if($role_id != $user->getRoleId()){
@@ -48,15 +63,8 @@ class UserObserver {
 	 *
 	 * @return void
 	 */
-	public function deleting( User $user ) {
-        $user->owner_expenses->each(function($p){
-            $p->delete();
-        });
-        $user->approver_expenses->each(function($p){
-            $p->delete();
-        });
-        $user->observations->each(function($p){
-            $p->delete();
-        });
+	public function deleting( User $user ): void
+    {
+//        $user->detachRoles();
 	}
 }

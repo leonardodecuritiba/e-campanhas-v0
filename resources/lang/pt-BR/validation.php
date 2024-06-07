@@ -113,6 +113,8 @@ return [
 	    'login' => 'Login',
 	    'password' => 'Senha',
 	    'password_confirmation' => 'Repetir a Senha',
+	    'user_password' => 'Senha',
+	    'user_password_confirmation' => 'Repetir a Senha',
 	    'description' => 'Descrição',
 	    'descriptions' => 'Descrições',
 	    'to'=>'Campo "Das:"',

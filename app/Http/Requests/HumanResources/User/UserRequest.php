@@ -23,13 +23,8 @@ class UserRequest extends FormRequest {
 	 * @return array
 	 */
 	public function rules() {
-		/*
-		contact_id
-		address_id
-		type
-		*/
         $rules = [
-            'name'  =>  'required|min:3|max:100',
+            'name'  =>  'required|min:3|max:191',
         ];
 
 		switch ( $this->method() ) {
@@ -40,8 +35,8 @@ class UserRequest extends FormRequest {
 				}
 			case 'POST':
 				{
-					$rules['email'] = 'required|email|min:3|max:100|unique:users,email';
-					$rules['password'] = 'required|min:3|max:100';
+					$rules['email'] = 'required|email|min:3|max:191|unique:users,email';
+					$rules['password'] = 'required|min:3|max:32';
 					return $rules;
 				}
 			case 'PUT':
