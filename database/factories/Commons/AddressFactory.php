@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\old;
+namespace Database\Factories\Commons;
 
 use App\Models\Commons\CepCities;
 use App\Models\Commons\CepStates;
@@ -23,11 +23,10 @@ class AddressFactory extends Factory
     public function definition()
     {
         $state_id = CepStates::get()->random( 1 )->first()->id;
-        $city     = CepCities::findOrFailByStateId( $state_id )->random( 1 )->first();
+        $city_id  = CepCities::findOrFailByStateId( $state_id )->random( 1 )->first()->id;
         return [
             'state_id'   => $state_id,
-            'city_id'    => $city->id,
-            'city_code'  => $this->faker->randomNumber( $nbDigits = 8 ),
+            'city_id'    => $city_id,
             'zip'        => $this->faker->randomNumber( $nbDigits = 8 ),
             'district'   => $this->faker->streetName,
             'street'     => $this->faker->streetName,

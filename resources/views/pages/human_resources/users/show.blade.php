@@ -15,7 +15,7 @@
     <div class="main-content">
 
 
-    @include('layout.inc.alerts')
+        @include('layout.inc.alerts')
 
         <div class="card">
 
@@ -27,14 +27,14 @@
                 <hr class="hr-sm mb-2">
 
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">ID</label>
-                    <div class="col-sm-10">
+                    <label class="col-2 col-form-label">ID</label>
+                    <div class="col-10">
                         <p class="form-control-plaintext">{{$Data->id}}</p>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
+                    <label class="col-2 col-form-label">Email</label>
+                    <div class="col-10">
                         <p class="form-control-plaintext">{{$Data->getEmail()}}</p>
                     </div>
                 </div>
@@ -43,17 +43,19 @@
                 <hr class="hr-sm mb-2">
 
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Nome</label>
-                    <div class="col-sm-10">
+                    <label class="col-2 col-form-label">Nome</label>
+                    <div class="col-10">
                         <p class="form-control-plaintext">{{$Data->name}}</p>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Role</label>
-                    <div class="col-sm-10">
+                    <label class="col-2 col-form-label">Role</label>
+                    <div class="col-10">
                         <p class="form-control-plaintext">{{$Data->role_name}}</p>
                     </div>
                 </div>
+        </div>
+
         </div>
 
     </div><!--/.main-content -->

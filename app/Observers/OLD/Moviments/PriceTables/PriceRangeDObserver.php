@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers\Moviments\PriceTables;
+namespace App\Observers\OLD\Moviments\PriceTables;
 
 use App\Models\Moviments\PriceTables\PriceRangeD;
 use Illuminate\Http\Request;

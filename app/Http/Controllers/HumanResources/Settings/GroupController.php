@@ -35,9 +35,9 @@ class GroupController extends Controller {
             'auxiliar'    => array(),
             'response'    => array(),
             'has_menu'    => 1,
-            'page_title'  => 'Grupos',
-            'title'       => 'Grupos',
-            'subtitle'    => 'Grupos',
+            'page_title'  => $this->names,
+            'title'       => $this->names,
+            'subtitle'    => $this->names,
             'create_option' => 0,
             'noresults'   => '',
             'tab'         => 'data',
@@ -155,6 +155,7 @@ class GroupController extends Controller {
             'message' => $message,
         ], 200 );
     }
+
     /**
      * Display a listing of the removed resource.
      *

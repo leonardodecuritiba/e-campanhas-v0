@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Observers\Commons;
+namespace App\Observers\OLD;
 
 use App\Models\Commons\Observation;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ObservationObserver {
 	protected $request;

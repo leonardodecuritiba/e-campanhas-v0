@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers\Moviments;
+namespace App\Observers\OLD\Moviments;
 
 use App\Models\Moviments\Moviment;
 use App\Models\Moviments\Vehicle;

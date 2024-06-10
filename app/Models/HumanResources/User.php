@@ -9,6 +9,7 @@ use App\Traits\Commons\DateTimeTrait;
 use App\Traits\HumanResources\User\NotificationTrait;
 use App\Traits\HumanResources\User\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -90,7 +91,8 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    static public function getAlltoSelectList() {
+    static public function getAlltoSelectList()
+    {
         return self::get()->map( function ( $s ) {
             return [
                 'id'          => $s->id,
@@ -116,6 +118,10 @@ class User extends Authenticatable
 
     //======================== HASONE ============================
     //============================================================
+    public function voter(): HasOne
+    {
+        return $this->hasOne(Voter::class, 'user_id');
+    }
 
     //======================== HASMANY ===========================
     //============================================================

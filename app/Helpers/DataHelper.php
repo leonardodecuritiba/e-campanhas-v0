@@ -128,39 +128,29 @@ class DataHelper {
 		return ( $value != null ) ? preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$value): $value;
 	}
 
-	static public function getShortName( $value ) {
-		$value = explode( ' ', $value );
+    static public function getShortName( $value ) {
+        $value = explode( ' ', $value );
+        return ( count( $value ) > 1 ) ? ( $value[0] . " " . end( $value ) ) : $value[0];
+    }
 
-		return ( count( $value ) > 1 ) ? ( $value[0] . " " . end( $value ) ) : $value[0];
-	}
+    static public function diffInYears( $value ) {
+        $now = Date::now();
+        return $now->diffInYears($value);
+    }
+
+    static public function diffForHumansFromDate( $value )
+    {
+        if($value != null){
+            $date = Date::createFromFormat('Y-m-d', $value);
+            return $date->diffForHumans(Date::now());
+        }
+        return $value;
+    }
 
 	static public function removeAllWhiteSpaces( $value ) {
 		$str = str_replace(array(" ", "\t", "\n"), "", $value);
 		return urldecode(str_replace("%C2%A0", "", urlencode($str)));
 	}
-
-	static public function mask( $val, $mask ) {
-		if ( $val != null || $val != "" ) {
-			$maskared = '';
-			$k        = 0;
-			for ( $i = 0; $i <= strlen( $mask ) - 1; $i ++ ) {
-				if ( $mask[ $i ] == '#' ) {
-					if ( isset( $val[ $k ] ) ) {
-						$maskared .= $val[ $k ++ ];
-					}
-				} else {
-					if ( isset( $mask[ $i ] ) ) {
-						$maskared .= $mask[ $i ];
-					}
-				}
-			}
-		} else {
-			$maskared = null;
-		}
-
-		return $maskared;
-	}
-
 
 		/**
 		 * Friendly UTF-8 URL for all languages

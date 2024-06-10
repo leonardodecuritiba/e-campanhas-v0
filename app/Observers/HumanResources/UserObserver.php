@@ -67,4 +67,16 @@ class UserObserver {
     {
 //        $user->detachRoles();
 	}
+
+    /**
+     * Listen to the Provider restoring event.
+     *
+     * @param User $user
+     *
+     * @return void
+     */
+    public function restoring(User $user)
+    {
+
+    }
 }

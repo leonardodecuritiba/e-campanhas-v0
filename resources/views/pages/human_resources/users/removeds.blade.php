@@ -4,8 +4,6 @@
 
 @section('page_header-title',   $Page->title)
 
-
-
 @section('page_header-nav')
 
     @include('layout.inc.defaultsubmenu',['entity'=>$Page->entity, 'removeds' => true])
@@ -16,11 +14,6 @@
 
     <div class="main-content">
 
-<!--
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-| Zero configuration
-|‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-!-->
         <div class="card">
             <h4 class="card-title">
                 <strong>{{count($Page->response)}}</strong> {{$Page->names}}
@@ -54,7 +47,7 @@
                         <tbody>
                         @foreach($Page->response as $sel)
                             <tr>
-                                <td>{{$sel['id']}}</td>
+                                <td data-order="{{$sel['id']}}">{{$sel['id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['name']}}</td>

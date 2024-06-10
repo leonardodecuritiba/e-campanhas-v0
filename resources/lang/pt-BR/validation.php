@@ -93,6 +93,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'birthday' => [
+            'before_or_equal' => ':Attribute precisa estar no passado.',
+        ],
+        'death_date' => [
+            'before_or_equal' => ':Attribute precisa estar no passado.',
+        ],
     ],
 
     /*
@@ -149,6 +155,21 @@ return [
 	    'cover'         => 'Capa do Trabalho',
 	    'short_image'  => 'Imagem',
 	    'file_import'  => 'Arquivo de Importação',
+	    'surname'      => 'Apelido',
+	    'years_approximate'      => 'Idade Aproximada',
+	    'death'      => 'Óbito',
+	    'death_date'      => 'Data de Óbito',
+	    'whatsapp'      => 'Whatsapp',
+	    'other_phones'      => 'Outros telefones',
+	    'instagram'      => 'Instagram',
+        'voter_registration_zone'=> 'Tit. eleitor zona',
+        'voter_registration_session' => 'Tit. eleitor seção',
+        'votes_estimate' => 'Estimativa votos',
+        'votes_degree_certainty' => 'Grau de certeza de voto',
+        'supporter' => 'Apoiador',
+        'electoral_campaigner' => 'Cabo eleitoral',
+        'social_history' => 'Histórico Função Social ',
+
     ],
 
 

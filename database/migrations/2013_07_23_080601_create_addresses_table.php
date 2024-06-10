@@ -14,10 +14,10 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 	        $table->unsignedInteger( 'state_id' )->nullable();
 	        $table->foreign( 'state_id' )->references( 'id' )->on( 'cep_states' )->onDelete( 'SET NULL' );
-	        $table->unsignedInteger( 'city_id' )->nullable();
+	        $table->unsignedBigInteger( 'city_id' )->nullable();
 	        $table->foreign( 'city_id' )->references( 'id' )->on( 'cep_cities' )->onDelete( 'SET NULL' );
 
 	        $table->string( 'zip', 16 )->nullable();

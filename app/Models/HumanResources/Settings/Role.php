@@ -2,7 +2,7 @@
 
 namespace App\Models\HumanResources\Settings;
 
-use App\Traits\OLD\DateTimeTrait;
+use App\Traits\Commons\DateTimeTrait;
 use Spatie\Permission\Models\Role as RoleSpatie;
 
 class Role extends RoleSpatie

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Observers\Commons;
+namespace App\Observers\OLD;
 
 use App\Models\Commons\ExpenseType;
 use Illuminate\Http\Request;

@@ -8,7 +8,8 @@
         $('.show-credit-card').inputmask({'mask': '9999 9999 9999 9999', 'removeMaskOnSubmit': true});
         $('.show-rg').inputmask({'mask': '99.999.999-9', 'removeMaskOnSubmit': true});
         $('.show-celular, .show-cellphone').inputmask({'mask': '(99) 99999-9999', 'removeMaskOnSubmit': true});
-        $('.show-telefone, .show-phone').inputmask({'mask': '(99) 9999-9999', 'removeMaskOnSubmit': true});
+        $('.show-telefone, .show-phone').inputmask({'mask': '(99) 99999-9999', 'removeMaskOnSubmit': true});
+        $('.show-whatsapp').inputmask({'mask': '+55 (99) 99999-9999', 'removeMaskOnSubmit': true});
         $('.show-cep').inputmask({'mask': '99999-999', 'removeMaskOnSubmit': true});
         $('.show-cnpj').inputmask({'mask': '99.999.999/9999-99', 'removeMaskOnSubmit': true});
         $('.show-ie').inputmask({'mask': '999.999.999.999', 'removeMaskOnSubmit': true});

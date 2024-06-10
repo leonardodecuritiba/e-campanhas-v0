@@ -38,26 +38,25 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
         Route::get( 'restore/{user}', 'UserController@restore' )->name( 'users.restore' );
         Route::post( 'change-user-password', 'UserController@updateUserPassword' )->name( 'users.change.password' );
     } );
-
     Route::resource( 'users', 'UserController' );
 
     Route::group( [ 'namespace' => 'Settings','prefix' => 'settings' ], function () {
-
         Route::group( ['prefix' => 'groups'], function () {
             Route::get( 'removeds', 'GroupController@removeds' )->name( 'groups.removeds' );
             Route::get( 'restore/{group}', 'GroupController@restore' )->name( 'groups.restore' );
         } );
-
         Route::resource( 'groups', 'GroupController' );
-
     } );
 
-
+    Route::group( ['prefix' => 'voters'], function () {
+        Route::get( 'removeds', 'VoterController@removeds' )->name( 'voters.removeds' );
+        Route::get( 'restore/{group}', 'VoterController@restore' )->name( 'voters.restore' );
+    } );
+    Route::resource( 'voters', 'VoterController' );
 
 
 
 	Route::resource( 'notifications', 'NotificationController' );
-	Route::resource( 'voters', 'VoterController' );
 
 	Route::group( [ 'namespace' => 'Settings','prefix' => 'settings' ], function () {
 

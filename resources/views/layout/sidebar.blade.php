@@ -22,7 +22,7 @@
             <li class="menu-item @if(Menu::isRoute(
             [
             'users.index','users.create','users.edit','users.show','users.removeds',
-            'voters.index','voters.create','voters.edit',
+            'voters.index','voters.create','voters.edit','voters.show','voters.removeds',
             'groups.index','groups.create','groups.edit','groups.show','groups.removeds',
             'permissions.index',
             'roles.index','roles.create','roles.edit'
@@ -58,7 +58,7 @@
                     @endrole
 
                     @can('voters.menu')
-                        <li class="menu-item @if(Menu::isRoute(['voters.index','voters.create','voters.edit'])) active @endif">
+                        <li class="menu-item @if(Menu::isRoute(['voters.index','voters.create','voters.edit','voters.show','voters.removeds'])) active @endif">
                             <a class="menu-link" href="{{route('voters.index')}}">
                                 <span class="icon ti-user"></span>
                                 <span class="title">Eleitores</span>

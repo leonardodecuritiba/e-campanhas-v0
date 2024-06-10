@@ -5,7 +5,7 @@ namespace App\Models\HumanResources\Settings;
 use App\Models\Commons\CepCities;
 use App\Models\Commons\CepStates;
 use App\Traits\OLD\AddressTrait;
-use Database\Factories\old\AddressFactory;
+use Database\Factories\Commons\AddressFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -42,8 +42,6 @@ class Address extends Model {
 	//============================================================
 	//======================== MUTATORS ==========================
 	//============================================================
-
-
 
     //============================================================
     //======================== FUNCTIONS =========================
