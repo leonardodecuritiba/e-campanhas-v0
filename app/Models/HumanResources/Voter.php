@@ -47,11 +47,10 @@ class Voter extends Model
 
         'voter_registration_zone',
         'voter_registration_session',
+        'location_of_operation',
         'social_history',
         'votes_estimate',
         'votes_degree_certainty',
-        'supporter',
-        'electoral_campaigner',
 
         'status',
 	];

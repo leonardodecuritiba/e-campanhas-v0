@@ -23,8 +23,6 @@ class VoterRequest extends FormRequest {
     protected function prepareForValidation()
     {
         $this->merge([
-            'electoral_campaigner' => $this->has('electoral_campaigner'),
-            'supporter' => $this->has('supporter'),
             'death' => $this->has('death'),
         ]);
     }
@@ -38,6 +36,8 @@ class VoterRequest extends FormRequest {
         $rules = [
             'name' => 'required|min:3|max:191',
             'surname'  => 'nullable|min:3|max:191',
+            'location_of_operation'  => 'nullable|min:1|max:191',
+//            'cpf'  => 'nullable|min:1|max:191',
         ];
 
         /*

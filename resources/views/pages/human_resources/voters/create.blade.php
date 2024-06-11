@@ -131,15 +131,25 @@
                     <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
                     <hr class="hr-sm mb-2">
                     <div class="form-row">
-                        <div class="form-group col-4">
+                        <div class="form-group col-2">
                             {!! Html::decode(Form::label('voter_registration_zone', 'Tit. eleitor zona', array('class' => 'col-form-label'))) !!}
                             {{Form::text('voter_registration_zone', old('voter_registration_zone'), ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-group col-8">
+                        <div class="form-group col-2">
                             {!! Html::decode(Form::label('voter_registration_session', 'Tit. eleitor seção', array('class' => 'col-form-label'))) !!}
                             {{Form::text('voter_registration_session', old('voter_registration_session'), ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
                             <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-4">
+                            {!! Html::decode(Form::label('location_of_operation', 'Localidade de atuação', array('class' => 'col-form-label'))) !!}
+                            {{Form::text('location_of_operation', old('location_of_operation'), ['placeholder' => 'Localidade de atuação', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-4">
+                            {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
+                            <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
+                            <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="0" data-target="prev" class="mr-3 ml-3"></div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -147,23 +157,6 @@
                             {!! Html::decode(Form::label('votes_estimate', 'Estimativa de votos', array('class' => 'col-form-label'))) !!}
                             {{Form::number('votes_estimate', old('votes_estimate'), ['placeholder' => 'Estimativa de votos', 'class'=>'form-control','min'=>0])}}
                             <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-group col-4">
-                            {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza', array('class' => 'col-form-label'))) !!}
-                            <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
-                            <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="0" data-target="prev" class="mr-3 ml-3"></div>
-                        </div>
-                        <div class="form-group col-2">
-                            {!! Html::decode(Form::label('electoral_campaigner', 'Cabo Eleitoral?', array('class' => 'col-form-label'))) !!}
-                            <div class="form-group">
-                                <input type="checkbox" data-provide="switchery" name="electoral_campaigner" data-size="small"> Sim
-                            </div>
-                        </div>
-                        <div class="form-group col-2">
-                            {!! Html::decode(Form::label('supporter', 'Apoiador?', array('class' => 'col-form-label'))) !!}
-                            <div class="form-group">
-                                <input type="checkbox" data-provide="switchery" name="supporter" data-size="small"> Sim
-                            </div>
                         </div>
                     </div>
                     <div class="form-row">

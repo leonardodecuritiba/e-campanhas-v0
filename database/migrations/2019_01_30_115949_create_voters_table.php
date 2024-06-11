@@ -42,11 +42,10 @@ class CreateVotersTable extends Migration
 
             $table->string('voter_registration_zone')->nullable();
             $table->string('voter_registration_session')->nullable();
+            $table->string('location_of_operation')->nullable();
             $table->mediumText('social_history')->nullable();
             $table->integer('votes_estimate')->default(0);
             $table->smallInteger('votes_degree_certainty')->default(0);
-            $table->boolean( 'supporter' )->default( 1 );
-            $table->boolean( 'electoral_campaigner' )->default( 0 );
 
             $table->boolean( 'status' )->default( 1 );
 

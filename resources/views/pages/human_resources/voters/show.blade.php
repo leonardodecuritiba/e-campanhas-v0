@@ -87,37 +87,27 @@
                 <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
-                    <label class="col-2 col-form-label">Tit. eleitor zona</label>
-                    <div class="col-2">
+                    <label class="col-1 col-form-label">Tit. eleitor zona</label>
+                    <div class="col-1">
                         <p class="form-control-plaintext">{{$Data->voter_registration_zone}}</p>
                     </div>
-                    <label class="col-2 col-form-label">Tit. eleitor seção</label>
-                    <div class="col-2">
+                    <label class="col-1 col-form-label">Tit. eleitor seção</label>
+                    <div class="col-1">
                         <p class="form-control-plaintext">{{$Data->voter_registration_session}}</p>
+                    </div>
+                    <label class="col-2 col-form-label">Localidade de atuação</label>
+                    <div class="col-2">
+                        <p class="form-control-plaintext">{{$Data->location_of_operation}}</p>
+                    </div>
+                    <label class="col-2 col-form-label">Grau de certeza</label>
+                    <div class="col-2">
+                        <p class="form-control-plaintext text-primary fw-500">{{$Data->votes_degree_certainty}}</p>
                     </div>
                 </div>
                 <div class="form-row">
                     <label class="col-2 col-form-label">Estimativa de votos</label>
                     <div class="col-2">
                         <p class="form-control-plaintext">{{$Data->votes_estimate}}</p>
-                    </div>
-                    <label class="col-2 col-form-label">Grau de certeza</label>
-                    <div class="col-2">
-                        <p class="form-control-plaintext text-primary fw-500">{{$Data->votes_degree_certainty}}</p>
-                    </div>
-                    <label class="col-1 col-form-label">Cabo Eleitoral</label>
-                    <div class="col-1">
-                        <label class="switch">
-                            <input type="checkbox" @if($Data->electoral_campaigner) checked @endif>
-                            <span class="switch-indicator"></span>
-                        </label>
-                    </div>
-                    <label class="col-1 col-form-label">Apoiador</label>
-                    <div class="col-1">
-                        <label class="switch">
-                            <input type="checkbox" @if($Data->supporter) checked @endif>
-                            <span class="switch-indicator"></span>
-                        </label>
                     </div>
                 </div>
                 <div class="form-row">

@@ -54,11 +54,10 @@ class VoterFactory extends Factory
             'instagram'   => $this->faker->url,
             'voter_registration_zone'   => $voter_registration? $this->faker->sentence($nbWords = 3) : null,
             'voter_registration_session'   => $voter_registration? $this->faker->sentence($nbWords = 3) : null,
+            'location_of_operation'   => $this->faker->sentence($nbWords = 3),
             'social_history'   => $this->faker->text(),
             'votes_estimate'   => $this->faker->numberBetween(0, 1000),
             'votes_degree_certainty'   => $this->faker->numberBetween(0, 10),
-            'supporter'        => $this->faker->boolean,
-            'electoral_campaigner'        => $this->faker->boolean,
         ];
     }
 }

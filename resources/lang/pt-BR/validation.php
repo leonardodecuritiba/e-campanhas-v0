@@ -166,9 +166,8 @@ return [
         'voter_registration_session' => 'Tit. eleitor seção',
         'votes_estimate' => 'Estimativa votos',
         'votes_degree_certainty' => 'Grau de certeza de voto',
-        'supporter' => 'Apoiador',
-        'electoral_campaigner' => 'Cabo eleitoral',
-        'social_history' => 'Histórico Função Social ',
+        'social_history' => 'Histórico Função Social',
+        'location_of_operation' => 'Localidade de atuação',
 
     ],
 
