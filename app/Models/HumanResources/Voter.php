@@ -6,6 +6,7 @@ use App\Models\HumanResources\Settings\Address;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\Commons\StringTrait;
+use App\Traits\Commons\FileTrait;
 use App\Traits\HumanResources\VoterFieldsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,9 +22,12 @@ class Voter extends Model
     use ActiveTrait;
     use SoftDeletes;
     use HasFactory;
+    use FileTrait;
 
 	public $timestamps = true;
-	static public $img_path = 'voters';
+    static private $file_folder = 'voters';
+    static private $field_filename = 'image';
+    static private $file_mode = 'self';
 
 	protected $fillable = [
         'address_id',
@@ -80,6 +84,11 @@ class Voter extends Model
 	//============================================================
 	//======================== MUTATORS ==========================
 	//============================================================
+
+    public function setImageAttribute($value)
+    {
+        return $this->setFileAttribute( $value );
+    }
 
     //============================================================
     //======================== SCOPE =============================

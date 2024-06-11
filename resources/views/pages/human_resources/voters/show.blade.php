@@ -24,6 +24,13 @@
             <div class="card-body">
 
                 <h6 class="text-uppercase mt-3">Identificação</h6>
+                @if($Data->image)
+                    <div class="col-2" data-provide="photoswipe">
+                        <a href="#">
+                            <img style="max-width: 240px;" class="img-fluid" data-original-src="{{$Data->link_download}}" src="{{$Data->link_download}}" alt="">
+                        </a>
+                    </div>
+                @endif
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
                     <label class="col-2 col-form-label">Nome</label>

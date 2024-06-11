@@ -7,6 +7,7 @@ use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 class VoterFactory extends Factory
 {
@@ -16,7 +17,20 @@ class VoterFactory extends Factory
      * @var string
      */
     protected $model = Voter::class;
-
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Voter $voter) {
+            $destinationPath = storage_path('app/public/' . Voter::getPath($voter->id));
+            File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            $voter->image = $this->faker->image($dir = $destinationPath, $width = 640, $height = 480, 'avatar', false);
+            $voter->save();
+        });
+    }
     /**
      * Define the model's default state.
      *

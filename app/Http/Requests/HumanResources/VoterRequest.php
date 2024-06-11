@@ -37,6 +37,7 @@ class VoterRequest extends FormRequest {
             'name' => 'required|min:3|max:191',
             'surname'  => 'nullable|min:3|max:191',
             'location_of_operation'  => 'nullable|min:1|max:191',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 //            'cpf'  => 'nullable|min:1|max:191',
         ];
 

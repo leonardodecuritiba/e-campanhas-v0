@@ -28,11 +28,22 @@
                 'data-disable'=>'false'
             )
             )}}
-{{--                @include('pages.human_resources.voters.form.data')--}}
+
                 <div class="card-body">
 
                     <h6 class="text-uppercase mt-3">Identificação</h6>
                     <hr class="hr-sm mb-2">
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
+                                data-provide="tooltip"
+                                data-placement="right"
+                                data-tooltip-color="primary"
+                                data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
+                            <input name="image" type="file" data-provide="dropify">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-8">
                             {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
@@ -71,34 +82,7 @@
                             {{Form::number('years_approximate',old("years_approximate"), ['placeholder'=>'Idade Aprox.','class'=>'form-control','min'=>0, 'max'=>150])}}
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-group col-2">
-                            {!! Html::decode(Form::label('death', 'Óbito?', array('class' => 'col-form-label'))) !!}
-                            <i class="fa fa-question-circle"
-                               data-provide="tooltip"
-                               data-placement="top"
-                               data-tooltip-color="primary"
-                               data-original-title="Em caso de óbito, preencha a data de óbito!"></i>
-                            <div class="form-group">
-                                <input type="checkbox" data-provide="switchery" name="death" data-size="small"> Sim
-                            </div>
-                        </div>
-                        <div class="form-group col-2">
-                            {!! Html::decode(Form::label('death_date', 'Data Óbito', array('class' => 'col-form-label'))) !!}
-                            {{Form::text('death_date',old("death_date"), ['placeholder'=>'Data Óbito','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR", "disabled"])}}
-                            <div class="invalid-feedback"></div>
-                        </div>
 
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
-                                data-provide="tooltip"
-                                data-placement="right"
-                                data-tooltip-color="primary"
-                                data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
-                            <input name="image" type="file" data-provide="dropify">
-                            <div class="invalid-feedback"></div>
-                        </div>
                     </div>
 
                     <h6 class="text-uppercase mt-3">Contato</h6>
@@ -184,24 +168,5 @@
 
     <!-- Jquery Validation Plugin Js -->
     @include('layout.inc.inputmask.js')
-
-    <script>
-
-        app.ready(function() {
-
-            $('input[name="death"]').change(function () {
-                const $input_death_date = $(this).closest('div.card-body').find('input[name=death_date]');
-                if ($(this).prop('checked')) {
-                    //HABILITAR E REQUIRED
-                    $($input_death_date).val("").attr("required", true).attr("disabled", false);
-                } else {
-                   //DESABILITAR E NÃO REQUIRED
-                    $($input_death_date).val("").attr("required", false).attr("disabled", true);
-
-                }
-            });
-
-        });
-    </script>
 
 @endsection

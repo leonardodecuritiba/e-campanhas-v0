@@ -57,6 +57,9 @@ class VoterObserver {
         if($voter->birthday != null){
             $voter->years_approximate = null;
         }
+        if(!$voter->death){
+            $voter->death_date = null;
+        }
 	}
 	/**
 	 * Listen to the Provider deleting event.
@@ -68,6 +71,14 @@ class VoterObserver {
 	public function deleting( Voter $voter )
     {
 		$voter->address->delete();
+        File::Delete($voter->link_path);
+
+        $path = $voter->getPath($voter->getIdFileAttribute());
+        // Check if directory is empty.
+        if (empty(File::files($path))) {
+            // Yes, delete the directory.
+            File::deleteDirectory($path);
+        }
 	}
 
     /**

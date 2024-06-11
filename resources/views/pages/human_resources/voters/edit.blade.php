@@ -24,18 +24,35 @@
             {{Form::model($Data,
             array(
                 'route' => ['voters.update', $Data->id],
-                'method'=>'POST',
                 'method'=>'PATCH',
+                'files'=>'true',
                 'data-provide'=> "validation",
                 'data-disable'=>'false'
             )
             )}}
-{{--                @include('pages.human_resources.users.form.data')--}}
 
                 <div class="card-body">
 
                     <h6 class="text-uppercase mt-3">Identificação</h6>
                     <hr class="hr-sm mb-2">
+                    <div class="form-row">
+                        @if($Data->image)
+                            <div class="col-2" data-provide="photoswipe">
+                                <a href="#">
+                                    <img style="max-width: 240px;" class="img-fluid" data-original-src="{{$Data->link_download}}" src="{{$Data->link_download}}" alt="">
+                                </a>
+                            </div>
+                        @endif
+                        <div class="form-group @if($Data->image) col-10 @else col-12 @endif">
+                            {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
+                                data-provide="tooltip"
+                                data-placement="right"
+                                data-tooltip-color="primary"
+                                data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
+                            <input name="image" type="file" data-provide="dropify">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-8">
                             {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
@@ -92,17 +109,6 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
-                                data-provide="tooltip"
-                                data-placement="right"
-                                data-tooltip-color="primary"
-                                data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
-                            <input name="image" type="file" data-provide="dropify">
-                            <div class="invalid-feedback"></div>
-                        </div>
                     </div>
 
                     <h6 class="text-uppercase mt-3">Contato</h6>

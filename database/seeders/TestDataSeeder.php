@@ -18,7 +18,6 @@ class TestDataSeeder extends Seeder
     public function run()
     {
         //php artisan db:seed --class=TestDataSeeder
-
         $start = microtime( true );
 
         User::factory()
