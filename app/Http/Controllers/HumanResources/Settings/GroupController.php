@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\HumanResources\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Commons\Select2QueryRequest;
 use App\Http\Requests\HumanResources\Settings\GroupRequest;
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\Settings\GroupService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
@@ -56,11 +58,12 @@ class GroupController extends Controller {
 
     public function index()
     {
-        $this->page->response = Group::get()->map( function ( $s ) {
+        $this->page->response = Group::with('voters')->get()->map( function ( $s ) {
             return [
                 'id'                => $s->id,
                 'name'              => $s->description,
                 'description'       => $s->description,
+                'count_voters'      => $s->voters->count(),
                 'created_at'        => $s->created_at_formatted,
                 'created_at_time'   => $s->created_at_time_formatted,
             ];
@@ -91,10 +94,11 @@ class GroupController extends Controller {
      */
     public function edit( Group $group )
     {
+        $group->load('voters');
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $group );
+            ->with( 'Group', $group );
     }
 
     /**
@@ -191,5 +195,18 @@ class GroupController extends Controller {
     {
         $this->groupService->restoreGroup( $id );
         return Redirect::route('groups.edit', $id);
+    }
+
+    /**
+     * Get available groups for user.
+     *
+     * @param Select2QueryRequest $request
+     * @param Voter $voter
+     * @return JsonResponse
+     */
+    public function availableGroups(Select2QueryRequest $request, Voter $voter)
+    {
+        $availableGroups = $this->groupService->getAvailableGroupsForVoter( $voter, $request->term );
+        return response()->json($availableGroups);
     }
 }

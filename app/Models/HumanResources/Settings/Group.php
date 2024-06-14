@@ -2,6 +2,8 @@
 
 namespace App\Models\HumanResources\Settings;
 
+use App\Models\HumanResources\User;
+use App\Models\HumanResources\Voter;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\Commons\StringTrait;
@@ -55,4 +57,8 @@ class Group extends Model
 
     //======================== HASMANY ===========================
     //============================================================
+    public function voters()
+    {
+        return $this->belongsToMany(Voter::class)->using(GroupVoter::class)->withTimestamps();
+    }
 }

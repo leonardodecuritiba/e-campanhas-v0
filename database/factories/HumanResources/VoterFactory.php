@@ -17,20 +17,7 @@ class VoterFactory extends Factory
      * @var string
      */
     protected $model = Voter::class;
-    /**
-     * Configure the model factory.
-     *
-     * @return $this
-     */
-    public function configure()
-    {
-        return $this->afterCreating(function (Voter $voter) {
-            $destinationPath = storage_path('app/public/' . Voter::getPath($voter->id));
-            File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            $voter->image = $this->faker->image($dir = $destinationPath, $width = 640, $height = 480, 'avatar', false);
-            $voter->save();
-        });
-    }
+
     /**
      * Define the model's default state.
      *
@@ -73,6 +60,28 @@ class VoterFactory extends Factory
             'votes_estimate'   => $this->faker->numberBetween(0, 1000),
             'votes_degree_certainty'   => $this->faker->numberBetween(0, 10),
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Voter $voter) {
+//            $destinationPath = storage_path('app/public/' . Voter::getPath($voter->id));
+//            File::makeDirectory($destinationPath, $mode = 0777, true, true);
+//            $voter->image = $this->faker->image($dir = $destinationPath, $width = 640, $height = 480, 'avatar', false);
+//            $voter->save();
+
+            $qtd = $this->faker->numberBetween(0, 5);
+            for($i = 0; $i < $qtd; $i++) {
+                $group_id = $this->faker->numberBetween(1, 50);
+                $voter->groups()->attach($group_id);
+            }
+
+        });
     }
 }
 

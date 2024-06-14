@@ -124,10 +124,11 @@ class VoterController extends Controller {
 //            'users' => User::getAlltoSelectList(),
 //            'states' => CepStates::getAlltoSelectList(),
 //        ];
+        $voter->load('groups');
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $voter );
+            ->with( 'Voter', $voter );
     }
 
     /**

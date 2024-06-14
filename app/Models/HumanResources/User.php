@@ -122,8 +122,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(Voter::class, 'user_id');
     }
-
-    //======================== HASMANY ===========================
-    //============================================================
-
 }

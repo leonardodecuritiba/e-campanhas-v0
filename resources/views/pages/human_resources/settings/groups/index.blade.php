@@ -27,6 +27,7 @@
                             <th>ID</th>
                             <th>Cadastrado</th>
                             <th>Descrição</th>
+                            <th>Eleitores</th>
 {{--                            <th>Clientes</th>--}}
                             <th>Ações</th>
                         </tr>
@@ -36,6 +37,7 @@
                             <th>ID</th>
                             <th>Cadastrado</th>
                             <th>Descrição</th>
+                            <th>Eleitores</th>
 {{--                            <th>Clientes</th>--}}
                             <th>Ações</th>
                         </tr>
@@ -46,6 +48,7 @@
                                 <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['description']}}</td>
+                                <td>{{$sel['count_voters']}}</td>
 {{--                                <td>{{$sel['n_clients']}}</td>--}}
                                 <td>
                                     @include('layout.inc.buttons.edit')

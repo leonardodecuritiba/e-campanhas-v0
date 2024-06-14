@@ -3,6 +3,8 @@
 namespace App\Models\HumanResources;
 
 use App\Models\HumanResources\Settings\Address;
+use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Settings\GroupVoter;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\Commons\StringTrait;
@@ -140,6 +142,11 @@ class Voter extends Model
     public function sponsoreds(): HasMany
     {
         return $this->hasMany(self::class, 'sponsor_id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class)->using(GroupVoter::class)->withTimestamps();
     }
 
 }

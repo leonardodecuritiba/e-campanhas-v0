@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
+use App\Http\Controllers\HumanResources\Settings\GroupController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -46,6 +48,13 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
             Route::get( 'restore/{group}', 'GroupController@restore' )->name( 'groups.restore' );
         } );
         Route::resource( 'groups', 'GroupController' );
+
+        Route::get('/voters/{voter}/available-groups', [GroupController::class, 'availableGroups'])->name('voters.availableGroups');
+
+
+        Route::post('/group-voter/attach', [GroupVoterController::class, 'attach'])->name('voter.group.attach');
+        Route::delete('/group-voter/detach', [GroupVoterController::class, 'detach'])->name('voter.group.detach');
+
     } );
 
     Route::group( ['prefix' => 'voters'], function () {

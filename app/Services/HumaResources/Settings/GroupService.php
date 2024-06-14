@@ -2,6 +2,8 @@
 namespace App\Services\HumaResources\Settings;
 
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Voter;
+use Illuminate\Database\Eloquent\Collection;
 
 class GroupService{
 
@@ -22,6 +24,14 @@ class GroupService{
         $group = Group::withTrashed()->findOrFail( $id );
         $group->restore();
         return $group;
+    }
+
+    public function getAvailableGroupsForVoter( Voter $voter, string $term ): Collection
+    {
+        // Obtém os IDs dos grupos já associados ao eleitor
+        $associatedGroupIds = $voter->groups()->pluck('groups.id');
+        // Obtém os grupos disponíveis
+        return Group::whereNotIn('id', $associatedGroupIds)->where('description','like','%'.$term.'%')->get(['id', 'description']);
     }
     
     
