@@ -70,10 +70,10 @@ class VoterFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Voter $voter) {
-//            $destinationPath = storage_path('app/public/' . Voter::getPath($voter->id));
-//            File::makeDirectory($destinationPath, $mode = 0777, true, true);
-//            $voter->image = $this->faker->image($dir = $destinationPath, $width = 640, $height = 480, 'avatar', false);
-//            $voter->save();
+            $destinationPath = storage_path('app/public/' . Voter::getPath($voter->id));
+            File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            $voter->image = $this->faker->image($dir = $destinationPath, $width = 640, $height = 480, 'avatar', false);
+            $voter->save();
 
             $qtd = $this->faker->numberBetween(0, 5);
             for($i = 0; $i < $qtd; $i++) {
