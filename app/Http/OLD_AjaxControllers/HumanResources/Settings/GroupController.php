@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\AjaxControllers\HumanResources\Settings;
+namespace App\Http\OLD_AjaxControllers\HumanResources\Settings;
 
-use App\Http\AjaxControllers\Controller;
+use App\Http\OLD_AjaxControllers\Controller;
 use App\Http\Resources\HumanResources\Settings\GroupResource;
 use App\Models\HumanResources\Settings\Group;
 use Illuminate\Http\Request;

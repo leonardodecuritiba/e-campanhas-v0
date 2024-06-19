@@ -25,7 +25,9 @@ class CreateAddressesTable extends Migration
 	        $table->string( 'street', 125 )->nullable();
 	        $table->string( 'number', 30 )->nullable();
 	        $table->string( 'complement', 50 )->nullable();
-	        $table->string( 'region', 20 )->nullable();
+            $table->string( 'region', 20 )->nullable();
+            $table->geometry( 'geolocalization' )->nullable();
+
 	        $table->timestamps();
 	        $table->softDeletes();
         });

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\AjaxControllers\HumanResources;
+namespace App\Http\OLD_AjaxControllers\HumanResources;
 
 use App\Helpers\DataHelper;
-use App\Http\AjaxControllers\Controller;
+use App\Http\OLD_AjaxControllers\Controller;
 use App\Http\Resources\HumanResources\SupplierConveyorResource;
 use App\Models\HumanResources\Supplier;
 use App\Models\Moviments\Conveyor;

@@ -45,4 +45,8 @@ trait StringTrait {
         return $maskared;
     }
 
+    static public function getOnlyNumbers( $value )
+    {
+        return ( $value != null ) ? preg_replace( "/[^0-9]/", "", $value ) : $value;
+    }
 }

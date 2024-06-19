@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AjaxControllers\HumanResources;
 
-use App\Http\AjaxControllers\Controller;
+use App\Http\OLD_AjaxControllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 

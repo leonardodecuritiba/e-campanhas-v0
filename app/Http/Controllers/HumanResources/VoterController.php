@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HumanResources;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HumanResources\VoterRequest;
-use App\Models\Commons\CepStates;
+use App\Models\Commons\CepState;
 use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\VoterService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -104,7 +104,7 @@ class VoterController extends Controller {
     {
         $this->page->auxiliar = [
 //            'users' => User::getAlltoSelectList(),
-            'states' => CepStates::getAlltoSelectList(),
+            'states' => CepState::getAlltoSelectList(),
         ];
         $this->page->create_option = 0;
         return view('pages.human_resources.voters.create' )
@@ -122,9 +122,9 @@ class VoterController extends Controller {
 //        return $voter->birthday_formatted;
 //        $this->page->auxiliar = [
 //            'users' => User::getAlltoSelectList(),
-//            'states' => CepStates::getAlltoSelectList(),
+//            'states' => CepState::getAlltoSelectList(),
 //        ];
-        $voter->load('groups');
+        $voter->load('groups','address.state','address.city');
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.edit' )
             ->with( 'Page', $this->page )
@@ -141,10 +141,11 @@ class VoterController extends Controller {
      */
     public function show( Voter $voter )
     {
+        $voter->load('groups','address.state','address.city');
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.show' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $voter );
+            ->with( 'Voter', $voter );
     }
 
     /**

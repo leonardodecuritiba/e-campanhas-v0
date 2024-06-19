@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\AjaxControllers;
+namespace App\Http\OLD_AjaxControllers;
 
 use App\Http\Controllers\Controller as MasterController;
 

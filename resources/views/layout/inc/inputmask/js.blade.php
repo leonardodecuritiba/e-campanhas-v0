@@ -45,5 +45,11 @@
                 return  (_date <= _now + 20);
             } });
         $('.show-only-numbers').inputmask({ regex: "\\d*", 'removeMaskOnSubmit': true});
+        // $('.show-latitude').inputmask({
+        //     regex: '\[(\+|\-|)(([0-8]\d?)(\.\d+)?|90(\.0+)?)\]'
+        // });
+        // $('.show-longitude').inputmask({
+        //     regex: '\[(\+|\-|)((\d?\d|1[0-7]\d)(\.\d+)?|180(\.0+)?)\]'
+        // });
     });
 </script>

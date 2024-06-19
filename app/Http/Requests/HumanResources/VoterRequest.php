@@ -65,13 +65,15 @@ class VoterRequest extends FormRequest {
 				{
 					return [];
 				}
-			case 'POST':
+			case 'POST': //store
 				{
 					return $rules;
 				}
 			case 'PUT':
-			case 'PATCH':
+			case 'PATCH': //update
 				{
+                    $rules['latitude'] = 'required|numeric|between:-90,90';
+                    $rules['longitude'] = 'required|numeric|between:-180,180';
 					return $rules;
 				}
 			default:
