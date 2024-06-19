@@ -33,15 +33,18 @@
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="informations-tab" data-toggle="tab" href="#informations" role="tab" aria-controls="informations" aria-selected="true">Informações</a>
+                        <a class="nav-link active" id="informations-tab" data-toggle="tab" href="#informations"
+                           role="tab" aria-controls="informations" aria-selected="true">Informações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="associations-tab" data-toggle="tab" href="#associations" role="tab" aria-controls="associations" aria-selected="true">Associações</a>
+                        <a class="nav-link" id="associations-tab" data-toggle="tab" href="#associations" role="tab"
+                           aria-controls="associations" aria-selected="true">Associações</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
 
-                    <div class="tab-pane fade show active" id="informations" role="tabpanel" aria-labelledby="informations-tab">
+                    <div class="tab-pane fade show active" id="informations" role="tabpanel"
+                         aria-labelledby="informations-tab">
 
                         {{Form::model($Voter,
                         array(
@@ -53,155 +56,160 @@
                         )
                         )}}
 
-                            <h6 class="text-uppercase mt-3">Identificação</h6>
-                            <hr class="hr-sm mb-2">
-                            <div class="form-row">
-                                @if($Voter->image)
-                                    <div class="col-2" data-provide="photoswipe">
-                                        <a href="#">
-                                            <img style="max-width: 240px;" class="img-fluid" data-original-src="{{$Voter->link_download}}" src="{{$Voter->link_download}}" alt="">
-                                        </a>
-                                    </div>
-                                @endif
-                                <div class="form-group @if($Voter->image) col-10 @else col-12 @endif">
-                                    {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
-                                        data-provide="tooltip"
-                                        data-placement="right"
-                                        data-tooltip-color="primary"
-                                        data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
-                                    <input name="image" type="file" data-provide="dropify">
-                                    <div class="invalid-feedback"></div>
+                        <h6 class="text-uppercase mt-3">Identificação</h6>
+                        <hr class="hr-sm mb-2">
+                        <div class="form-row">
+                            @if($Voter->image)
+                                <div class="col-2" data-provide="photoswipe">
+                                    <a href="#">
+                                        <img style="max-width: 240px;" class="img-fluid"
+                                             data-original-src="{{$Voter->link_download}}"
+                                             src="{{$Voter->link_download}}" alt="">
+                                    </a>
+                                </div>
+                            @endif
+                            <div class="form-group @if($Voter->image) col-10 @else col-12 @endif">
+                                {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
+                                    data-provide="tooltip"
+                                    data-placement="right"
+                                    data-tooltip-color="primary"
+                                    data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
+                                <input name="image" type="file" data-provide="dropify">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-8">
+                                {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('name', $Voter->name, ['id'=>'name','placeholder'=>'Nome completo','class'=>'form-control','minlength'=>'3','maxlength'=>'191','required'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('surname', 'Apelido', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('surname', $Voter->surname, ['placeholder'=>'Apelido','class'=>'form-control','minlength'=>'3', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('cpf', 'CPF', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('cpf', $Voter->cpf, ['placeholder'=>'CPF','class'=>'form-control show-cpf','minlength'=>'3', 'maxlength'=>'16'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('birthday', 'Data Nascimento', array('class' => 'col-form-label'))) !!}
+                                <i class="fa fa-question-circle"
+                                   data-provide="tooltip"
+                                   data-placement="top"
+                                   data-tooltip-color="primary"
+                                   data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
+                                {{Form::text('birthday', $Voter->birthday_formatted, ['placeholder'=>'Data Nascimento','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR"])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('years_approximate', 'Idade Aproximada', array('class' => 'col-form-label'))) !!}
+                                <i class="fa fa-question-circle"
+                                   data-provide="tooltip"
+                                   data-placement="top"
+                                   data-tooltip-color="primary"
+                                   data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
+                                {{Form::number('years_approximate',$Voter->years_approximate, ['placeholder'=>'Idade Aprox.','class'=>'form-control','min'=>0, 'max'=>150])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('death', 'Óbito?', array('class' => 'col-form-label'))) !!}
+                                <i class="fa fa-question-circle"
+                                   data-provide="tooltip"
+                                   data-placement="top"
+                                   data-tooltip-color="primary"
+                                   data-original-title="Em caso de óbito, preencha a data de óbito!"></i>
+                                <div class="form-group">
+                                    <input type="checkbox" data-provide="switchery" name="death" data-size="small"
+                                           @if($Voter->death) checked @endif> Sim
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-8">
-                                    {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('name', $Voter->name, ['id'=>'name','placeholder'=>'Nome completo','class'=>'form-control','minlength'=>'3','maxlength'=>'191','required'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('surname', 'Apelido', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('surname', $Voter->surname, ['placeholder'=>'Apelido','class'=>'form-control','minlength'=>'3', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('cpf', 'CPF', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('cpf', $Voter->cpf, ['placeholder'=>'CPF','class'=>'form-control show-cpf','minlength'=>'3', 'maxlength'=>'16'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('birthday', 'Data Nascimento', array('class' => 'col-form-label'))) !!}
-                                    <i class="fa fa-question-circle"
-                                       data-provide="tooltip"
-                                       data-placement="top"
-                                       data-tooltip-color="primary"
-                                       data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
-                                    {{Form::text('birthday', $Voter->birthday_formatted, ['placeholder'=>'Data Nascimento','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR"])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('years_approximate', 'Idade Aproximada', array('class' => 'col-form-label'))) !!}
-                                    <i class="fa fa-question-circle"
-                                       data-provide="tooltip"
-                                       data-placement="top"
-                                       data-tooltip-color="primary"
-                                       data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
-                                    {{Form::number('years_approximate',$Voter->years_approximate, ['placeholder'=>'Idade Aprox.','class'=>'form-control','min'=>0, 'max'=>150])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('death', 'Óbito?', array('class' => 'col-form-label'))) !!}
-                                    <i class="fa fa-question-circle"
-                                       data-provide="tooltip"
-                                       data-placement="top"
-                                       data-tooltip-color="primary"
-                                       data-original-title="Em caso de óbito, preencha a data de óbito!"></i>
-                                    <div class="form-group">
-                                        <input type="checkbox" data-provide="switchery" name="death" data-size="small" @if($Voter->death) checked @endif> Sim
-                                    </div>
-                                </div>
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('death_date', 'Data Óbito', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('death_date',$Voter->death_date_formatted,
-                                        ['placeholder'=>'Data Óbito','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR", ($Voter->death ? "required" : "disabled")])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-
-                            </div>
-
-                            <h6 class="text-uppercase mt-3">Contato</h6>
-                            <hr class="hr-sm mb-2">
-                            <div class="form-row">
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('whatsapp', 'Whatsapp', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('whatsapp', $Voter->whatsapp_formatted, ['placeholder' => 'Telefone', 'class'=>'form-control show-whatsapp'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-8">
-                                    {!! Html::decode(Form::label('other_phones', 'Outros telefones', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('other_phones', $Voter->other_phones, ['placeholder' => 'Outros telefones', 'class'=>'form-control'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('email', 'Email', array('class' => 'col-form-label'))) !!}
-                                    {{Form::email('email', $Voter->email, ['placeholder' => 'Email', 'class'=>'form-control', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-8">
-                                    {!! Html::decode(Form::label('instagram', 'Instagram', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('instagram', $Voter->instagram, ['placeholder' => 'Instagram', 'class'=>'form-control', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('death_date', 'Data Óbito', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('death_date',$Voter->death_date_formatted,
+                                    ['placeholder'=>'Data Óbito','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR", ($Voter->death ? "required" : "disabled")])}}
+                                <div class="invalid-feedback"></div>
                             </div>
 
-                            <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
-                            <hr class="hr-sm mb-2">
-                            <div class="form-row">
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('voter_registration_zone', 'Tit. eleitor zona', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('voter_registration_zone', $Voter->voter_registration_zone, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-2">
-                                    {!! Html::decode(Form::label('voter_registration_session', 'Tit. eleitor seção', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('voter_registration_session', $Voter->voter_registration_session, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('location_of_operation', 'Localidade de atuação', array('class' => 'col-form-label'))) !!}
-                                    {{Form::text('location_of_operation', $Voter->location_of_operation, ['placeholder' => 'Localidade de atuação', 'class'=>'form-control', 'maxlength'=>'191'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
-                                    <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
-                                    <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="{{$Voter->votes_degree_certainty}}" data-target="prev" class="mr-3 ml-3"></div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-4">
-                                    {!! Html::decode(Form::label('votes_estimate', 'Estimativa de votos', array('class' => 'col-form-label'))) !!}
-                                    {{Form::number('votes_estimate', $Voter->votes_estimate, ['placeholder' => 'Estimativa de votos', 'class'=>'form-control','min'=>0])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-12">
-                                    {!! Html::decode(Form::label('social_history', 'Histórico Função Social ', array('class' => 'col-form-label'))) !!}
-                                    {{Form::textarea('social_history', $Voter->social_history, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'16777'])}}
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
+                        </div>
 
-                            @include('pages.human_resources.forms.address-create')
+                        @include('pages.human_resources.forms.address', ['Address' => $Voter->address])
 
-                            <footer class="card-footer text-right">
-                                <button class="btn btn-primary" type="submit">Salvar</button>
-                            </footer>
+                        <h6 class="text-uppercase mt-3">Contato</h6>
+                        <hr class="hr-sm mb-2">
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('whatsapp', 'Whatsapp', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('whatsapp', $Voter->whatsapp_formatted, ['placeholder' => 'Telefone', 'class'=>'form-control show-whatsapp'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-8">
+                                {!! Html::decode(Form::label('other_phones', 'Outros telefones', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('other_phones', $Voter->other_phones, ['placeholder' => 'Outros telefones', 'class'=>'form-control'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('email', 'Email', array('class' => 'col-form-label'))) !!}
+                                {{Form::email('email', $Voter->email, ['placeholder' => 'Email', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-8">
+                                {!! Html::decode(Form::label('instagram', 'Instagram', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('instagram', $Voter->instagram, ['placeholder' => 'Instagram', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
+                        <hr class="hr-sm mb-2">
+                        <div class="form-row">
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('voter_registration_zone', 'Tit. eleitor zona', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('voter_registration_zone', $Voter->voter_registration_zone, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-2">
+                                {!! Html::decode(Form::label('voter_registration_session', 'Tit. eleitor seção', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('voter_registration_session', $Voter->voter_registration_session, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('location_of_operation', 'Localidade de atuação', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('location_of_operation', $Voter->location_of_operation, ['placeholder' => 'Localidade de atuação', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
+                                <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
+                                <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10"
+                                     data-value="{{$Voter->votes_degree_certainty}}" data-target="prev"
+                                     class="mr-3 ml-3"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                {!! Html::decode(Form::label('votes_estimate', 'Estimativa de votos', array('class' => 'col-form-label'))) !!}
+                                {{Form::number('votes_estimate', $Voter->votes_estimate, ['placeholder' => 'Estimativa de votos', 'class'=>'form-control','min'=>0])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                {!! Html::decode(Form::label('social_history', 'Histórico Função Social ', array('class' => 'col-form-label'))) !!}
+                                {{Form::textarea('social_history', $Voter->social_history, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'16777'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <footer class="card-footer text-right">
+                            <button class="btn btn-primary" type="submit">Salvar</button>
+                        </footer>
 
                         {{Form::close()}}
 
@@ -215,11 +223,12 @@
 
                                 <h4 class="card-title"><strong>Grupos</strong>
                                     <button class="btn btn-float btn-sm btn-primary" data-toggle="modal"
-                                            data-target="#modal-groups" ><i class="ti-plus"></i></button>
+                                            data-target="#modal-groups"><i class="ti-plus"></i></button>
                                 </h4>
 
                                 <div class="card-body">
-                                    <table class="table table-striped table-bordered table-responsive-sm" data-provide="datatables">
+                                    <table class="table table-striped table-bordered table-responsive-sm"
+                                           data-provide="datatables">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
@@ -239,7 +248,8 @@
                                         <tbody>
                                         @foreach($Voter->groups as $group)
                                             <tr>
-                                                <td><a href="{{route('groups.show',$group->id)}}" target="_blank">{{$group->id}}</a></td>
+                                                <td><a href="{{route('groups.show',$group->id)}}"
+                                                       target="_blank">{{$group->id}}</a></td>
                                                 <td data-order="{{$group->pivot->created_at_time_formatted}}">{{$group->pivot->created_at_formatted}}</td>
                                                 <td>{{$group->description}}</td>
                                                 <td>
@@ -274,7 +284,7 @@
     @include('layout.inc.inputmask.js')
 
     <script>
-        app.ready(function() {
+        app.ready(function () {
 
             $('input[name="death"]').change(function () {
                 const $input_death_date = $(this).closest('div.card-body').find('input[name=death_date]');
@@ -290,7 +300,7 @@
         });
     </script>
     <script>
-        app.ready(function() {
+        app.ready(function () {
 
             $('#group_id').select2({
                 dropdownParent: $('#modal-groups'),
@@ -299,9 +309,9 @@
                     url: `{{route('voters.availableGroups', $Voter->id)}}`,
                     dataType: 'json',
                     delay: 100,
-                    processResults: function(data) {
+                    processResults: function (data) {
                         return {
-                            results: $.map(data, function(item) {
+                            results: $.map(data, function (item) {
                                 return {
                                     text: item.description,
                                     id: item.id
@@ -322,7 +332,78 @@
     @include('layout.inc.sweetalert.js')
 
     <script>
-        var _STATE_ID_ = "{{old('state_id')}}";
-        var _CITY_ID_ = "{{old('city_id')}}";
+        var _STATE_ = {
+            id: "{{$Voter->address->state_id}}",
+            text: "{{$Voter->address->state->name}}"
+        };
+        var _CITY_ = {
+            id: "{{$Voter->address->city_id}}",
+            text: "{{$Voter->address->city->name}}"
+        };
     </script>
+    <script>
+        $_INPUT_STATE_ = 'select#select-state';
+        $_INPUT_CITY_ = 'select#select-city';
+        app.ready(function () {
+
+            if (_STATE_.id !== '') {
+                $($_INPUT_STATE_).append(
+                    new Option(_STATE_.text, _STATE_.id, true, true)
+                ).trigger('change');
+            }
+
+            if (_CITY_.id !== '') {
+                $($_INPUT_CITY_).append(
+                    new Option(_CITY_.text, _CITY_.id, true, true)
+                ).trigger('change');
+            }
+
+            $($_INPUT_STATE_).select2({
+                placeholder: 'Escolha o Estado',
+                minimumInputLength: 0,
+                ajax: {
+                    url: `{{route('ceps.get.states')}}`,
+                    dataType: 'json',
+                    delay: 100,
+                    cache: true,
+                    processResults: function (json) {
+                        return {
+                            results: json.data
+                        };
+                    },
+                }
+            });
+
+            $($_INPUT_STATE_).change(function () {
+                $($_INPUT_CITY_).empty();
+                $($_INPUT_CITY_).append("<option value=''>Escolha a Cidade</option>");
+                if ($($_INPUT_STATE_).val() == "") {
+                    return false;
+                }
+
+                $.ajax({
+                    url: '{{route('ceps.get.cities')}}',
+                    data: {state_id: $($_INPUT_STATE_).val()},
+                    type: 'GET',
+                    dataType: "json",
+                    beforeSend: function (xhr, textStatus) {
+                        loadingCard('show', $_INPUT_STATE_);
+                    },
+                    error: function (xhr, textStatus) {
+                        console.log('xhr-error: ' + xhr.responseText);
+                        console.log('textStatus-error: ' + textStatus);
+                        loadingCard('hide', $_INPUT_STATE_);
+                    },
+                    success: function (json) {
+                        $(json.data).each(function (i, v) {
+                            $($_INPUT_CITY_).append(
+                                new Option(v.text, v.id, false, false)
+                            );
+                        });
+                    }
+                });
+            })
+        });
+    </script>
+    {{--    @include('layout.inc.address.js')--}}
 @endsection

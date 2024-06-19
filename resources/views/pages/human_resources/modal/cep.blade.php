@@ -9,19 +9,21 @@
             </div>
 
             <div class="modal-body">
-
-                {{Form::open(array(
-                    'route' => ['voter.group.attach'],
-                    'method'=>'POST',
-                    'data-disable'=>'false'
-                    )
-                )}}
+                <div class="alert alert-danger" role="alert">
+                    Este recurso está indisponível no momento!
+                </div>
+{{--                {{Form::open(array(--}}
+{{--                    'route' => ['voter.group.attach'],--}}
+{{--                    'method'=>'POST',--}}
+{{--                    'data-disable'=>'false'--}}
+{{--                    )--}}
+{{--                )}}--}}
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            {!! Html::decode(Form::label('zip', 'CEP', array('class' => 'col-form-label'))) !!}
-                            {{Form::text('zip', '', ['class'=>'form-control show-cep', 'placeholder'=>'CEP', 'maxlength'=>'16'])}}
+                            {!! Html::decode(Form::label('checkzip', 'CEP', array('class' => 'col-form-label'))) !!}
+                            {{Form::text('checkzip', '', ['class'=>'form-control show-cep', 'placeholder'=>'CEP', 'maxlength'=>'16'])}}
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -30,11 +32,11 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal"> Cancelar</button>
-                    <button class="btn btn-label btn-primary"><label><i class="ti-search"></i></label> Buscar
+                    <button class="btn btn-label btn-info"><label><i class="ti-search"></i></label> Buscar
                     </button>
                 </div>
 
-                {{Form::close()}}
+{{--                {{Form::close()}}--}}
             </div>
 
         </div>

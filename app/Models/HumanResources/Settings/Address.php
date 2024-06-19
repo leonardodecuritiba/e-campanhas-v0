@@ -2,8 +2,8 @@
 
 namespace App\Models\HumanResources\Settings;
 
-use App\Models\Commons\CepCities;
-use App\Models\Commons\CepStates;
+use App\Models\Commons\CepCity;
+use App\Models\Commons\CepState;
 use App\Models\HumanResources\Voter;
 use App\Traits\HumanResources\Settings\AddressTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,11 +65,11 @@ class Address extends Model {
 
 	public function state()
     {
-		return $this->belongsTo( CepStates::class, 'state_id' );
+		return $this->belongsTo( CepState::class, 'state_id' );
 	}
 
 	public function city() {
-		return $this->belongsTo( CepCities::class, 'city_id', 'id' );
+		return $this->belongsTo( CepCity::class, 'city_id', 'id' );
 	}
 
     //============================================================

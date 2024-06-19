@@ -10,8 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
+
+use App\Http\Controllers\HumanResources\Settings\CepCityController;
+use App\Http\Controllers\HumanResources\Settings\CepStateController;
 use App\Http\Controllers\HumanResources\Settings\GroupController;
+use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -51,10 +54,13 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
 
         Route::get('/voters/{voter}/available-groups', [GroupController::class, 'availableGroups'])->name('voters.availableGroups');
 
-
         Route::post('/group-voter/attach', [GroupVoterController::class, 'attach'])->name('voter.group.attach');
         Route::delete('/group-voter/detach', [GroupVoterController::class, 'detach'])->name('voter.group.detach');
 
+        Route::group( ['prefix' => 'ceps' ], function () {
+            Route::get( 'states', [CepStateController::class, 'index'] )->name( 'ceps.get.states' );
+            Route::get( 'cities', [CepCityController::class, 'index'] )->name( 'ceps.get.cities' );
+        } );
     } );
 
     Route::group( ['prefix' => 'voters'], function () {
@@ -62,8 +68,6 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
         Route::get( 'restore/{group}', 'VoterController@restore' )->name( 'voters.restore' );
     } );
     Route::resource( 'voters', 'VoterController' );
-
-
 
 	Route::resource( 'notifications', 'NotificationController' );
 

@@ -47,6 +47,19 @@ trait AddressTrait {
         return $this->attributes['zip'] = StringTrait::getOnlyNumbers( $value );
     }
 
+
+    // Accessor for latitude
+    public function getLatitudeAttribute()
+    {
+        return $this->geolocalization ? $this->geolocalization->getLat() : null;
+    }
+
+    // Accessor for longitude
+    public function getLongitudeAttribute()
+    {
+        return $this->geolocalization ? $this->geolocalization->getLng() : null;
+    }
+
     /*
 	public function getFullAddress()
     {

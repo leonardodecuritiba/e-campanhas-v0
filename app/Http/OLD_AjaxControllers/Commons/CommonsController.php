@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\AjaxControllers\Commons;
+namespace App\Http\OLD_AjaxControllers\Commons;
 
 use App\Helpers\DataHelper;
-use App\Http\AjaxControllers\Controller;
-use App\Models\Commons\CepCities;
+use App\Http\OLD_AjaxControllers\Controller;
+use App\Models\Commons\CepCity;
 use App\Models\Moviments\Commons\Entity;
 use App\Models\Moviments\Commons\Receiver;
 use App\Models\Moviments\Conveyor;
@@ -25,7 +25,7 @@ class CommonsController extends Controller {
 	 */
 	public function getStateCityToSelect(Request $request) {
 		$state_id = $request->get( 'id' );
-		return ( $state_id == null ) ? $state_id : CepCities::where( 'state_id', $state_id )->get();
+		return ( $state_id == null ) ? $state_id : CepCity::where( 'state_id', $state_id )->get();
 	}
 
 
