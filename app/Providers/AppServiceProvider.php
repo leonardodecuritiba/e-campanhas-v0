@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\OpenCepInterface;
 use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\Settings\GroupVoter;
 use App\Models\HumanResources\User;
@@ -10,6 +11,7 @@ use App\Observers\HumanResources\Settings\GroupObserver;
 use App\Observers\HumanResources\Settings\GroupVoterObserver;
 use App\Observers\HumanResources\UserObserver;
 use App\Observers\HumanResources\VoterObserver;
+use App\Services\Commons\OpenCepService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Faker\Generator as FakerGenerator;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(OpenCepInterface::class, OpenCepService::class);
     }
 
     /**

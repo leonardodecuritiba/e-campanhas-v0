@@ -12,6 +12,7 @@
 */
 use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
 use App\Http\Controllers\HumanResources\Settings\GroupController;
+use App\Http\Controllers\Commons\OpenCepController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -27,7 +28,7 @@ Auth::routes();
 
 /*
 |--------------------------------------------------------------------------
-| Users Routes
+| HumanResources Routes
 |--------------------------------------------------------------------------
 |
 */
@@ -75,5 +76,22 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
         });
 
 	} );
+
+} );
+/*
+|--------------------------------------------------------------------------
+| HumanResources Routes
+|--------------------------------------------------------------------------
+|
+*/
+Route::group( [ 'namespace' => 'Commons','prefix' => 'commons', 'middleware' => 'auth' ], function () {
+
+    Route::prefix('openceps')->group(function () {
+        Route::get('countries', [OpenCepController::class, 'listCountries'])->name( 'openceps.list.countries' );
+        Route::get('ufs', [OpenCepController::class, 'listUfs'])->name( 'openceps.list.ufs' );
+        Route::get('cities/{uf}', [OpenCepController::class, 'listCities'])->name( 'openceps.list.cities' );
+        Route::get('address/cep/{cep}', [OpenCepController::class, 'getAddressByCep'])->name( 'openceps.get.address.cep' );
+        Route::get('address/street/{uf}/{city}/{street?}/{district?}', [OpenCepController::class, 'getAddressByStreet'])->name( 'openceps.get.address.street' );
+    });
 
 } );
