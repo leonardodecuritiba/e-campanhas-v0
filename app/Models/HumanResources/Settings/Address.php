@@ -4,8 +4,8 @@ namespace App\Models\HumanResources\Settings;
 
 use App\Models\Commons\CepCities;
 use App\Models\Commons\CepStates;
-use App\Traits\OLD\AddressTrait;
-use Database\Factories\Commons\AddressFactory;
+use App\Models\HumanResources\Voter;
+use App\Traits\HumanResources\Settings\AddressTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,13 +18,14 @@ class Address extends Model {
 	protected $fillable = [
 		'state_id',
 		'city_id',
-		'city_code',
+
 		'zip',
 		'district',
 		'street',
 		'number',
 		'complement',
-		'region'
+		'region',
+		'geolocalization',
 	];
 
 	protected $with = array( 'state', 'city' );
@@ -34,6 +35,16 @@ class Address extends Model {
 		'uf_name',
 		'city_uf'
 	];
+
+
+    /**
+     * The attributes that are spatial fields.
+     *
+     * @var array
+     */
+    protected $spatialFields = [
+        'geolocalization',
+    ];
 
 	//============================================================
 	//======================== ACCESSORS =========================
@@ -46,16 +57,6 @@ class Address extends Model {
     //============================================================
     //======================== FUNCTIONS =========================
     //============================================================
-    /**
-     * Create a new factory instance for the model.
-     *
-     * @return Factory
-     */
-    protected static function newFactory()
-    {
-        return AddressFactory::new();
-    }
-
 
     //============================================================
     //======================== RELASHIONSHIPS ====================
@@ -74,10 +75,10 @@ class Address extends Model {
     //============================================================
     //======================== HASONE ============================
     //============================================================
-//
-//    public function client()
-//    {
-//        return $this->hasOne( Client::class, 'contact_id' );
-//    }
+
+    public function voter()
+    {
+        return $this->hasOne( Voter::class, 'address_id' );
+    }
 
 }

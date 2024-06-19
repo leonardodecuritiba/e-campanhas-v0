@@ -11,7 +11,11 @@
 @endsection
 
 @section('page_modals')
+
     @include('pages.human_resources.voters.modal.groups', ['voter_id' => $Voter->id])
+
+    @include('pages.human_resources.modal.cep')
+
 @endsection
 
 @section('page_content')
@@ -193,6 +197,8 @@
                                 </div>
                             </div>
 
+                            @include('pages.human_resources.forms.address-create')
+
                             <footer class="card-footer text-right">
                                 <button class="btn btn-primary" type="submit">Salvar</button>
                             </footer>
@@ -315,4 +321,8 @@
 
     @include('layout.inc.sweetalert.js')
 
+    <script>
+        var _STATE_ID_ = "{{old('state_id')}}";
+        var _CITY_ID_ = "{{old('city_id')}}";
+    </script>
 @endsection
