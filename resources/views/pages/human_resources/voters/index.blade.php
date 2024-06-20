@@ -25,6 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Cadastrador</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
@@ -36,6 +37,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Cadastrador</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
@@ -48,6 +50,7 @@
                             <tr>
                                 <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
+                                <td data-order="{{$sel['register_id']}}">{{$sel['register_id']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['cpf_formatted']}}</td>
                                 <td>{{$sel['email']}}</td>

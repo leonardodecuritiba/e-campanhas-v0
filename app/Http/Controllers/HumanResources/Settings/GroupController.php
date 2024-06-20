@@ -28,7 +28,9 @@ class GroupController extends Controller {
     public $page = [];
     protected $groupService;
 
-    public function __construct( Route $route, GroupService $groupService) {
+    public function __construct( Route $route, GroupService $groupService)
+    {
+        parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,
             'main_folder' => $this->main_folder,

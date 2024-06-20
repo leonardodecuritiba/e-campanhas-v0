@@ -26,7 +26,9 @@ class VoterController extends Controller {
     public $page = [];
     public $voterService;
 
-    public function __construct( Route $route, VoterService $voterService ) {
+    public function __construct( Route $route, VoterService $voterService )
+    {
+        parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,
             'main_folder' => $this->main_folder,

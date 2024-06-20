@@ -29,7 +29,8 @@ class UserController extends Controller {
     public $page = [];
     protected $userService;
 
-    public function __construct( Route $route, UserService $userService ) {
+    public function __construct( Route $route, UserService $userService )
+    {
         parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,

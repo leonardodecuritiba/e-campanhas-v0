@@ -4,7 +4,7 @@ namespace App\Services\HumaResources\Settings;
 use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class GroupService{
 
@@ -17,6 +17,7 @@ class GroupService{
         return $query->get()->map( function ( $s ) {
             return [
                 'id'                => $s->id,
+                'register_id'       => $s->register_id,
                 'name'              => $s->description,
                 'description'       => $s->description,
                 'count_voters'      => $s->voters->count(),

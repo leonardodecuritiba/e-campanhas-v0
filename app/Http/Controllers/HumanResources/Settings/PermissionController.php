@@ -17,7 +17,9 @@ class PermissionController extends Controller {
 	public $main_folder = 'pages.human_resources.settings.permissions';
 	public $page = [];
 
-	public function __construct( Route $route ) {
+	public function __construct( Route $route )
+    {
+        parent::__construct();
 		$this->page = (object) [
 			'entity'      => $this->entity,
 			'main_folder' => $this->main_folder,

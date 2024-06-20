@@ -3,7 +3,7 @@ namespace App\Services\HumaResources;
 
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class VoterService{
 
@@ -16,6 +16,7 @@ class VoterService{
         return $query->get()->map( function ( $s ) {
             return [
                 'id'                => $s->id,
+                'register_id'       => $s->register_id,
                 'name'              => $s->name,
                 'cpf_formatted'     => $s->cpf_formatted,
                 'email'             => $s->email,
