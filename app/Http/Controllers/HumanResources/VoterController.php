@@ -55,18 +55,9 @@ class VoterController extends Controller {
      * @throws AuthorizationException
      */
 
-    public function index() {
-        $this->page->response = Voter::get()->map( function ( $s ) {
-            return [
-                'id'                => $s->id,
-                'name'              => $s->name,
-                'cpf_formatted'     => $s->cpf_formatted,
-                'email'             => $s->email,
-                'whatsapp_formatted'=> $s->whatsapp_formatted,
-                'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time_formatted,
-            ];
-        } );
+    public function index()
+    {
+        $this->page->response = $this->voterService->listVoter( $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.index' )
             ->with( 'Page', $this->page );
@@ -114,17 +105,12 @@ class VoterController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Voter $voter
+     * @param int $id
      * @return Factory|Application|View
      */
-    public function edit( Voter $voter)
+    public function edit( int $id )
     {
-//        return $voter->birthday_formatted;
-//        $this->page->auxiliar = [
-//            'users' => User::getAlltoSelectList(),
-//            'states' => CepState::getAlltoSelectList(),
-//        ];
-        $voter->load('groups','address.state','address.city');
+        $voter = $this->voterService->findVoter( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.edit' )
             ->with( 'Page', $this->page )
@@ -134,14 +120,13 @@ class VoterController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Voter $voter
-     *
+     * @param int $id
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function show( Voter $voter )
+    public function show( int $id )
     {
-        $voter->load('groups','address.state','address.city');
+        $voter = $this->voterService->findVoter( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.show' )
             ->with( 'Page', $this->page )
@@ -166,27 +151,27 @@ class VoterController extends Controller {
      * Update the specified resource in storage.
      *
      * @param VoterRequest $request
-     * @param Voter $voter
+     * @param int $id
      * @return string
      */
-    public function update( VoterRequest $request, Voter $voter)
+    public function update( VoterRequest $request, int $id)
     {
-        $data = $this->voterService->updateVoter( $voter, $request->all() );
+        $data = $this->voterService->updateVoter( $id, $request->all(), $this->user );
         return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Voter $voter
-     *
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy( Voter $voter )
+    public function destroy( int $id )
     {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $voter->description );
+        $description = $this->voterService->destroyVoter( $id, $this->user );
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
-            'status'  => $voter->delete(),
+            'status'  => true,
             'message' => $message,
         ], 200 );
     }

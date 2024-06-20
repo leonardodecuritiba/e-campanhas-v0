@@ -3,6 +3,7 @@
 namespace App\Models\HumanResources;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\HumanResources\Settings\Group;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
@@ -116,10 +117,24 @@ class User extends Authenticatable
     //======================== BELONGS ===========================
     //============================================================
 
+    //======================== HASMANY ===========================
+    //============================================================
+
+    public function voters()
+    {
+        return $this->hasMany(Voter::class, 'register_id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'register_id');
+    }
+
     //======================== HASONE ============================
     //============================================================
     public function voter(): HasOne
     {
         return $this->hasOne(Voter::class, 'user_id');
     }
+
 }

@@ -16,6 +16,9 @@ class CreateVotersTable extends Migration
         Schema::create('voters', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->unsignedBigInteger('register_id')->nullable();
+            $table->foreign('register_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->unsignedBigInteger('address_id');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
 

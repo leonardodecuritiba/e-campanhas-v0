@@ -15,6 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller {
@@ -58,16 +59,7 @@ class GroupController extends Controller {
 
     public function index()
     {
-        $this->page->response = Group::with('voters')->get()->map( function ( $s ) {
-            return [
-                'id'                => $s->id,
-                'name'              => $s->description,
-                'description'       => $s->description,
-                'count_voters'      => $s->voters->count(),
-                'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time_formatted,
-            ];
-        } );
+        $this->page->response = $this->groupService->listGroup( $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.index' )
             ->with( 'Page', $this->page );
@@ -89,12 +81,12 @@ class GroupController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Group $group
+     * @param int $id
      * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function edit( Group $group )
+    public function edit( int $id )
     {
-        $group->load('voters');
+        $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.edit' )
             ->with( 'Page', $this->page )
@@ -104,13 +96,13 @@ class GroupController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Group $group
-     *
+     * @param int $id
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function show( Group $group )
+    public function show( int $id )
     {
+        $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.show' )
             ->with( 'Page', $this->page )
@@ -135,27 +127,27 @@ class GroupController extends Controller {
      * Update the specified resource in storage.
      *
      * @param GroupRequest $request
-     * @param Group $group
+     * @param int $id
      * @return string
      */
-    public function update( GroupRequest $request, Group $group)
+    public function update( GroupRequest $request, int $id)
     {
-        $data = $this->groupService->updateGroup( $group, $request->all() );
+        $data = $this->groupService->updateGroup( $id, $request->all(), $this->user );
         return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Group $group
-     *
+     * @param  int $id
      * @return JsonResponse
      */
-    public function destroy( Group $group )
+    public function destroy( int $id )
     {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $group->short_description );
+        $description = $this->groupService->destroyGroup( $id, $this->user );
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
-            'status'  => $group->delete(),
+            'status'  => true,
             'message' => $message,
         ], 200 );
     }

@@ -22,10 +22,12 @@ class TestDataSeeder extends Seeder
         $start = microtime( true );
 
         User::factory()
-            ->count(50)
+            ->count(10)
             ->create();
         $this->command->info('User complete ...');
 
+        Group::flushEventListeners();
+        Group::getEventDispatcher();
         Group::factory()
             ->count(50)
             ->create();

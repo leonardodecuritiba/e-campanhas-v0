@@ -2,10 +2,38 @@
 namespace App\Services\HumaResources\Settings;
 
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
 use Illuminate\Database\Eloquent\Collection;
 
 class GroupService{
+
+    public function listGroup(User $user): Collection
+    {
+        $query = Group::query()->with('voters');
+        if($user->hasRole('registrar')){
+            $query->my( $user->id );
+        }
+        return $query->get()->map( function ( $s ) {
+            return [
+                'id'                => $s->id,
+                'name'              => $s->description,
+                'description'       => $s->description,
+                'count_voters'      => $s->voters->count(),
+                'created_at'        => $s->created_at_formatted,
+                'created_at_time'   => $s->created_at_time_formatted,
+            ];
+        } );
+    }
+
+    public function findGroup( int $id, User $user ): Group
+    {
+        $query = Group::query()->with('voters');
+        if($user->hasRole('registrar')){
+            $query->my( $user->id );
+        }
+        return $query->findOrFail( $id );
+    }
 
     public function createGroup(array $data): Group
     {
@@ -13,10 +41,19 @@ class GroupService{
         return $group;
     }
 
-    public function updateGroup(Group $group, array $data): Group
+    public function updateGroup(int $id, array $data, User $user): Group
     {
+        $group = $this->findGroup( $id, $user );
         $group->update($data);
         return $group;
+    }
+
+    public function destroyGroup(int $id, User $user): string
+    {
+        $group = $this->findGroup( $id, $user );
+        $description = $group->short_description;
+        $group->delete();
+        return $description;
     }
 
     public function restoreGroup( int $id): Group
@@ -36,11 +73,6 @@ class GroupService{
     
     
     /*
-
-    public function findUser( int $id): Group
-    {
-        return Group::findOrFail( $id );
-    }
 
     public function updateUserPassword(Group $group, $password): Group
     {

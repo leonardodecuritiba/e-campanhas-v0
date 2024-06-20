@@ -34,6 +34,7 @@ class VoterObserver {
 		//CRIAR UM ADDRESS
 		$address           = Address::create( $this->request->all() );
 		$voter->address_id = $address->id;
+        $voter->register_id = auth()->id();
 	}
 
 
