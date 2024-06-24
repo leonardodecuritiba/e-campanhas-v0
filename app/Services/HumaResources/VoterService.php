@@ -48,6 +48,8 @@ class VoterService{
         $query = Voter::with('groups','address.state','address.city');
         if($user->hasRole('registrar')){
             $query->my( $user->id );
+        } elseif($user->hasRole('coordinator')){ //Se o coordenador estiver olhando um eleitor que é um coordenador, admin ou root, não poderá editar
+            $query->onlyRegistrarUsers( );
         }
         return $query->findOrFail( $id );
     }
@@ -86,6 +88,8 @@ class VoterService{
         if($user->hasRole('registrar'))
         {
             $query->my( $user->id );
+        } elseif($user->hasRole('coordinator')){ //Se o coordenador estiver olhando um eleitor que é um coordenador, admin ou root, não poderá editar
+            $query->onlyRegistrarUsers( );
         }
         return $query->get()->map( function ( $s ) {
             return [
@@ -109,6 +113,8 @@ class VoterService{
         if($user->hasRole('registrar'))
         {
             $query->my( $user->id );
+        } elseif($user->hasRole('coordinator')){ //Se o coordenador estiver olhando um eleitor que é um coordenador, admin ou root, não poderá editar
+            $query->onlyRegistrarUsers( );
         }
         $voter = $query->findOrFail( $id );
         $voter->restore();

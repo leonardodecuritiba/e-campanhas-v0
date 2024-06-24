@@ -89,7 +89,6 @@ class UserService{
         {
             $query->role('registrar');
         }
-
         return $query->get()->map( function ( $s ) {
             return [
                 'id'              => $s->id,
