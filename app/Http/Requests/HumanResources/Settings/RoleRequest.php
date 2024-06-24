@@ -21,13 +21,13 @@ class RoleRequest extends FormRequest {
 	 *
 	 * @return array
 	 */
-	public function rules() {
+	public function rules() :array
+    {
+        $rules = [];
+//		$rules = [
+//            'name'  => 'required|min:3|max:100|unique:'.$this->table.',name',
+//        ];
 
-		$rules = [
-            'name'  => 'required|min:3|max:100|unique:'.$this->table.',name',
-        ];
-
-//		dd($rules);
 		switch ( $this->method() ) {
 			case 'GET':
 			case 'DELETE':
@@ -37,7 +37,7 @@ class RoleRequest extends FormRequest {
 			case 'PUT':
 			case 'PATCH':
                 {
-                    $rules['name'] .= ',' . $this->role . ',id';
+//                    $rules['name'] .= ',' . $this->role . ',id';
                     return $rules;
                 }
 			case 'POST':

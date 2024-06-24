@@ -27,6 +27,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Cadastrador</th>
                             <th>Cadastrado</th>
                             <th>Removido</th>
                             <th>Descrição</th>
@@ -36,6 +37,7 @@
                         <tfoot>
                         <tr>
                             <th>ID</th>
+                            <th>Cadastrador</th>
                             <th>Cadastrado</th>
                             <th>Removido</th>
                             <th>Descrição</th>
@@ -46,6 +48,7 @@
                         @foreach($Page->response as $sel)
                             <tr>
                                 <td data-order="{{$sel['id']}}">{{$sel['id']}}</td>
+                                <td data-order="{{$sel['register_id']}}">{{$sel['register_id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['description']}}</td>

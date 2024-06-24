@@ -24,7 +24,7 @@ class AddressFactory extends Factory
     public function definition()
     {
         $state_id = CepState::get()->random( 1 )->first()->id;
-        $city_id  = CepCity::findOrFailByStateId( $state_id )->random( 1 )->first()->id;
+        $city_id  = CepCity::findOrFailByStateId( $state_id )->get()->random( 1 )->first()->id;
         return [
             'state_id'   => $state_id,
             'city_id'    => $city_id,

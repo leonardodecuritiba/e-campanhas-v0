@@ -18,15 +18,15 @@ class Role extends RoleSpatie
         'created_at_formatted',
     ];
 
-    static public function getAlltoSelectList()
-    {
-        return self::get()->map( function ( $s ) {
-            return [
-                'id'          => $s->id,
-                'description' => $s->name
-            ];
-        } )->pluck( 'description', 'id' );
-    }
+//    static public function getAlltoSelectList()
+//    {
+//        return self::get()->map( function ( $s ) {
+//            return [
+//                'id'          => $s->id,
+//                'description' => $s->name
+//            ];
+//        } )->pluck( 'description', 'id' );
+//    }
 
     public function getShortName()
     {

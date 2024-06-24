@@ -16,6 +16,7 @@ class GroupVoterController extends Controller
 
     public function __construct(GroupVoterService $groupVoterService)
     {
+        parent::__construct();
         $this->groupVoterService = $groupVoterService;
     }
     /**

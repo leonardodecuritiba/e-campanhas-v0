@@ -4,8 +4,6 @@ namespace App\Http\Controllers\HumanResources;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HumanResources\VoterRequest;
-use App\Models\Commons\CepState;
-use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\VoterService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
@@ -26,7 +24,9 @@ class VoterController extends Controller {
     public $page = [];
     public $voterService;
 
-    public function __construct( Route $route, VoterService $voterService ) {
+    public function __construct( Route $route, VoterService $voterService )
+    {
+        parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,
             'main_folder' => $this->main_folder,
@@ -55,18 +55,10 @@ class VoterController extends Controller {
      * @throws AuthorizationException
      */
 
-    public function index() {
-        $this->page->response = Voter::get()->map( function ( $s ) {
-            return [
-                'id'                => $s->id,
-                'name'              => $s->name,
-                'cpf_formatted'     => $s->cpf_formatted,
-                'email'             => $s->email,
-                'whatsapp_formatted'=> $s->whatsapp_formatted,
-                'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time_formatted,
-            ];
-        } );
+    public function index()
+    {
+        $this->hasPermission('voters.index');
+        $this->page->response = $this->voterService->listVoter( $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.index' )
             ->with( 'Page', $this->page );
@@ -102,10 +94,7 @@ class VoterController extends Controller {
      */
     public function create()
     {
-        $this->page->auxiliar = [
-//            'users' => User::getAlltoSelectList(),
-            'states' => CepState::getAlltoSelectList(),
-        ];
+        $this->hasPermission('voters.create');
         $this->page->create_option = 0;
         return view('pages.human_resources.voters.create' )
             ->with( 'Page', $this->page );
@@ -114,17 +103,13 @@ class VoterController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Voter $voter
+     * @param int $id
      * @return Factory|Application|View
      */
-    public function edit( Voter $voter)
+    public function edit( int $id )
     {
-//        return $voter->birthday_formatted;
-//        $this->page->auxiliar = [
-//            'users' => User::getAlltoSelectList(),
-//            'states' => CepState::getAlltoSelectList(),
-//        ];
-        $voter->load('groups','address.state','address.city');
+        $this->hasPermission('voters.edit');
+        $voter = $this->voterService->findVoter( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.edit' )
             ->with( 'Page', $this->page )
@@ -134,14 +119,14 @@ class VoterController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Voter $voter
-     *
+     * @param int $id
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function show( Voter $voter )
+    public function show( int $id )
     {
-        $voter->load('groups','address.state','address.city');
+        $this->hasPermission('voters.show');
+        $voter = $this->voterService->findVoter( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.voters.show' )
             ->with( 'Page', $this->page )
@@ -157,36 +142,38 @@ class VoterController extends Controller {
      */
     public function store( VoterRequest $request )
     {
+        $this->hasPermission('voters.create');
         $data = $this->voterService->createVoter( $request->all() );
         return $this->redirect( 'STORE', $data );
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param VoterRequest $request
-     * @param Voter $voter
+     * @param int $id
      * @return string
      */
-    public function update( VoterRequest $request, Voter $voter)
+    public function update( VoterRequest $request, int $id)
     {
-        $data = $this->voterService->updateVoter( $voter, $request->all() );
+        $this->hasPermission('voters.edit');
+        $data = $this->voterService->updateVoter( $id, $request->all(), $this->user );
         return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Voter $voter
-     *
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy( Voter $voter )
+    public function destroy( int $id )
     {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $voter->description );
+        $this->hasPermission('voters.delete');
+        $description = $this->voterService->destroyVoter( $id, $this->user );
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
-            'status'  => $voter->delete(),
+            'status'  => true,
             'message' => $message,
         ], 200 );
     }
@@ -199,20 +186,8 @@ class VoterController extends Controller {
      */
     public function removeds()
     {
-        $this->page->response = Voter::onlyTrashed()->get()->map( function ( $s ) {
-            return [
-                'id'              => $s->id,
-                'name'            => $s->name,
-                'cpf_formatted'   => $s->cpf_formatted,
-                'email'           => $s->email,
-                'whatsapp_formatted'=> $s->whatsapp_formatted,
-                'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time_formatted,
-                'deleted_at'      => $s->deleted_at_formatted,
-                'deleted_at_time' => $s->deleted_at_time_formatted,
-            ];
-        } );
-
+        $this->hasPermission('voters.removeds');
+        $this->page->response = $this->voterService->listVoterRemoveds( $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.voters.removeds' )
             ->with( 'Page', $this->page );
@@ -221,13 +196,14 @@ class VoterController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param int $id
      *
      * @return RedirectResponse
      */
-    public function restore( $id )
+    public function restore( int $id )
     {
-        $this->voterService->restoreVoter( $id );
+        $this->hasPermission('voters.restore');
+        $this->voterService->restoreVoter( $id, $this->user );
         return Redirect::route('voters.edit', $id);
     }
 }

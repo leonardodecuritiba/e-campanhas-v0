@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Models\HumanResources\Settings;
-
-use App\Traits\OLD\DateTimeTrait;
+use App\Traits\Commons\DateTimeTrait;
 use Spatie\Permission\Models\Permission as PermissionSpatie;
 
 class Permission extends PermissionSpatie
@@ -16,6 +15,10 @@ class Permission extends PermissionSpatie
     protected $appends = [
         'created_at_time',
         'created_at_formatted',
+    ];
+
+    protected $fillable = [
+        'description',
     ];
 
     static public function getAlltoSelectList() {

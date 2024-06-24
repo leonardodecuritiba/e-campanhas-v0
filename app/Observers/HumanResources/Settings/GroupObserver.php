@@ -31,7 +31,7 @@ class GroupObserver {
 	 */
 	public function creating( Group $group )
     {
-
+        $group->register_id = auth()->id();
 	}
 
 

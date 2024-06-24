@@ -3,6 +3,7 @@
 namespace Database\Factories\HumanResources;
 
 use App\Models\HumanResources\Settings\Address;
+use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
 use Faker\Generator;
@@ -28,7 +29,7 @@ class VoterFactory extends Factory
         $death = $this->faker->boolean;
         $birthday = $this->faker->boolean;
         $voter_registration = $this->faker->boolean;
-        $user_id = $this->faker->boolean ? User::get()->random( 1 )->first()->id : null;
+//        $user_id = $this->faker->boolean ? User::get()->random( 1 )->first()->id : null;
         $sponsor_id = null;
         if($this->faker->boolean){
             $voters = Voter::get();
@@ -36,8 +37,9 @@ class VoterFactory extends Factory
         }
 
         return [
+            'register_id'   => User::get()->random( 1 )->first()->id,
             'address_id'   => (Address::factory()->create())->id,
-            'user_id'   => $user_id,
+//            'user_id'   => $user_id,
             'sponsor_id'    => $sponsor_id,
             'name'   => $this->faker->name,
             'surname'   => $this->faker->firstName,
@@ -77,10 +79,13 @@ class VoterFactory extends Factory
                 $voter->save();
             }
 
-            $qtd = $this->faker->numberBetween(0, 5);
-            for($i = 0; $i < $qtd; $i++) {
-                $group_id = $this->faker->numberBetween(1, 50);
-                $voter->groups()->attach($group_id);
+            $ngroups = Group::all()->count();
+            if($ngroups > 0){
+                $qtd = $this->faker->numberBetween(0, 5);
+                for($i = 0; $i < $qtd; $i++) {
+                    $group_id = $this->faker->numberBetween(1, $ngroups);
+                    $voter->groups()->attach($group_id);
+                }
             }
 
         });

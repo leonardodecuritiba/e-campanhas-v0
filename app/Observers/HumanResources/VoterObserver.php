@@ -5,6 +5,7 @@ namespace App\Observers\HumanResources;
 use App\Models\HumanResources\Voter;
 use App\Models\HumanResources\Settings\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class VoterObserver {
 
@@ -34,6 +35,7 @@ class VoterObserver {
 		//CRIAR UM ADDRESS
 		$address           = Address::create( $this->request->all() );
 		$voter->address_id = $address->id;
+        $voter->register_id = auth()->id();
 	}
 
 
@@ -71,14 +73,8 @@ class VoterObserver {
 	public function deleting( Voter $voter )
     {
 		$voter->address->delete();
-        File::Delete($voter->link_path);
-
-        $path = $voter->getPath($voter->getIdFileAttribute());
-        // Check if directory is empty.
-        if (empty(File::files($path))) {
-            // Yes, delete the directory.
-            File::deleteDirectory($path);
-        }
+//        $path = $voter->real_path;
+//        File::deleteDirectory($path);
 	}
 
     /**

@@ -28,6 +28,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Cadastrador</th>
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>CPF</th>
@@ -40,6 +41,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Cadastrador</th>
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>CPF</th>
@@ -53,6 +55,7 @@
                             <tr>
                                 <td data-order="{{$sel['id']}}">{{$sel['id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
+                                <td>{{$sel['register_id']}}</td>
                                 <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['cpf_formatted']}}</td>

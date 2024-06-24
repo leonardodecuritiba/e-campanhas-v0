@@ -5,16 +5,20 @@ namespace App\Models\HumanResources;
 use App\Models\HumanResources\Settings\Address;
 use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\Settings\GroupVoter;
+use App\Models\HumanResources\Settings\Role;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\Commons\StringTrait;
 use App\Traits\Commons\FileTrait;
 use App\Traits\HumanResources\VoterFieldsTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class Voter extends Model
 {
@@ -32,6 +36,7 @@ class Voter extends Model
     static private $file_mode = 'self';
 
 	protected $fillable = [
+        'register_id',
         'address_id',
 //        'user_id',
 //        'sponsor_id',
@@ -69,6 +74,20 @@ class Voter extends Model
 	//======================== FUNCTIONS =========================
 	//============================================================
 
+    /**
+     * Scope the model query to certain roles only.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnlyRegistrarUsers(Builder $query): Builder
+    {
+        return $query->where(function ($query) {
+            $query->whereHas('user.roles', function ($q) {
+                $q->where('name', 'registrar');
+            })->orWhereNull('user_id');
+        });
+    }
 
 	//============================================================
 	//======================== ACCESSORS =========================
@@ -96,12 +115,10 @@ class Voter extends Model
     //======================== SCOPE =============================
     //============================================================
 
-//    public function scopeMy($query)
-//    {
-//        $u = Auth::user();
-//        return $query->where('user_id', $u->id);
-//    }
-//
+    public function scopeMy(Builder $query, int $id): void
+    {
+        $query->where('register_id', $id);
+    }
 //
 //    static public function itsMy($client_id)
 //    {
@@ -120,10 +137,16 @@ class Voter extends Model
     //======================== BELONGS ===========================
     //============================================================
 
+    public function register(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'register_id');
+    }
+
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'address_id');
     }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
