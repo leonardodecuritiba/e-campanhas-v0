@@ -4,7 +4,6 @@ namespace App\Http\Controllers\HumanResources;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HumanResources\VoterRequest;
-use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\VoterService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;

@@ -15,6 +15,8 @@ use App\Http\Controllers\HumanResources\Settings\CepCityController;
 use App\Http\Controllers\HumanResources\Settings\CepStateController;
 use App\Http\Controllers\HumanResources\Settings\GroupController;
 use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
+use App\Http\Controllers\HumanResources\VoterController;
+use App\Http\Controllers\HumanResources\UserController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -37,11 +39,11 @@ Auth::routes();
 Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', 'middleware' => 'auth' ], function () {
 
     Route::group( ['prefix' => 'users'], function () {
-        Route::get( 'profile', 'UserController@profile' )->name( 'users.my.profile' );
-        Route::post( 'change-my-password', 'UserController@updateMyPassword' )->name( 'users.change.my.password' );
-        Route::get( 'removeds', 'UserController@removeds' )->name( 'users.removeds' );
-        Route::get( 'restore/{user}', 'UserController@restore' )->name( 'users.restore' );
-        Route::post( 'change-user-password', 'UserController@updateUserPassword' )->name( 'users.change.password' );
+        Route::get( 'profile', [UserController::class, 'profile'] )->name( 'users.my.profile' );
+        Route::post( 'change-my-password', [UserController::class, 'updateMyPassword'] )->name( 'users.change.my.password' );
+        Route::get( 'removeds', [UserController::class, 'removeds'] )->name( 'users.removeds' );
+        Route::get( 'restore/{user}', [UserController::class, 'restore'])->name( 'users.restore' );
+        Route::post( 'change-user-password', [UserController::class, 'updateUserPassword'] )->name( 'users.change.password' );
     } );
     Route::resource( 'users', 'UserController' );
 
@@ -62,8 +64,8 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
     } );
 
     Route::group( ['prefix' => 'voters'], function () {
-        Route::get( 'removeds', 'VoterController@removeds' )->name( 'voters.removeds' );
-        Route::get( 'restore/{group}', 'VoterController@restore' )->name( 'voters.restore' );
+        Route::get( 'removeds', [VoterController::class, 'removeds'] )->name( 'voters.removeds' );
+        Route::get( 'restore/{group}', [VoterController::class, 'restore'] )->name( 'voters.restore' );
     } );
     Route::resource( 'voters', 'VoterController' );
 

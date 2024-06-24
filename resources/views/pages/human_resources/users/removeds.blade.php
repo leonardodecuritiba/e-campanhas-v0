@@ -31,6 +31,7 @@
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Tipo</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
@@ -41,6 +42,7 @@
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Tipo</th>
                             <th>Ações</th>
                         </tr>
                         </tfoot>
@@ -52,7 +54,7 @@
                                 <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['email']}}</td>
-                                
+                                <td data-order="{{$sel['role_name']}}">{{$sel['role_name']}}</td>
                                 <td>
 
                                     @include('layout.inc.buttons.restore')

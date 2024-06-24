@@ -31,7 +31,7 @@
                 )
                 )}}
                 <div class="modal-body">
-                    {{Form::hidden('id', $Data->id)}}
+                    {{Form::hidden('id', $User->id)}}
                     {{--<div class="text-right">--}}
                     {{--<img src="{{asset('assets/images/logo/logo.png')}}"--}}
                     {{--alt="logo icon">--}}
@@ -82,11 +82,11 @@
 
         <div class="card">
 
-            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}} ({{$Data->role_name}})</strong></h4>
+            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name}})</strong></h4>
 
-            {{Form::model($Data,
+            {{Form::model($User,
             array(
-                'route' => ['users.update', $Data->id],
+                'route' => ['users.update', $User->id],
                 'method'=>'PATCH',
                 'data-provide'=> "validation",
                 'data-disable'=>'false'

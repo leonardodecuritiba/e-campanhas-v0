@@ -61,19 +61,8 @@ class UserController extends Controller {
 
     public function index()
     {
-        $user_id = $this->user->id;
-        $this->page->response = User::get()->map( function ( $s ) use ($user_id) {
-            return [
-                'id'              => $s->id,
-                'role_name'       => $s->role_name_formatted,
-                'name'            => $s->name,
-                'email'           => $s->email,
-                'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time_formatted,
-                'its_me'          => $s->itsMe($user_id)
-            ];
-        } );
-
+        $this->hasPermission('users.index');
+        $this->page->response = $this->userService->listUser( $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.users.index' )
             ->with( 'Page', $this->page );
@@ -87,12 +76,23 @@ class UserController extends Controller {
      */
     public function create()
     {
+        $this->hasPermission('users.create');
         $this->page->create_option = 0;
-        if($this->user->hasRole('admin') || $this->user->hasRole('root')){
-            $this->page->auxiliar = [
-                'roles' => Role::getAlltoSelectList(),
-            ];
+        $roles = Role::query();
+        if($this->user->hasRole('coordinator|registrar'))
+        {
+            $roles->where('name', 'registrar');
+        } elseif($this->user->hasRole('admin'))
+        {
+            $roles->where('name', '<>', 'root');
         }
+        $this->page->auxiliar['roles'] = $roles->get()->map( function ( $s ) {
+            return [
+                'id'          => $s->id,
+                'description' => $s->name
+            ];
+        } )->pluck( 'description', 'id' );
+
         return view(  'pages.human_resources.users.create' )
             ->with( 'Page', $this->page );
     }
@@ -100,39 +100,53 @@ class UserController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param int $id
      * @return Application|Factory|RedirectResponse|\Illuminate\View\View|View
      */
-    public function edit( User $user )
+    public function edit( int $id )
     {
-        if($this->user->itsMe($user->id)){
+        $this->hasPermission('users.edit');
+        if($this->user->itsMe( $id )){
             return Redirect::route('users.my.profile');
         }
+        $user = $this->userService->findUser( $id, $this->user );
         $this->page->create_option = 1;
-        $this->page->auxiliar = [
-            'roles' => Role::getAlltoSelectList(),
-        ];
-
+        $roles = Role::query();
+        if($this->user->hasRole('coordinator|registrar'))
+        {
+            $roles->where('name', 'registrar');
+        } elseif($this->user->hasRole('admin'))
+        {
+            $roles->where('name', '<>', 'root');
+        }
+        $this->page->auxiliar['roles'] = $roles->get()->map( function ( $s ) {
+            return [
+                'id'          => $s->id,
+                'description' => $s->name
+            ];
+        } )->pluck( 'description', 'id' );
         return view( 'pages.human_resources.users.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $user );
+            ->with( 'User', $user );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param int $id
      * @return Application|Factory|RedirectResponse|\Illuminate\View\View|View
      */
-    public function show( User $user )
+    public function show( int $id )
     {
-        if($this->user->itsMe($user->id)){
+        $this->hasPermission('users.show');
+        if($this->user->itsMe( $id )){
             return Redirect::route('users.my.profile');
         }
+        $user = $this->userService->findUser( $id, $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.users.show' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $user );
+            ->with( 'User', $user );
     }
 
     /**
@@ -144,6 +158,7 @@ class UserController extends Controller {
      */
     public function store( UserRequest $request )
     {
+        $this->hasPermission('users.create');
         $data = $this->userService->createUser( $request->all() );
         return $this->redirect( 'STORE', $data );
     }
@@ -152,26 +167,31 @@ class UserController extends Controller {
      * Update the specified resource in storage.
      *
      * @param UserRequest $request
-     * @param User $user
+     * @param int $id
      * @return string
      */
-    public function update( UserRequest $request, User $user)
+    public function update( UserRequest $request, int $id)
     {
-        $data = $this->userService->updateUser( $user, $request->all() );
+        $this->hasPermission('users.edit');
+        $data = $this->userService->updateUser( $id, $this->user, $request->all() );
         return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param int $id
      *
-     * @return JsonResponse
+     * @return JsonResponse|RedirectResponse
      */
-    public function destroy( User $user )
+    public function destroy( int $id )
     {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $user->short_description );
-        $user->delete();
+        $this->hasPermission('users.delete');
+        if($this->user->itsMe( $id )){
+            return Redirect::route('users.my.profile');
+        }
+        $description = $this->userService->destroyUser( $id, $this->user );
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
             'status'  => 1,
             'message' => $message,
@@ -186,19 +206,8 @@ class UserController extends Controller {
      */
     public function removeds()
     {
-        $this->page->response = User::onlyTrashed()->get()->map( function ( $s ) {
-            return [
-                'id'              => $s->id,
-                'role_name'       => $s->role_name_formatted,
-                'name'            => $s->short_name,
-                'email'           => $s->email,
-                'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time_formatted,
-                'deleted_at'      => $s->deleted_at_formatted,
-                'deleted_at_time' => $s->deleted_at_time_formatted,
-            ];
-        } );
-
+        $this->hasPermission('users.removeds');
+        $this->page->response = $this->userService->listUserRemoveds( $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.users.removeds' )
             ->with( 'Page', $this->page );
@@ -213,7 +222,8 @@ class UserController extends Controller {
      */
     public function restore( $id )
     {
-        $this->userService->restoreUser( $id );
+        $this->hasPermission('users.restore');
+        $this->userService->restoreUser( $id, $this->user );
         return Redirect::route('users.edit', $id);
     }
 
@@ -227,7 +237,7 @@ class UserController extends Controller {
         $this->page->create_option = 0;
         return view(  'pages.human_resources.users.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $this->user );
+            ->with( 'User', $this->user );
     }
 
     /**
