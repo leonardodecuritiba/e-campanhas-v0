@@ -6,7 +6,7 @@
     <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
     <meta name="keywords" content="error, 500">
 
-    <title>Internal server error &mdash; TheAdmin</title>
+    <title>{{ config('app.name', 'Audite') }} - @yield('title')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">

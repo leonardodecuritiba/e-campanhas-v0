@@ -47,13 +47,11 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
 
     Route::group( [ 'namespace' => 'Settings','prefix' => 'settings' ], function () {
         Route::group( ['prefix' => 'groups'], function () {
-            Route::get( 'removeds', 'GroupController@removeds' )->name( 'groups.removeds' );
-            Route::get( 'restore/{group}', 'GroupController@restore' )->name( 'groups.restore' );
+            Route::get( 'removeds', [GroupController::class, 'removeds'] )->name( 'groups.removeds' );
+            Route::get( 'restore/{group}', [GroupController::class, 'restore'] )->name( 'groups.restore' );
         } );
         Route::resource( 'groups', 'GroupController' );
-
         Route::get('/voters/{voter}/available-groups', [GroupController::class, 'availableGroups'])->name('voters.availableGroups');
-
         Route::post('/group-voter/attach', [GroupVoterController::class, 'attach'])->name('voter.group.attach');
         Route::delete('/group-voter/detach', [GroupVoterController::class, 'detach'])->name('voter.group.detach');
 

@@ -15,7 +15,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller {
@@ -61,6 +60,7 @@ class GroupController extends Controller {
 
     public function index()
     {
+        $this->hasPermission('groups.index');
         $this->page->response = $this->groupService->listGroup( $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.index' )
@@ -75,6 +75,7 @@ class GroupController extends Controller {
      */
     public function create()
     {
+        $this->hasPermission('groups.create');
         $this->page->create_option = 0;
         return view('pages.human_resources.settings.groups.create' )
             ->with( 'Page', $this->page );
@@ -88,6 +89,7 @@ class GroupController extends Controller {
      */
     public function edit( int $id )
     {
+        $this->hasPermission('groups.edit');
         $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.edit' )
@@ -104,6 +106,7 @@ class GroupController extends Controller {
      */
     public function show( int $id )
     {
+        $this->hasPermission('groups.show');
         $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.show' )
@@ -120,10 +123,10 @@ class GroupController extends Controller {
      */
     public function store( GroupRequest $request )
     {
+        $this->hasPermission('groups.create');
         $data = $this->groupService->createGroup( $request->all() );
         return $this->redirect( 'STORE', $data );
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -134,6 +137,7 @@ class GroupController extends Controller {
      */
     public function update( GroupRequest $request, int $id)
     {
+        $this->hasPermission('groups.edit');
         $data = $this->groupService->updateGroup( $id, $request->all(), $this->user );
         return $this->redirect( 'UPDATE', $data );
     }
@@ -146,6 +150,7 @@ class GroupController extends Controller {
      */
     public function destroy( int $id )
     {
+        $this->hasPermission('groups.removeds');
         $description = $this->groupService->destroyGroup( $id, $this->user );
         $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
@@ -162,17 +167,8 @@ class GroupController extends Controller {
      */
     public function removeds()
     {
-        $this->page->response = Group::onlyTrashed()->get()->map( function ( $s ) {
-            return [
-                'id'              => $s->id,
-                'description'     => $s->description,
-                'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time_formatted,
-                'deleted_at'      => $s->deleted_at_formatted,
-                'deleted_at_time' => $s->deleted_at_time_formatted,
-            ];
-        } );
-
+        $this->hasPermission('groups.removeds');
+        $this->page->response = $this->groupService->listGroupRemoveds( $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.settings.groups.removeds' )
             ->with( 'Page', $this->page );
@@ -187,7 +183,8 @@ class GroupController extends Controller {
      */
     public function restore( $id )
     {
-        $this->groupService->restoreGroup( $id );
+        $this->hasPermission('groups.restore');
+        $this->groupService->restoreGroup( $id, $this->user );
         return Redirect::route('groups.edit', $id);
     }
 
@@ -200,7 +197,8 @@ class GroupController extends Controller {
      */
     public function availableGroups(Select2QueryRequest $request, Voter $voter)
     {
-        $availableGroups = $this->groupService->getAvailableGroupsForVoter( $voter, $request->term );
+        $this->hasPermission('groups.index');
+        $availableGroups = $this->groupService->getAvailableGroupsForVoter( $voter, $this->user, $request->term );
         return response()->json($availableGroups);
     }
 }
