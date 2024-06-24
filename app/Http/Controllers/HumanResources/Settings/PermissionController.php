@@ -4,6 +4,9 @@ namespace App\Http\Controllers\HumanResources\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\HumanResources\Settings\Permission;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
@@ -45,20 +48,20 @@ class PermissionController extends Controller {
 	 *
 	 * @param Request $request
 	 *
-	 * @return Response
-	 */
+	 * @return Application|Factory|View|\Illuminate\View\View
+     */
 
-	public function index(Request $request) {
+	public function index(Request $request)
+    {
 		$this->page->response = Permission::get()->map( function ( $s ) {
 			return [
 				'id'                    => $s->id,
 				'name'                  => $s->name,
+				'description'           => $s->description,
 				'created_at'            => $s->created_at_formatted,
 				'created_at_time'       => $s->created_at_time,
 			];
 		} );
-
-		$this->page->create_option = 0;
 		return view('pages.human_resources.settings.permissions.index' )
 			->with( 'Page', $this->page );
 	}

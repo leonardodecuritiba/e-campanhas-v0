@@ -1,9 +1,6 @@
 @extends('layout.app')
-
 @section('title', $Page->title)
-
 @section('style_content')
-
 @endsection
 
 @section('page_header-title',   $Page->title)
@@ -27,36 +24,26 @@
         |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
         !-->
         <div class="card">
-            @if(isset($Data))
-                <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->getShortName()}}</strong></h4>
+            @if(isset($Role))
+                <h4 class="card-title"><strong>#{{$Role->id}} - {{$Role->getShortName()}}</strong></h4>
             @else
                 <h4 class="card-title"><strong>Dados do {{$Page->name}}</strong></h4>
             @endif
             <div class="card-body">
-                @if(isset($Data))
-                    {{Form::model($Data,
-                        array(
-                            'route' => ['roles.update', $Data->id],
-                            'method'=>'PATCH',
-                            'data-provide'=> "validation",
-                            'data-disable'=>'false'
-                        )
-                        )}}
-                @else
-                    {{Form::open(array(
-                        'route' => ['roles.store'],
-                        'method'=>'POST',
+                {{Form::model($Role,
+                    array(
+                        'route' => ['roles.update', $Role->id],
+                        'method'=>'PATCH',
                         'data-provide'=> "validation",
                         'data-disable'=>'false'
                     )
-                    )}}
-                @endif
+                    )}}            
                     <div class="card-body">
 
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
-                                {{Form::text('name', old('name',(isset($Data) ? $Data->name : "")), ['placeholder'=>'Descrição','class'=>'form-control','minlength'=>'3', 'maxlength'=>'100'])}}
+                                {{Form::text('name', old('name',(isset($Role) ? $Role->name : "")), ['placeholder'=>'Descrição','class'=>'form-control','minlength'=>'3', 'maxlength'=>'100', 'disabled'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
