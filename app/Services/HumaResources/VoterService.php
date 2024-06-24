@@ -24,6 +24,7 @@ class VoterService{
         return $query->get()->map( function ( $s ) {
             return [
                 'id'                => $s->id,
+                'sponsor_id'        => $s->sponsor_id,
                 'register_id'       => $s->register_id,
                 'name'              => $s->name,
                 'cpf_formatted'     => $s->cpf_formatted,
@@ -45,7 +46,7 @@ class VoterService{
      */
     public function findVoter( int $id, User $user ): Voter
     {
-        $query = Voter::with('groups','address.state','address.city');
+        $query = Voter::with('groups', 'address.state', 'address.city', 'sponsor');
         if($user->hasRole('registrar')){
             $query->my( $user->id );
         } elseif($user->hasRole('coordinator')){ //Se o coordenador estiver olhando um eleitor que é um coordenador, admin ou root, não poderá editar

@@ -172,4 +172,6 @@
     <!-- Jquery Validation Plugin Js -->
     @include('layout.inc.inputmask.js')
 
+    @include('layout.inc.address.js')
+
 @endsection

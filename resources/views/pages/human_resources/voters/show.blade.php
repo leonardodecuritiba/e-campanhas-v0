@@ -22,7 +22,6 @@
             <h4 class="card-title"><strong>#{{$Voter->id}} - {{$Voter->name}}</strong></h4>
 
             <div class="card-body">
-
                 <h6 class="text-uppercase mt-3">Identificação</h6>
                 @if($Voter->image)
                     <div class="col-2" data-provide="photoswipe">
@@ -33,6 +32,12 @@
                 @endif
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
+                    @if($Voter->sponsor)
+                        <label class="col-2 col-form-label">Patrocinador</label>
+                        <div class="col-10">
+                            <p class="form-control-plaintext text-primary">{{$Voter->sponsor->name}}</p>
+                        </div>
+                    @endif
                     <label class="col-2 col-form-label">Nome</label>
                     <div class="col-4">
                         <p class="form-control-plaintext">{{$Voter->name}}</p>

@@ -36,19 +36,19 @@ trait FileTrait {
 
     public function getRealPathAttribute()
     {
-        $id = $this->getIdFileAttribute();
+        $id = null;//$this->getIdFileAttribute();
         return storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . $this->getAttribute( self::$field_filename ));
     }
 
     public function getLinkPathAttribute()
     {
-        $id = $this->getIdFileAttribute();
+        $id = null;//$this->getIdFileAttribute();
         return public_path($this->getPath( $id ) . $this->getAttribute( self::$field_filename ));
     }
 
 	public function getLinkDownloadAttribute()
 	{
-        $id = $this->getIdFileAttribute();
+        $id = null;//$this->getIdFileAttribute();
 		return asset('storage' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . DIRECTORY_SEPARATOR . $this->getAttribute( self::$field_filename ));
 	}
 
@@ -65,7 +65,7 @@ trait FileTrait {
             if(!is_string($file) && $file != NULL){
                 $filename = md5(time()) .'.'. $file->getClientOriginalExtension();
                 // Armazenar a imagem no diretório dentro de storage/app/public
-                $id = $this->getIdFileAttribute();
+                $id = null;//$this->getIdFileAttribute();
                 $path = $this->getPath( $id );
                 $path = $file->storeAs($path, $filename, 'public');
             } else {
@@ -83,10 +83,10 @@ trait FileTrait {
 	}
 
 
-    public function copyFile($new_id): bool
-    {
-        $new_pathname = public_path($this->getPath($new_id));
-        File::makeDirectory($new_pathname, $mode = 0777, true, true);
-        return File::copy( $this->link_path,  ($new_pathname . $this->getAttribute( self::$field_filename )) );
-    }
+//    public function copyFile($new_id): bool
+//    {
+//        $new_pathname = public_path($this->getPath($new_id));
+//        File::makeDirectory($new_pathname, $mode = 0777, true, true);
+//        return File::copy( $this->link_path,  ($new_pathname . $this->getAttribute( self::$field_filename )) );
+//    }
 }

@@ -5,6 +5,7 @@ namespace App\Observers\HumanResources;
 use App\Models\HumanResources\Voter;
 use App\Models\HumanResources\Settings\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class VoterObserver {
@@ -33,9 +34,11 @@ class VoterObserver {
 	public function creating( Voter $voter )
     {
 		//CRIAR UM ADDRESS
+        $user = Auth::user()->load('voter');
 		$address           = Address::create( $this->request->all() );
 		$voter->address_id = $address->id;
-        $voter->register_id = auth()->id();
+        $voter->register_id = $user->id;
+        $voter->sponsor_id = $user->voter->id;
 	}
 
 

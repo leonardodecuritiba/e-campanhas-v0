@@ -4,6 +4,7 @@ namespace App\Observers\HumanResources\Settings;
 
 use App\Models\HumanResources\Settings\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupObserver {
 
@@ -31,7 +32,8 @@ class GroupObserver {
 	 */
 	public function creating( Group $group )
     {
-        $group->register_id = auth()->id();
+        $user = Auth::user();
+        $group->register_id = $user->id;
 	}
 
 

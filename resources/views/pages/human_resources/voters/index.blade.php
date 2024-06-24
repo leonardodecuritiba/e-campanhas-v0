@@ -26,6 +26,7 @@
                             <th>ID</th>
                             <th>Cadastrado</th>
                             <th>Cadastrador</th>
+                            <th>Sponsor</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
@@ -38,6 +39,7 @@
                             <th>ID</th>
                             <th>Cadastrado</th>
                             <th>Cadastrador</th>
+                            <th>Sponsor</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
@@ -51,6 +53,7 @@
                                 <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td data-order="{{$sel['register_id']}}">{{$sel['register_id']}}</td>
+                                <td data-order="{{$sel['sponsor_id']}}">{{$sel['sponsor_id']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['cpf_formatted']}}</td>
                                 <td>{{$sel['email']}}</td>

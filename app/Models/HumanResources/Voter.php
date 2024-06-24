@@ -5,7 +5,6 @@ namespace App\Models\HumanResources;
 use App\Models\HumanResources\Settings\Address;
 use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\Settings\GroupVoter;
-use App\Models\HumanResources\Settings\Role;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\Commons\StringTrait;
@@ -17,8 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class Voter extends Model
 {
