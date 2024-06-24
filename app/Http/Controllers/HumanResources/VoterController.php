@@ -189,6 +189,7 @@ class VoterController extends Controller {
         $this->page->response = Voter::onlyTrashed()->get()->map( function ( $s ) {
             return [
                 'id'              => $s->id,
+                'register_id'     => $s->register_id,
                 'name'            => $s->name,
                 'cpf_formatted'   => $s->cpf_formatted,
                 'email'           => $s->email,

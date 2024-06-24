@@ -55,7 +55,10 @@ class RoleController extends Controller {
      */
 	public function index(Request $request)
     {
-		$this->page->response = Role::with('permissions')->where('name','<>', 'root')->get()->map( function ( $s ) {
+		$this->page->response = Role::with('permissions')
+            ->where('name','<>', 'root')
+            ->where('name','<>', 'admin')
+            ->get()->map( function ( $s ) {
 			return [
 				'id'                    => $s->id,
                 'name'                  => $s->name,
