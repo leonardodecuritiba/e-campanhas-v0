@@ -36,6 +36,14 @@ class GroupService extends MainService {
         } );
     }
 
+    /**
+     * Group find.
+     * User registrar only can view self voters
+     *
+     * @param int $id
+     * @param User $user
+     * @return Group
+     */
     public function findGroup( int $id, User $user ): Group
     {
         $query = Group::query()->with('voters');
@@ -67,7 +75,7 @@ class GroupService extends MainService {
     }
 
     /**
-     * Group List.
+     * Removeds Group List.
      * User registrar only can view self voters
      *
      * @param User $user

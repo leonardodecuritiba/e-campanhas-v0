@@ -34,6 +34,12 @@ trait FileTrait {
         return $path;
     }
 
+    public function getRealPathAttribute()
+    {
+        $id = $this->getIdFileAttribute();
+        return storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . $this->getAttribute( self::$field_filename ));
+    }
+
     public function getLinkPathAttribute()
     {
         $id = $this->getIdFileAttribute();

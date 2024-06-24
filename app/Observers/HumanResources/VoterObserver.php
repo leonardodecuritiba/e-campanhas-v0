@@ -5,6 +5,7 @@ namespace App\Observers\HumanResources;
 use App\Models\HumanResources\Voter;
 use App\Models\HumanResources\Settings\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class VoterObserver {
 
@@ -72,14 +73,8 @@ class VoterObserver {
 	public function deleting( Voter $voter )
     {
 		$voter->address->delete();
-        File::Delete($voter->link_path);
-
-        $path = $voter->getPath($voter->getIdFileAttribute());
-        // Check if directory is empty.
-        if (empty(File::files($path))) {
-            // Yes, delete the directory.
-            File::deleteDirectory($path);
-        }
+//        $path = $voter->real_path;
+//        File::deleteDirectory($path);
 	}
 
     /**

@@ -150,7 +150,7 @@ class GroupController extends Controller {
      */
     public function destroy( int $id )
     {
-        $this->hasPermission('groups.removeds');
+        $this->hasPermission('groups.delete');
         $description = $this->groupService->destroyGroup( $id, $this->user );
         $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
