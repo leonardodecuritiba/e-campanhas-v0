@@ -17,6 +17,8 @@ class UserTableSeeder extends Seeder
         //php artisan db:seed --class=UserTableSeeder
         $start = microtime( true );
 
+        User::flushEventListeners();
+        User::getEventDispatcher();
         $user = User::factory()
             ->create();
         $user->name = 'Leonardo';
