@@ -5,7 +5,6 @@ namespace App\Http\Controllers\HumanResources\Settings;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Commons\Select2QueryRequest;
 use App\Http\Requests\HumanResources\Settings\GroupRequest;
-use App\Models\HumanResources\Settings\Group;
 use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\Settings\GroupService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -13,9 +12,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller {
 
@@ -177,15 +174,15 @@ class GroupController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param int $id
      *
-     * @return RedirectResponse
+     * @return string
      */
-    public function restore( $id )
+    public function restore( int $id )
     {
         $this->hasPermission('groups.restore');
-        $this->groupService->restoreGroup( $id, $this->user );
-        return Redirect::route('groups.edit', $id);
+        $group = $this->groupService->restoreGroup( $id, $this->user );
+        return $this->redirect( 'RESTORE', $group );
     }
 
     /**
