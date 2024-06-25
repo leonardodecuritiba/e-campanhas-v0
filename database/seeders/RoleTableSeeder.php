@@ -29,10 +29,12 @@ class RoleTableSeeder extends Seeder
         Artisan::call('make:permission users');
 
         $permissions = Permission::all();
-        $role_registrar = Role::findByName('registrar');
         $role_coordinator = Role::findByName('coordinator');
-        $role_registrar->syncPermissions($permissions);
         $role_coordinator->syncPermissions($permissions);
+
+        $permissions = Permission::where('name', 'not like', 'users.%')->get();
+        $role_registrar = Role::findByName('registrar');
+        $role_registrar->syncPermissions($permissions);
 
 
         $this->command->info( 'Seed FINISHED in ' . round((microtime(true) - $start), 3) . "s ***");
