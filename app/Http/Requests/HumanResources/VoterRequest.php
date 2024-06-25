@@ -80,18 +80,5 @@ class VoterRequest extends FormRequest {
 				break;
 		}
 	}
-
-//    /**
-//     * Get the error messages for the defined validation rules.
-//     *
-//     * @return array
-//     */
-//    public function messages() {
-//        return [
-////            'image.image' => 'O arquivo deve ser uma imagem.',
-////            'image.mimes' => 'A imagem deve ser um arquivo do tipo: jpeg, png, jpg, gif, svg.',
-//            'image.max' => 'A imagem não pode ser maior que 2MB.',
-//        ];
-//    }
 }
 
