@@ -27,9 +27,10 @@ class GroupVoterController extends Controller
      */
     public function attach(AttachRequest $request)
     {
+        $this->hasPermission('groups.edit');
         $voter_id = $request->voter_id;
         $group_id = $request->group_id;
-        $result = $this->groupVoterService->attachVoterWithGroup($voter_id, $group_id);
+        $result = $this->groupVoterService->attachVoterWithGroup($voter_id, $group_id, $this->user);
         /*
         if ($result) {
             return response()->json(['success' => true, 'message' => 'Voter associated with group successfully']);
@@ -49,9 +50,10 @@ class GroupVoterController extends Controller
      */
     public function detach(DetachRequest $request)
     {
+        $this->hasPermission('groups.edit');
         $voter_id = $request->voter_id;
         $group_id = $request->group_id;
-        $result = $this->groupVoterService->detachVoterFromGroup($voter_id, $group_id);
+        $result = $this->groupVoterService->detachVoterFromGroup($voter_id, $group_id, $this->user);
         if ($result) {
             return response()->json(['success' => true, 'message' => 'Voter dissociated with group successfully']);
         } else {
