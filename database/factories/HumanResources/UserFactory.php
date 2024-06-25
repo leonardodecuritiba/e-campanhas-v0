@@ -5,7 +5,6 @@ namespace Database\Factories\HumanResources;
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -26,7 +25,7 @@ class UserFactory extends Factory
         return [
             'name'              => $this->faker->name,
             'email'             => $this->faker->unique()->safeEmail,
-            'password'          => Hash::make('123'), // password
+            'password'          => '123', // password
             'status'            => $this->faker->boolean,
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
