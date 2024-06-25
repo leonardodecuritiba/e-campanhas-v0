@@ -12,7 +12,7 @@ class CreateCepCitiesTable extends Migration {
 	 */
 	public function up() {
 		Schema::create( 'cep_cities', function ( Blueprint $table ) {
-			$table->increments( 'id' );
+			$table->bigIncrements( 'id' );
 			$table->unsignedInteger( 'state_id' );
 			$table->foreign( 'state_id' )->references( 'id' )->on( 'cep_states' )->onDelete( 'cascade' );
 			$table->string( 'name', 70 );

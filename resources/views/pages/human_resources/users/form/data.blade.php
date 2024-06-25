@@ -3,18 +3,18 @@
     <h6 class="text-uppercase mt-3">Dados de Acesso</h6>
     <hr class="hr-sm mb-2">
 
-    @if(isset($Data))
+    @if(isset($User))
 
         <div class="form-row">
             <label class="col-sm-2 col-form-label">ID</label>
             <div class="col-sm-10">
-                <p class="form-control-plaintext">{{$Data->id}}</p>
+                <p class="form-control-plaintext">{{$User->id}}</p>
             </div>
         </div>
         <div class="form-row">
             <label class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <p class="form-control-plaintext">{{$Data->getEmail()}}</p>
+                <p class="form-control-plaintext">{{$User->getEmail()}}</p>
             </div>
         </div>
         <div class="form-row pull-right">
@@ -40,23 +40,22 @@
 
     <h6 class="text-uppercase mt-3">Dados Pessoais</h6>
     <hr class="hr-sm mb-2">
-    @hasanyrole('root|admin')
 
-        @if(Route::current()->getName() != 'users.my.profile')
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    {!! Html::decode(Form::label('role_id', 'Tipo de Usuário *', array('class' => 'col-form-label'))) !!}
-                    {{Form::select('role_id', $Page->auxiliar['roles'], Request::get('role_id',(isset($Data) ? $Data->getRoleId() : "")), ['placeholder' => 'Escolha o Tipo de Usuário', 'class'=>'form-control select2_single', 'required'])}}
-                    <div class="invalid-feedback"></div>
-                </div>
+    @if(Route::current()->getName() != 'users.my.profile')
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                {!! Html::decode(Form::label('role_id', 'Tipo de Usuário *', array('class' => 'col-form-label'))) !!}
+                {{Form::select('role_id', $Page->auxiliar['roles'], Request::get('role_id',(isset($User) ? $User->getRoleId() : "")), ['placeholder' => 'Escolha o Tipo de Usuário', 'class'=>'form-control select2_single', 'required'])}}
+                <div class="invalid-feedback"></div>
             </div>
+        </div>
 
-        @endif
-    @endhasanyrole
+    @endif
+
     <div class="form-row">
         <div class="form-group col-md-12">
             {!! Html::decode(Form::label('name', 'Nome *', array('class' => 'col-form-label'))) !!}
-            {{Form::text('name', old('name',(isset($Data) ? $Data->name : "")), ['id'=>'name','placeholder'=>'Nome','class'=>'form-control','minlength'=>'3', 'maxlength'=>'100', 'required'])}}
+            {{Form::text('name', old('name',(isset($User) ? $User->name : "")), ['id'=>'name','placeholder'=>'Nome','class'=>'form-control','minlength'=>'3', 'maxlength'=>'100', 'required'])}}
             <div class="invalid-feedback"></div>
         </div>
     </div>

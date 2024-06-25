@@ -6,7 +6,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class Controller extends BaseController {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -96,7 +98,7 @@ class Controller extends BaseController {
     /**
      * Define breadcrumb.
      *
-     * @param  \Illuminate\Routing\Route $route
+     * @param  Route $route
      *
      */
     public function breadcrumb( $route ) {
@@ -134,4 +136,24 @@ class Controller extends BaseController {
                 break;
         }
     }
+
+    /**
+     * Checkpermission.
+     *
+     * @param string $input
+     */
+    public function hasPermission( string $input ):void
+    {
+        if (!$this->user->can($input))
+        {
+            $permissions = is_array($input)
+                ? $input
+                : explode('|', $input);
+            throw UnauthorizedException::forPermissions($permissions);
+        }
+
+//        $this->middleware(['role:super-admin','permission:publish articles|edit articles']);
+    }
+
+
 }

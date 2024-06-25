@@ -1,9 +1,6 @@
 @extends('layout.app')
-
 @section('title', $Page->title)
-
 @section('page_header-title',   $Page->title)
-
 @section('page_content')
     <!-- Main container -->
 
@@ -22,6 +19,7 @@
                             <th>Cadastrado</th>
                             <th>Descrição</th>
                             <th>Permissões</th>
+                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -30,12 +28,13 @@
                             <th>Cadastrado</th>
                             <th>Descrição</th>
                             <th>Permissões</th>
+                            <th>Ações</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($Page->response as $sel)
                             <tr>
-                                <td>@include('layout.inc.buttons.show')</td>
+                                <td>{{$sel['id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['short_description']}}</td>
                                 <td>
@@ -43,6 +42,7 @@
                                         <span class="badge badge-dark badge-pill">{{$permission}}</span>
                                     @endforeach
                                 </td>
+                                <td>@include('layout.inc.buttons.edit')</td>
                             </tr>
                         @endforeach
                         </tbody>

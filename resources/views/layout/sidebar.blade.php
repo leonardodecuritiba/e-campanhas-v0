@@ -22,7 +22,7 @@
             <li class="menu-item @if(Menu::isRoute(
             [
             'users.index','users.create','users.edit','users.show','users.removeds',
-            'voters.index','voters.create','voters.edit',
+            'voters.index','voters.create','voters.edit','voters.show','voters.removeds',
             'groups.index','groups.create','groups.edit','groups.show','groups.removeds',
             'permissions.index',
             'roles.index','roles.create','roles.edit'
@@ -34,6 +34,22 @@
                 </a>
 
                 <ul class="menu-submenu">
+
+                    @role('root')
+                    <li class="menu-item @if(Menu::isRoute(['permissions.index'])) active @endif">
+                        <a class="menu-link" href="{{route('permissions.index')}}">
+                            <span class="icon ti-lock"></span>
+                            <span class="title">Permissões</span>
+                        </a>
+                    </li>
+                    <li class="menu-item @if(Menu::isRoute(['roles.index','roles.create','roles.edit'])) active @endif">
+                        <a class="menu-link" href="{{route('roles.index')}}">
+                            <span class="icon ti-bag"></span>
+                            <span class="title">Roles</span>
+                        </a>
+                    </li>
+                    @endrole
+
                     @can('users.menu')
                         <li class="menu-item @if(Menu::isRoute(['users.index','users.create','users.edit','users.show','users.removeds'])) active @endif">
                             <a class="menu-link" href="{{route('users.index')}}">
@@ -42,23 +58,9 @@
                             </a>
                         </li>
                     @endcan
-                    @role('root')
-                        <li class="menu-item @if(Menu::isRoute(['permissions.index'])) active @endif">
-                            <a class="menu-link" href="{{route('permissions.index')}}">
-                                <span class="icon ti-lock"></span>
-                                <span class="title">Permissões</span>
-                            </a>
-                        </li>
-                        <li class="menu-item @if(Menu::isRoute(['roles.index','roles.create','roles.edit'])) active @endif">
-                            <a class="menu-link" href="{{route('roles.index')}}">
-                                <span class="icon ti-bag"></span>
-                                <span class="title">Roles</span>
-                            </a>
-                        </li>
-                    @endrole
 
                     @can('voters.menu')
-                        <li class="menu-item @if(Menu::isRoute(['voters.index','voters.create','voters.edit'])) active @endif">
+                        <li class="menu-item @if(Menu::isRoute(['voters.index','voters.create','voters.edit','voters.show','voters.removeds'])) active @endif">
                             <a class="menu-link" href="{{route('voters.index')}}">
                                 <span class="icon ti-user"></span>
                                 <span class="title">Eleitores</span>

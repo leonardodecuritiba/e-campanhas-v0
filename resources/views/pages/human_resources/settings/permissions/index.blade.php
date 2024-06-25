@@ -20,6 +20,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Código</th>
                             <th>Descrição</th>
                         </tr>
                         </thead>
@@ -27,6 +28,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Cadastrado</th>
+                            <th>Código</th>
                             <th>Descrição</th>
                         </tr>
                         </tfoot>
@@ -36,6 +38,7 @@
                                 <td>{{$sel['id']}}</td>
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['name']}}</td>
+                                <td>{{$sel['description']}}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -15,6 +15,17 @@ class VoterRequest extends FormRequest {
 	public function authorize() {
 		return true;
 	}
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'death' => $this->has('death'),
+        ]);
+    }
 
 	/**
 	 * Get the validation rules that apply to the request.
@@ -22,42 +33,47 @@ class VoterRequest extends FormRequest {
 	 * @return array
 	 */
 	public function rules() {
-
         $rules = [
-            'surname'  => 'required|min:3|max:100',
-            'name' => 'required|min:3|max:100',
+            'name' => 'required|min:3|max:191',
+            'surname'  => 'nullable|min:3|max:191',
+            'location_of_operation'  => 'nullable|min:1|max:191',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+//            'cpf'  => 'nullable|min:1|max:191',
         ];
 
-//		dd($rules);
+        /*
+         * Se tiver birthday, a years_approximate fica oculto e vice-versa. São campos OU-EXCLUSIVO,
+         * se um for preenchido, o outro é zerado
+         */
+        if($this->has('birthday') && $this->get('birthday') != "") {
+            $rules['birthday'] = 'required|date_format:dmY|before_or_equal:today';
+        } else {
+            $rules['years_approximate'] = 'required|between:1,150';
+        }
+
+        /*
+         * Se campo death for marcado (checkbox), o campo death_date deve aparecer e se tornar obrigatório. Se death
+         * estiver desmarcado o campo death_date recebe NULL.
+         */
+        if($this->has('death') && $this->get('death') != "") {
+            $rules['death_date'] = 'required|date_format:dmY|before_or_equal:today';
+        }
+
 		switch ( $this->method() ) {
 			case 'GET':
 			case 'DELETE':
 				{
 					return [];
 				}
-			case 'POST':
+			case 'POST': //store
 				{
-
-                    if($this->has('cnpj') && $this->get('cnpj') != NULL){
-                        $rules['cnpj'] = 'min:1|max:20|unique:voters,cnpj';
-                        unset($rules['cpf']);
-                    }  else {
-                        $rules['cpf'] = 'min:1|max:20|unique:voters,cpf';
-                        unset($rules['cnpj']);
-                    }
-
 					return $rules;
 				}
 			case 'PUT':
-			case 'PATCH':
+			case 'PATCH': //update
 				{
-                    if($this->has('cnpj') && $this->get('cnpj') != NULL){
-                        $rules['cnpj'] = 'required|min:3|max:20|unique:'.$this->table.',cnpj,' . $this->voter . ',id';
-                        unset($rules['cpf']);
-                    } else {
-                        $rules['cpf'] = 'required|min:3|max:20|unique:'.$this->table.',cpf,' . $this->voter . ',id';
-                        unset($rules['cnpj']);
-                    }
+                    $rules['latitude'] = 'required|numeric|between:-90,90';
+                    $rules['longitude'] = 'required|numeric|between:-180,180';
 					return $rules;
 				}
 			default:

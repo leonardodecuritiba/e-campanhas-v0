@@ -3,12 +3,14 @@
 namespace App\Models\HumanResources;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\HumanResources\Settings\Group;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\Commons\ActiveTrait;
 use App\Traits\Commons\DateTimeTrait;
 use App\Traits\HumanResources\User\NotificationTrait;
 use App\Traits\HumanResources\User\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -90,7 +92,8 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    static public function getAlltoSelectList() {
+    static public function getAlltoSelectList()
+    {
         return self::get()->map( function ( $s ) {
             return [
                 'id'          => $s->id,
@@ -114,10 +117,24 @@ class User extends Authenticatable
     //======================== BELONGS ===========================
     //============================================================
 
-    //======================== HASONE ============================
-    //============================================================
-
     //======================== HASMANY ===========================
     //============================================================
+
+    public function voters()
+    {
+        return $this->hasMany(Voter::class, 'register_id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'register_id');
+    }
+
+    //======================== HASONE ============================
+    //============================================================
+    public function voter(): HasOne
+    {
+        return $this->hasOne(Voter::class, 'user_id');
+    }
 
 }

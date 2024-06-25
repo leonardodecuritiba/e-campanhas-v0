@@ -8,7 +8,8 @@
         $('.show-credit-card').inputmask({'mask': '9999 9999 9999 9999', 'removeMaskOnSubmit': true});
         $('.show-rg').inputmask({'mask': '99.999.999-9', 'removeMaskOnSubmit': true});
         $('.show-celular, .show-cellphone').inputmask({'mask': '(99) 99999-9999', 'removeMaskOnSubmit': true});
-        $('.show-telefone, .show-phone').inputmask({'mask': '(99) 9999-9999', 'removeMaskOnSubmit': true});
+        $('.show-telefone, .show-phone').inputmask({'mask': '(99) 99999-9999', 'removeMaskOnSubmit': true});
+        $('.show-whatsapp').inputmask({'mask': '+55 (99) 99999-9999', 'removeMaskOnSubmit': true});
         $('.show-cep').inputmask({'mask': '99999-999', 'removeMaskOnSubmit': true});
         $('.show-cnpj').inputmask({'mask': '99.999.999/9999-99', 'removeMaskOnSubmit': true});
         $('.show-ie').inputmask({'mask': '999.999.999.999', 'removeMaskOnSubmit': true});
@@ -44,5 +45,11 @@
                 return  (_date <= _now + 20);
             } });
         $('.show-only-numbers').inputmask({ regex: "\\d*", 'removeMaskOnSubmit': true});
+        // $('.show-latitude').inputmask({
+        //     regex: '\[(\+|\-|)(([0-8]\d?)(\.\d+)?|90(\.0+)?)\]'
+        // });
+        // $('.show-longitude').inputmask({
+        //     regex: '\[(\+|\-|)((\d?\d|1[0-7]\d)(\.\d+)?|180(\.0+)?)\]'
+        // });
     });
 </script>

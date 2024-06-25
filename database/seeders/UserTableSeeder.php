@@ -16,25 +16,24 @@ class UserTableSeeder extends Seeder
     {
         //php artisan db:seed --class=UserTableSeeder
         $start = microtime( true );
-//
-//        User::flushEventListeners();
-//        User::getEventDispatcher();
 
-        $user = new User([
-            'name'          => 'Leonardo',
-            'email'         => 'silva.zanin@gmail.com',
-        ]);
-        $user->password = '123';
+        $user = User::factory()
+            ->create();
+        $user->name = 'Leonardo';
+        $user->email = 'silva.zanin@gmail.com';
         $user->save();
+        $user->detachRoles();
         $user->assignRole(1);
+        $this->command->info('Leonardo User complete ...');
 
-        $user = new User([
-            'name'          => 'Fabrício',
-            'email'         => 'guiafaxil@gmail.com',
-        ]);
-        $user->password = '123';
+        $user = User::factory()
+            ->create();
+        $user->name = 'Fabrício';
+        $user->email = 'guiafaxil@gmail.com';
         $user->save();
+        $user->detachRoles();
         $user->assignRole(1);
+        $this->command->info('Leonardo User complete ...');
 
         $this->command->info( 'Seed FINISHED in ' . round((microtime(true) - $start), 3) . "s ***");
     }

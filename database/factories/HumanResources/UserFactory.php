@@ -3,6 +3,7 @@
 namespace Database\Factories\HumanResources;
 
 use App\Models\HumanResources\User;
+use App\Models\HumanResources\Voter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -41,6 +42,10 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user) {
             $role = $this->faker->randomElement(['admin', 'coordinator', 'registrar']);
             $user->assignRole($role);
+
+            Voter::factory()->state([
+                'user_id' => $user->id,
+            ])->create();
         });
     }
 }

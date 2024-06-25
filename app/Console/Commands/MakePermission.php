@@ -34,12 +34,12 @@ class MakePermission extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle()
+    public function handle():void
     {
         $name = $this->argument('name');
-        $fields = ['index', 'show', 'create', 'edit', 'delete', 'menu'];
+        $fields = ['index', 'show', 'create', 'edit', 'delete', 'menu', 'removeds', 'restore'];
 
         foreach ($fields as $field){
             Permission::create([

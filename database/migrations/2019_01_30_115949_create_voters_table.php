@@ -14,24 +14,44 @@ class CreateVotersTable extends Migration
     public function up()
     {
         Schema::create('voters', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('address_id');
+            $table->unsignedBigInteger('register_id')->nullable();
+            $table->foreign('register_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('address_id');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
-
-            $table->unsignedInteger('contact_id');
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->string('code',20)->index();
-            $table->string('name',200);
-            $table->string('surname',200)->nullable();
+            $table->unsignedBigInteger('sponsor_id')->nullable();
+            $table->foreign('sponsor_id')->references('id')->on('voters')->onDelete('cascade');
+
+            $table->string('name');
+            $table->string('surname')->nullable();
+            $table->date('birthday')->nullable();
+            $table->smallInteger('years_approximate')->nullable();
+            $table->string('image')->nullable();
+
+            $table->boolean( 'death' )->default( 0 );
+            $table->date('death_date')->nullable();
+
             $table->string('cpf',20)->nullable();
-            $table->string('cnpj',20)->nullable();
+            $table->string('email')->nullable();
+            $table->string('whatsapp',20)->nullable();
+            $table->string('other_phones')->nullable();
+            $table->string('instagram')->nullable();
+
+            $table->string('voter_registration_zone')->nullable();
+            $table->string('voter_registration_session')->nullable();
+            $table->string('location_of_operation')->nullable();
+            $table->mediumText('social_history')->nullable();
+            $table->integer('votes_estimate')->default(0);
+            $table->smallInteger('votes_degree_certainty')->default(0);
 
             $table->boolean( 'status' )->default( 1 );
+
             $table->timestamps();
             $table->softDeletes();
         });

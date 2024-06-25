@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\HumanResources\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Commons\Select2QueryRequest;
 use App\Http\Requests\HumanResources\Settings\GroupRequest;
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Voter;
 use App\Services\HumaResources\Settings\GroupService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
@@ -25,7 +27,9 @@ class GroupController extends Controller {
     public $page = [];
     protected $groupService;
 
-    public function __construct( Route $route, GroupService $groupService) {
+    public function __construct( Route $route, GroupService $groupService)
+    {
+        parent::__construct();
         $this->page = (object) [
             'entity'      => $this->entity,
             'main_folder' => $this->main_folder,
@@ -35,9 +39,9 @@ class GroupController extends Controller {
             'auxiliar'    => array(),
             'response'    => array(),
             'has_menu'    => 1,
-            'page_title'  => 'Grupos',
-            'title'       => 'Grupos',
-            'subtitle'    => 'Grupos',
+            'page_title'  => $this->names,
+            'title'       => $this->names,
+            'subtitle'    => $this->names,
             'create_option' => 0,
             'noresults'   => '',
             'tab'         => 'data',
@@ -56,15 +60,8 @@ class GroupController extends Controller {
 
     public function index()
     {
-        $this->page->response = Group::get()->map( function ( $s ) {
-            return [
-                'id'                => $s->id,
-                'name'              => $s->description,
-                'description'       => $s->description,
-                'created_at'        => $s->created_at_formatted,
-                'created_at_time'   => $s->created_at_time_formatted,
-            ];
-        } );
+        $this->hasPermission('groups.index');
+        $this->page->response = $this->groupService->listGroup( $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.index' )
             ->with( 'Page', $this->page );
@@ -78,6 +75,7 @@ class GroupController extends Controller {
      */
     public function create()
     {
+        $this->hasPermission('groups.create');
         $this->page->create_option = 0;
         return view('pages.human_resources.settings.groups.create' )
             ->with( 'Page', $this->page );
@@ -86,27 +84,30 @@ class GroupController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param Group $group
+     * @param int $id
      * @return Application|Factory|\Illuminate\View\View|View
      */
-    public function edit( Group $group )
+    public function edit( int $id )
     {
+        $this->hasPermission('groups.edit');
+        $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.edit' )
             ->with( 'Page', $this->page )
-            ->with( 'Data', $group );
+            ->with( 'Group', $group );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Group $group
-     *
+     * @param int $id
      * @return Application|Factory|View
      * @throws AuthorizationException
      */
-    public function show( Group $group )
+    public function show( int $id )
     {
+        $this->hasPermission('groups.show');
+        $group = $this->groupService->findGroup( $id, $this->user );
         $this->page->create_option = 1;
         return view('pages.human_resources.settings.groups.show' )
             ->with( 'Page', $this->page )
@@ -122,39 +123,42 @@ class GroupController extends Controller {
      */
     public function store( GroupRequest $request )
     {
+        $this->hasPermission('groups.create');
         $data = $this->groupService->createGroup( $request->all() );
         return $this->redirect( 'STORE', $data );
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param GroupRequest $request
-     * @param Group $group
+     * @param int $id
      * @return string
      */
-    public function update( GroupRequest $request, Group $group)
+    public function update( GroupRequest $request, int $id)
     {
-        $data = $this->groupService->updateGroup( $group, $request->all() );
+        $this->hasPermission('groups.edit');
+        $data = $this->groupService->updateGroup( $id, $request->all(), $this->user );
         return $this->redirect( 'UPDATE', $data );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Group $group
-     *
+     * @param  int $id
      * @return JsonResponse
      */
-    public function destroy( Group $group )
+    public function destroy( int $id )
     {
-        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $group->short_description );
+        $this->hasPermission('groups.delete');
+        $description = $this->groupService->destroyGroup( $id, $this->user );
+        $message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $description );
         return new JsonResponse( [
-            'status'  => $group->delete(),
+            'status'  => true,
             'message' => $message,
         ], 200 );
     }
+
     /**
      * Display a listing of the removed resource.
      *
@@ -163,17 +167,8 @@ class GroupController extends Controller {
      */
     public function removeds()
     {
-        $this->page->response = Group::onlyTrashed()->get()->map( function ( $s ) {
-            return [
-                'id'              => $s->id,
-                'description'     => $s->description,
-                'created_at'      => $s->created_at_formatted,
-                'created_at_time' => $s->created_at_time_formatted,
-                'deleted_at'      => $s->deleted_at_formatted,
-                'deleted_at_time' => $s->deleted_at_time_formatted,
-            ];
-        } );
-
+        $this->hasPermission('groups.removeds');
+        $this->page->response = $this->groupService->listGroupRemoveds( $this->user );
         $this->page->create_option = 1;
         return view( 'pages.human_resources.settings.groups.removeds' )
             ->with( 'Page', $this->page );
@@ -188,7 +183,22 @@ class GroupController extends Controller {
      */
     public function restore( $id )
     {
-        $this->groupService->restoreGroup( $id );
+        $this->hasPermission('groups.restore');
+        $this->groupService->restoreGroup( $id, $this->user );
         return Redirect::route('groups.edit', $id);
+    }
+
+    /**
+     * Get available groups for user.
+     *
+     * @param Select2QueryRequest $request
+     * @param Voter $voter
+     * @return JsonResponse
+     */
+    public function availableGroups(Select2QueryRequest $request, Voter $voter)
+    {
+        $this->hasPermission('groups.index');
+        $availableGroups = $this->groupService->getAvailableGroupsForVoter( $voter, $this->user, $request->term );
+        return response()->json($availableGroups);
     }
 }

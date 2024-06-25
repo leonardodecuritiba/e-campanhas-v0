@@ -6,7 +6,7 @@
 |
 */
 Route::namespace('Commons')->middleware('auth')->prefix('commons')->group( function () {
-    Route::get( 'state-city', 'CommonsController@getStateCityToSelect' )->name( 'ajax.get.state-city' );
+//    Route::get( 'state-city', 'CommonsController@getStateCityToSelect' )->name( 'ajax.get.state-city' );
     Route::get( 'conveyors-generalities/{conveyor}', 'CommonsController@getConveyorsGeneralitiesToSelect' )->name( 'ajax.get.conveyors-generalities' );
     Route::get( 'set-active', 'CommonsController@setActive' )->name( 'ajax.set.active' );
     Route::get( 'get-ajax-to-select2', 'CommonsController@ajaxSelect2' )->name('ajax.get-select2');

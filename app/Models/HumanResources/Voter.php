@@ -2,45 +2,68 @@
 
 namespace App\Models\HumanResources;
 
-use App\Helpers\DataHelper;
 use App\Models\HumanResources\Settings\Address;
-use App\Models\HumanResources\Settings\Contact;
-use App\Models\Transactions\Request;
+use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Settings\GroupVoter;
 use App\Traits\Commons\ActiveTrait;
-use App\Traits\OLD\DateTimeTrait;
-use App\Traits\OLD\StringTrait;
-use Carbon\Carbon;
+use App\Traits\Commons\DateTimeTrait;
+use App\Traits\Commons\StringTrait;
+use App\Traits\Commons\FileTrait;
+use App\Traits\HumanResources\VoterFieldsTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 class Voter extends Model
 {
-	use SoftDeletes;
-    use DateTimeTrait;
     use StringTrait;
+    use DateTimeTrait;
+    use VoterFieldsTrait;
     use ActiveTrait;
+    use SoftDeletes;
+    use HasFactory;
+    use FileTrait;
+
 	public $timestamps = true;
-	static public $img_path = 'voters';
+    static private $file_folder = 'voters';
+    static private $field_filename = 'image';
+    static private $file_mode = 'self';
 
 	protected $fillable = [
-		'address_id',
-		'contact_id',
-		'user_id',
+        'register_id',
+        'address_id',
+//        'user_id',
+//        'sponsor_id',
 
-		'name',
-		'surname',
+        'name',
+        'surname',
+        'birthday',
+        'years_approximate',
+        'image',
+
+        'death',
+        'death_date',
+
         'cpf',
-        'cnpj',
+        'email',
+        'whatsapp',
+        'other_phones',
+        'instagram',
 
-		'status',
+        'voter_registration_zone',
+        'voter_registration_session',
+        'location_of_operation',
+        'social_history',
+        'votes_estimate',
+        'votes_degree_certainty',
+
+        'status',
 	];
 
 	protected $appends = [
-		'cpf_formatted',
-		'cnpj_formatted',
-		'short_description',
-		'short_document'
 	];
 
 
@@ -48,133 +71,102 @@ class Voter extends Model
 	//======================== FUNCTIONS =========================
 	//============================================================
 
+    /**
+     * Scope the model query to certain roles only.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnlyRegistrarUsers(Builder $query): Builder
+    {
+        return $query->where(function ($query) {
+            $query->whereHas('user.roles', function ($q) {
+                $q->where('name', 'registrar');
+            })->orWhereNull('user_id');
+        });
+    }
 
 	//============================================================
 	//======================== ACCESSORS =========================
 	//============================================================
-
-    public function getShortName()
+    public function getName()
     {
 	    return $this->name;
     }
 
-    public function getName()
-    {
-	    return $this->short_description;
-    }
-    public function isLegalPerson()
-    {
-	    return ($this->getAttribute('cpf') != NULL);
-    }
-
 	public function getShortDescriptionAttribute()
 	{
-        return ($this->getAttribute('name') != NULL) ? $this->getAttribute('name') : $this->getAttribute('surname');
-	}
-
-	public function getShortDocumentAttribute()
-	{
-        return ($this->getAttribute('cpf') != NULL) ? $this->cpf_formatted : $this->cnpj_formatted;
-	}
-
-	public function getCpfFormattedAttribute()
-	{
-		return DataHelper::mask($this->getAttribute('cpf'), '###.###.###-##');
-	}
-
-    public function getCnpjFormattedAttribute()
-    {
-        return DataHelper::mask($this->getAttribute('cnpj'), '##.###.###/####-##' );
+        return $this->name;
     }
-
 
 	//============================================================
 	//======================== MUTATORS ==========================
 	//============================================================
 
-    public function setCnpjAttribute( $value )
+    public function setImageAttribute($value)
     {
-        return $this->attributes['cnpj'] = DataHelper::getOnlyNumbers( $value );
+        return $this->setFileAttribute( $value );
     }
 
-    public function setCpfAttribute( $value )
-    {
-        return $this->attributes['cpf'] = DataHelper::getOnlyNumbers( $value );
-    }
     //============================================================
     //======================== SCOPE =============================
     //============================================================
 
-    public function scopeMy($query)
+    public function scopeMy(Builder $query, int $id): void
     {
-        $u = Auth::user();
-        return $query->where('user_id', $u->id);
+        $query->where('register_id', $id);
     }
-
-
-    static public function itsMy($client_id)
-    {
-        return self::my()->where('id', $client_id)->exists();
-    }
+//
+//    static public function itsMy($client_id)
+//    {
+//        return self::my()->where('id', $client_id)->exists();
+//    }
 
 	//============================================================
 	//======================== FUNCTIONS =========================
 	//============================================================
-
 
 
 	//============================================================
 	//======================== RELASHIONSHIP =====================
 	//============================================================
 
-	//======================== FUNCTIONS =========================
+    //======================== BELONGS ===========================
+    //============================================================
 
-
-
-	//======================== BELONGS ===========================
-
-
-	public function address()
-	{
-		return $this->belongsTo(Address::class, 'address_id');
-	}
-
-	public function contact()
-	{
-		return $this->belongsTo(Contact::class, 'contact_id');
-	}
-
-	public function owner()
-	{
-		return $this->belongsTo(User::class, 'user_id');
-	}
-
-	//======================== HASONE ============================
-
-	//======================== HASMANY ===========================
-    public function requests()
+    public function register(): BelongsTo
     {
-        return $this->hasMany(Request::class, 'client_id');
+        return $this->belongsTo(User::class, 'register_id');
     }
 
-    public function paid_requests()
+    public function address(): BelongsTo
     {
-        return $this->requests()->paid();
+        return $this->belongsTo(Address::class, 'address_id');
     }
 
-    public function billed_requests()
+    public function user(): BelongsTo
     {
-        return $this->requests()->billed();
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function requests_last_months($months = 3)
+    public function sponsor(): BelongsTo
     {
-        $begin = Carbon::now();
-        $end = clone $begin;
-        $begin->subMonths($months);
-        return $this->paid_requests()->whereBetween('created_at',[$begin->toDateString(), $end->toDateString()]);
+        return $this->belongsTo(self::class, 'sponsor_id');
     }
 
+    //======================== HASONE ============================
+    //============================================================
 
+    //======================== HASMANY ===========================
+    //============================================================
+    public function sponsoreds(): HasMany
+    {
+        return $this->hasMany(self::class, 'sponsor_id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class)->using(GroupVoter::class)->withTimestamps();
+    }
 
 }

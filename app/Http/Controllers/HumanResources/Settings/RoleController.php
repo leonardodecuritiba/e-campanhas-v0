@@ -23,7 +23,9 @@ class RoleController extends Controller {
 	public $main_folder = 'pages.human_resources.settings.roles';
 	public $page = [];
 
-	public function __construct( Route $route ) {
+	public function __construct( Route $route )
+    {
+        parent::__construct();
 		$this->page = (object) [
 			'entity'      => $this->entity,
 			'main_folder' => $this->main_folder,
@@ -51,8 +53,12 @@ class RoleController extends Controller {
 	 *
 	 * @return Application|Factory|View
      */
-	public function index(Request $request) {
-		$this->page->response = Role::with('permissions')->where('name','<>', 'root')->get()->map( function ( $s ) {
+	public function index(Request $request)
+    {
+		$this->page->response = Role::with('permissions')
+            ->where('name','<>', 'root')
+            ->where('name','<>', 'admin')
+            ->get()->map( function ( $s ) {
 			return [
 				'id'                    => $s->id,
                 'name'                  => $s->name,
@@ -62,7 +68,6 @@ class RoleController extends Controller {
 				'created_at_time'       => $s->created_at_time,
 			];
 		} );
-		$this->page->create_option = 1;
 		return view('pages.human_resources.settings.roles.index' )
 			->with( 'Page', $this->page );
 	}
@@ -71,15 +76,11 @@ class RoleController extends Controller {
      * Create the specified resource.
      *
      *
-     * @return Application|Factory|View
+     * @return void
      */
-    public function create( ) {
-        $this->page->create_option = 1;
-        $this->page->auxiliar = [
-            'permissions' => Permission::getAlltoSelectList(),
-        ];
-        return view('pages.human_resources.settings.roles.master' )
-            ->with( 'Page', $this->page );
+    public function create( ): void
+    {
+        abort(500, 'Not implemented');
     }
 
 	/**
@@ -89,15 +90,15 @@ class RoleController extends Controller {
 	 *
      * @return Application|Factory|View
 	 */
-	public function edit( $id ) {
-		$data = Role::with('permissions')->findOrFail( $id );
-		$this->page->create_option = 1;
+	public function edit( $id )
+    {
+		$role = Role::with('permissions')->findOrFail( $id );
         $this->page->auxiliar = [
             'permissions' => Permission::getAlltoSelectList(),
         ];
-		return view('pages.human_resources.settings.roles.master' )
+		return view('pages.human_resources.settings.roles.edit' )
 			->with( 'Page', $this->page )
-			->with( 'Data', $data );
+			->with( 'Role', $role );
 	}
 
 
@@ -106,14 +107,15 @@ class RoleController extends Controller {
      *
      * @param RoleRequest $request
      *
-     * @return string
+     * @return void
      */
-    public function store( RoleRequest $request )
+    public function store( RoleRequest $request ):void
     {
-        $data = Role::create( $request->only("name") );
-        $permissions = $request->get( 'permissions');
-        $data->syncPermissions($permissions);
-        return $this->redirect( 'STORE', $data );
+        abort(500, 'Not implemented');
+//        $data = Role::create( $request->only("name") );
+//        $permissions = $request->get( 'permissions');
+//        $data->syncPermissions($permissions);
+//        return $this->redirect( 'STORE', $data );
     }
 
 	/**
@@ -127,7 +129,7 @@ class RoleController extends Controller {
 	public function update( RoleRequest $request, $id )
     {
 		$data = Role::findOrFail( $id );
-        $data->update($request->all());
+//        $data->update($request->all());
 		$permissions = $request->get( 'permissions');
         $data->syncPermissions($permissions);
 		return $this->redirect( 'UPDATE', $data );
@@ -141,11 +143,13 @@ class RoleController extends Controller {
 	 * @return JsonResponse
 	 * @throws Exception
 	 */
-	public function destroy( Role $role ) {
-		$message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $role->getShortName() );
-		return new JsonResponse( [
-			'status'  => $role->delete(),
-			'message' => $message,
-		], 200 );
+	public function destroy( Role $role )
+    {
+        abort(500, 'Not implemented');
+//		$message = $this->getMessageFront( 'DELETE', $this->name . ': ' . $role->getShortName() );
+//		return new JsonResponse( [
+//			'status'  => $role->delete(),
+//			'message' => $message,
+//		], 200 );
 	}
 }

@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\HumanResources\Settings\Address;
 use App\Models\HumanResources\Settings\Group;
+use App\Models\HumanResources\Settings\GroupVoter;
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
+use App\Observers\HumanResources\Settings\AddressObserver;
 use App\Observers\HumanResources\Settings\GroupObserver;
+use App\Observers\HumanResources\Settings\GroupVoterObserver;
 use App\Observers\HumanResources\UserObserver;
 use App\Observers\HumanResources\VoterObserver;
 use Illuminate\Support\Facades\Schema;
@@ -38,7 +42,9 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength( 191 );
         User::observe( UserObserver::class );
         Voter::observe( VoterObserver::class );
+        Address::observe( AddressObserver::class );
         Group::observe( GroupObserver::class );
+        GroupVoter::observe( GroupVoterObserver::class );
 
     }
 }

@@ -15,11 +15,11 @@
     <div class="main-content">
 
 
-    @include('layout.inc.alerts')
+        @include('layout.inc.alerts')
 
         <div class="card">
 
-            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}} ({{$Data->role_name}})</strong></h4>
+            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name}})</strong></h4>
 
             <div class="card-body">
 
@@ -27,15 +27,15 @@
                 <hr class="hr-sm mb-2">
 
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">ID</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{$Data->id}}</p>
+                    <label class="col-2 col-form-label">ID</label>
+                    <div class="col-10">
+                        <p class="form-control-plaintext">{{$User->id}}</p>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{$Data->getEmail()}}</p>
+                    <label class="col-2 col-form-label">Email</label>
+                    <div class="col-10">
+                        <p class="form-control-plaintext">{{$User->getEmail()}}</p>
                     </div>
                 </div>
 
@@ -43,17 +43,19 @@
                 <hr class="hr-sm mb-2">
 
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Nome</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{$Data->name}}</p>
+                    <label class="col-2 col-form-label">Nome</label>
+                    <div class="col-10">
+                        <p class="form-control-plaintext">{{$User->name}}</p>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-sm-2 col-form-label">Role</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-plaintext">{{$Data->role_name}}</p>
+                    <label class="col-2 col-form-label">Role</label>
+                    <div class="col-10">
+                        <p class="form-control-plaintext">{{$User->role_name}}</p>
                     </div>
                 </div>
+        </div>
+
         </div>
 
     </div><!--/.main-content -->

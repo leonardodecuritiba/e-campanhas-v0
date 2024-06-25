@@ -19,19 +19,88 @@
 
         <div class="card">
 
-            <h4 class="card-title"><strong>#{{$Data->id}} - {{$Data->short_description}}</strong></h4>
+            <h4 class="card-title"><strong>#{{$Group->id}} - {{$Group->short_description}}</strong></h4>
 
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="informations-tab" data-toggle="tab" href="#informations" role="tab" aria-controls="informations" aria-selected="true">Informações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="voters-tab" data-toggle="tab" href="#voters" role="tab" aria-controls="voters" aria-selected="true">Eleitores
+                            @if($Group->voters->count() > 0)<span class="badge badge-pill badge-info">{{$Group->voters->count()}}</span> @endif
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
 
-            {{Form::model($Data,
-                array(
-                    'route' => ['groups.update', $Data->id],
-                    'method'=>'PATCH',
-                    'data-provide'=> "validation",
-                    'data-disable'=>'false'
-                )
-                )}}
-                @include('pages.human_resources.settings.groups.form.data')
-            {{Form::close()}}
+                    <div class="tab-pane fade show active" id="informations" role="tabpanel" aria-labelledby="informations-tab">
+                        {{Form::model($Group,
+                            array(
+                                'route' => ['groups.update', $Group->id],
+                                'method'=>'PATCH',
+                                'data-provide'=> "validation",
+                                'data-disable'=>'false'
+                            )
+                            )}}
+                        @include('pages.human_resources.settings.groups.form.data')
+                        {{Form::close()}}
+                    </div>
+
+                    <div class="tab-pane fade" id="voters" role="tabpanel" aria-labelledby="voters-tab">
+                        <div class="card">
+                            <div class="card-content">
+                                <table class="table table-striped table-bordered table-responsive-sm" data-provide="datatables">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Adicionado em</th>
+                                        <th>Nome</th>
+                                        <th>CPF</th>
+                                        <th>Email</th>
+                                        <th>Whatsapp</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Adicionado em</th>
+                                        <th>Nome</th>
+                                        <th>CPF</th>
+                                        <th>Email</th>
+                                        <th>Whatsapp</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    @foreach($Group->voters as $voter)
+                                        <tr>
+                                            <td><a href="{{route('voters.show',$voter->id)}}" target="_blank">{{$voter->id}}</a></td>
+                                            <td data-order="{{$voter->pivot->created_at_time_formatted}}">{{$voter->pivot->created_at_formatted}}</td>
+                                            <td>{{$voter->name}}</td>
+                                            <td>{{$voter->cpf_formatted}}</td>
+                                            <td>{{$voter->email}}</td>
+                                            <td>{{$voter->whatsapp_formatted}}</td>
+                                            <td>
+                                                @include('layout.inc.buttons.delete',
+                                                    [
+                                                        'sel'=>$voter,
+                                                        'field_delete_route'=>route('voter.group.detach',['voter_id'=>$voter->id,'group_id'=>$Group->id]),
+                                                        'field_delete'      => 'Eleitor'
+                                                    ]
+                                                )
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
 
@@ -43,5 +112,9 @@
 
     <!-- Jquery Validation Plugin Js -->
     @include('layout.inc.validation.js')
+
+    @include('layout.inc.datatable.js')
+
+    @include('layout.inc.sweetalert.js')
 
 @endsection

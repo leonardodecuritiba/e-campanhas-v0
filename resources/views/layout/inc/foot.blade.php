@@ -4,7 +4,7 @@
     var $_DATATABLE_OPTIONS_ = {
         "responsive": true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
         },
         "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         "pageLength": 10,
