@@ -43,6 +43,8 @@ class UserFactory extends Factory
             $role = $this->faker->randomElement(['admin', 'coordinator', 'registrar']);
             $user->assignRole($role);
 
+            Voter::flushEventListeners();
+            Voter::getEventDispatcher();
             Voter::factory()->state([
                 'user_id' => $user->id,
             ])->create();
