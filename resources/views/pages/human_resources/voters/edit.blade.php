@@ -195,8 +195,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-4">
-                                {!! Html::decode(Form::label('votes_estimate', 'Estimativa de votos', array('class' => 'col-form-label'))) !!}
-                                {{Form::number('votes_estimate', $Voter->votes_estimate, ['placeholder' => 'Estimativa de votos', 'class'=>'form-control','min'=>0])}}
+                                {!! Html::decode(Form::label('votes_estimate', 'Potencial de votos do eleitor', array('class' => 'col-form-label'))) !!}
+                                {{Form::number('votes_estimate', $Voter->votes_estimate, ['placeholder' => 'Potencial de votos do eleitor', 'class'=>'form-control','min'=>0])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>

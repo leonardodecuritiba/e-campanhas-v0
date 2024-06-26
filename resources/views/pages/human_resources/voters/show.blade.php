@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-2 col-form-label">Estimativa de votos</label>
+                    <label class="col-2 col-form-label">Potencial de votos do eleitor</label>
                     <div class="col-2">
                         <p class="form-control-plaintext">{{$Voter->votes_estimate}}</p>
                     </div>

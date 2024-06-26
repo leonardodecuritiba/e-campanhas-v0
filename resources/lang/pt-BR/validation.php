@@ -164,7 +164,7 @@ return [
 	    'instagram'      => 'Instagram',
         'voter_registration_zone'=> 'nº Zona Eleitoral',
         'voter_registration_session' => 'nº Seção Eleitoral',
-        'votes_estimate' => 'Estimativa votos',
+        'votes_estimate' => 'Potencial de votos do eleitor',
         'votes_degree_certainty' => 'Grau de certeza de voto',
         'social_history' => 'Histórico Função Social',
         'location_of_operation' => 'Regiões da cidade que tem influência',
