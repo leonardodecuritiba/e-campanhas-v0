@@ -99,11 +99,11 @@
                 <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
-                    <label class="col-1 col-form-label">Tit. eleitor zona</label>
+                    <label class="col-1 col-form-label">nº Zona Eleitoral</label>
                     <div class="col-1">
                         <p class="form-control-plaintext">{{$Voter->voter_registration_zone}}</p>
                     </div>
-                    <label class="col-1 col-form-label">Tit. eleitor seção</label>
+                    <label class="col-1 col-form-label">nº Seção Eleitoral</label>
                     <div class="col-1">
                         <p class="form-control-plaintext">{{$Voter->voter_registration_session}}</p>
                     </div>

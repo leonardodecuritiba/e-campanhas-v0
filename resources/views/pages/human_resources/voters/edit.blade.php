@@ -170,13 +170,13 @@
                         <hr class="hr-sm mb-2">
                         <div class="form-row">
                             <div class="form-group col-2">
-                                {!! Html::decode(Form::label('voter_registration_zone', 'Tit. eleitor zona', array('class' => 'col-form-label'))) !!}
-                                {{Form::text('voter_registration_zone', $Voter->voter_registration_zone, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                {!! Html::decode(Form::label('voter_registration_zone', 'nº Zona Eleitoral', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('voter_registration_zone', $Voter->voter_registration_zone, ['placeholder' => 'nº Zona Eleitoral', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-2">
-                                {!! Html::decode(Form::label('voter_registration_session', 'Tit. eleitor seção', array('class' => 'col-form-label'))) !!}
-                                {{Form::text('voter_registration_session', $Voter->voter_registration_session, ['placeholder' => 'Tit. eleitor zona', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                {!! Html::decode(Form::label('voter_registration_session', 'nº Seção Eleitoral', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('voter_registration_session', $Voter->voter_registration_session, ['placeholder' => 'nº Seção Eleitoral', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-4">
