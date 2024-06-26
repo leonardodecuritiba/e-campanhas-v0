@@ -107,7 +107,7 @@
                     <div class="col-1">
                         <p class="form-control-plaintext">{{$Voter->voter_registration_session}}</p>
                     </div>
-                    <label class="col-2 col-form-label">Localidade de atuação</label>
+                    <label class="col-2 col-form-label">Regiões da cidade que tem influência</label>
                     <div class="col-2">
                         <p class="form-control-plaintext">{{$Voter->location_of_operation}}</p>
                     </div>

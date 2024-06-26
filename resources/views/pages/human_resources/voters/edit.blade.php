@@ -70,11 +70,12 @@
                             @endif
                             <div class="form-group @if($Voter->image) col-10 @else col-12 @endif">
                                 {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
+                                    data-height="100"
                                     data-provide="tooltip"
                                     data-placement="right"
                                     data-tooltip-color="primary"
                                     data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
-                                <input name="image" type="file" data-provide="dropify">
+                                <input name="image" type="file" data-provide="dropify" data-height="100">
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -180,8 +181,8 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-4">
-                                {!! Html::decode(Form::label('location_of_operation', 'Localidade de atuação', array('class' => 'col-form-label'))) !!}
-                                {{Form::text('location_of_operation', $Voter->location_of_operation, ['placeholder' => 'Localidade de atuação', 'class'=>'form-control', 'maxlength'=>'191'])}}
+                                {!! Html::decode(Form::label('location_of_operation', 'Regiões da cidade que tem influência', array('class' => 'col-form-label'))) !!}
+                                {{Form::text('location_of_operation', $Voter->location_of_operation, ['placeholder' => 'Regiões da cidade que tem influência', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-4">

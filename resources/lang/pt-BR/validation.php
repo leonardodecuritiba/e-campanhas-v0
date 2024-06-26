@@ -167,7 +167,7 @@ return [
         'votes_estimate' => 'Estimativa votos',
         'votes_degree_certainty' => 'Grau de certeza de voto',
         'social_history' => 'Histórico Função Social',
-        'location_of_operation' => 'Localidade de atuação',
+        'location_of_operation' => 'Regiões da cidade que tem influência',
 
     ],
 
