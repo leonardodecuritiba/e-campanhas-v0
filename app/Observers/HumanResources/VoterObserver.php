@@ -7,6 +7,7 @@ use App\Models\HumanResources\Settings\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class VoterObserver {
 
@@ -35,10 +36,14 @@ class VoterObserver {
     {
 		//CRIAR UM ADDRESS
         $user = Auth::user()->load('voter');
-		$address           = Address::create( $this->request->all() );
-		$voter->address_id = $address->id;
+		$address            = Address::create( $this->request->all() );
+		$voter->address_id  = $address->id;
         $voter->register_id = $user->id;
-        $voter->sponsor_id = $user->voter->id;
+        if(!$user->hasRole('root') && $user->voter){
+            $voter->sponsor_id  = $user->voter->id;
+        } else {
+            Log::alert('User: '.$user->getEmail().' without Voter was create Voter: '.$voter->toJson());
+        }
 	}
 
 
