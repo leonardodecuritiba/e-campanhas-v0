@@ -45,7 +45,7 @@
                     <li class="menu-item @if(Menu::isRoute(['roles.index','roles.create','roles.edit'])) active @endif">
                         <a class="menu-link" href="{{route('roles.index')}}">
                             <span class="icon ti-bag"></span>
-                            <span class="title">Roles</span>
+                            <span class="title">Perfis</span>
                         </a>
                     </li>
                     @endrole

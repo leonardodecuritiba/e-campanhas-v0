@@ -23,7 +23,7 @@
                          {{--alt="logo icon">--}}
                 {{--</div>--}}
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    {!! Html::decode(Form::label('password', 'Nova Senha *', array('class' => 'col-md-4 control-label'))) !!}
+                    {!! Html::decode(Form::label('password', 'Nova Senha', array('class' => 'col-md-4 control-label require'))) !!}
                     <div class="col-md-12">
                         {{Form::password('password', ['id'=>'password','class'=>'form-control','minlength'=>'6', 'required'])}}
                         @if ($errors->has('password'))
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                    {!! Html::decode(Form::label('password_confirmation', 'Confirmar Senha *', array('class' => 'col-md-4 control-label'))) !!}
+                    {!! Html::decode(Form::label('password_confirmation', 'Confirmar Senha', array('class' => 'col-md-4 control-label require'))) !!}
                     <div class="col-md-12">
                         {{Form::password('password_confirmation', ['id'=>'password_confirmation','class'=>'form-control','minlength'=>'6', 'required'])}}
                         @if ($errors->has('password_confirmation'))

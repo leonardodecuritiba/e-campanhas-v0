@@ -51,7 +51,7 @@
                                 <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['email']}}</td>
-                                <td>{{$sel['role_name']}}</td>
+                                <td data-order="{{$sel['role_name_formatted']}}">{{$sel['role_name_formatted']}}</td>
                                 <td>
                                     @include('layout.inc.buttons.edit')
                                     @if(!$sel['its_me'])

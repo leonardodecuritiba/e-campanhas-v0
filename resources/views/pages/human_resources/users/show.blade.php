@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name}})</strong></h4>
+            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name_formatted}})</strong></h4>
 
             <div class="card-body">
 
@@ -49,9 +49,9 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="col-2 col-form-label">Role</label>
+                    <label class="col-2 col-form-label">Perfil</label>
                     <div class="col-10">
-                        <p class="form-control-plaintext">{{$User->role_name}}</p>
+                        <p class="form-control-plaintext">{{$User->role_name_formatted}}</p>
                     </div>
                 </div>
         </div>

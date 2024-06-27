@@ -61,7 +61,16 @@ trait UserTrait
 
     public function getRoleNameFormattedAttribute()
     {
-        return ucfirst($this->role_name);
+        switch ($this->role_name){
+            case 'root':
+                return 'Root';
+            case 'admin':
+                return 'Administrador';
+            case 'coordinator':
+                return 'Coordenador';
+            case 'registrar':
+                return 'Cabo Eleitoral';
+        }
     }
 
     /**

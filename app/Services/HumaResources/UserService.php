@@ -23,8 +23,8 @@ class UserService{
         $user_id = $user->id;
         return $query->get()->map( function ( $s ) use ($user_id) {
             return [
-                'id'              => $s->id,
-                'role_name'       => $s->role_name_formatted,
+                'id'                    => $s->id,
+                'role_name_formatted'   => $s->role_name_formatted,
                 'name'            => $s->name,
                 'email'           => $s->email,
                 'created_at'      => $s->created_at_formatted,

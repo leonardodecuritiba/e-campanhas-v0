@@ -22,7 +22,7 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            {!! Html::decode(Form::label('group_id', 'Grupo *', array('class' => 'col-form-label'))) !!}
+                            {!! Html::decode(Form::label('group_id', 'Grupo', array('class' => 'col-form-label require'))) !!}
                             {{Form::select('group_id', [], "", ['placeholder' => 'Escolha o Grupo', 'class'=>'form-control select2_single', 'required'])}}
                             <div class="invalid-feedback"></div>
                         </div>

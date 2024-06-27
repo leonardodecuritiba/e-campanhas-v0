@@ -14,6 +14,7 @@ class Role extends RoleSpatie
      * @var array
      */
     protected $appends = [
+        'name_formatted',
         'created_at_time',
         'created_at_formatted',
     ];
@@ -31,5 +32,19 @@ class Role extends RoleSpatie
     public function getShortName()
     {
         return $this->name;
+    }
+
+    public function getNameFormattedAttribute()
+    {
+        switch ($this->name){
+            case 'root':
+                return 'Root';
+            case 'admin':
+                return 'Administrador';
+            case 'coordinator':
+                return 'Coordenador';
+            case 'registrar':
+                return 'Cabo Eleitoral';
+        }
     }
 }

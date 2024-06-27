@@ -89,7 +89,7 @@ class UserController extends Controller {
         $this->page->auxiliar['roles'] = $roles->get()->map( function ( $s ) {
             return [
                 'id'          => $s->id,
-                'description' => $s->name
+                'description' => $s->name_formatted
             ];
         } )->pluck( 'description', 'id' );
 
@@ -122,7 +122,7 @@ class UserController extends Controller {
         $this->page->auxiliar['roles'] = $roles->get()->map( function ( $s ) {
             return [
                 'id'          => $s->id,
-                'description' => $s->name
+                'description' => $s->name_formatted
             ];
         } )->pluck( 'description', 'id' );
         return view( 'pages.human_resources.users.edit' )

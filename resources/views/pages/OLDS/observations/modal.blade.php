@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            {!! Html::decode(Form::label('descriptions', 'Descrição *', array('class' => 'col-form-label'))) !!}
+                            {!! Html::decode(Form::label('descriptions', 'Descrição', array('class' => 'col-form-label require'))) !!}
                             {{Form::textarea('descriptions', '', ['class'=>'form-control','rows'=>5,'minlength'=>'3', 'maxlength'=>'500', 'required'])}}
                         </div>
                     </div>

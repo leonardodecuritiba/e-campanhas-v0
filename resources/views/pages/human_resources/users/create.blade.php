@@ -24,7 +24,8 @@
                 'route' => ['users.store'],
                 'method'=>'POST',
                 'data-provide'=> "validation",
-                'data-disable'=>'false'
+                'data-disable'=>'false',
+                'autocomplete'=>'off'
             )
             )}}
                 @include('pages.human_resources.users.form.data')

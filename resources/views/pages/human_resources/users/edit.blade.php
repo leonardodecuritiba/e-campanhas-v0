@@ -37,7 +37,7 @@
                     {{--alt="logo icon">--}}
                     {{--</div>--}}
                     <div class="form-group{{ $errors->has('user_password') ? ' has-error' : '' }}">
-                        {!! Html::decode(Form::label('user_password', 'Nova Senha *', array('class' => 'col-md-4 control-label'))) !!}
+                        {!! Html::decode(Form::label('user_password', 'Nova Senha', array('class' => 'col-md-4 control-label require'))) !!}
                         <div class="col-md-12">
                             {{Form::password('user_password', ['class'=>'form-control','minlength'=>'6', 'required'])}}
                             @if ($errors->has('user_password'))
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('user_password_confirmation') ? ' has-error' : '' }}">
-                        {!! Html::decode(Form::label('user_password_confirmation', 'Confirmar Senha *', array('class' => 'col-md-4 control-label'))) !!}
+                        {!! Html::decode(Form::label('user_password_confirmation', 'Confirmar Senha', array('class' => 'col-md-4 control-label require'))) !!}
                         <div class="col-md-12">
                             {{Form::password('user_password_confirmation', ['class'=>'form-control','minlength'=>'6', 'required'])}}
                             @if ($errors->has('user_password_confirmation'))
@@ -82,7 +82,7 @@
 
         <div class="card">
 
-            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name}})</strong></h4>
+            <h4 class="card-title"><strong>#{{$User->id}} - {{$User->short_description}} ({{$User->role_name_formatted}})</strong></h4>
 
             {{Form::model($User,
             array(
