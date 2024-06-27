@@ -10,12 +10,12 @@
         <div class="invalid-feedback"></div>
     </div>
     <div class="form-group col-3">
-        {!! Html::decode(Form::label('state', 'Estado', array('class' => 'col-form-label'))) !!}
+        {!! Html::decode(Form::label('state', 'Estado', array('class' => 'col-form-label require'))) !!}
         {{Form::select('state_id', [], old('state_id'), ['placeholder' => 'Escolha o Estado', 'class'=>'form-control select2_single','id' => 'select-state', 'required'])}}
         <div class="invalid-feedback"></div>
     </div>
     <div class="form-group col-5">
-        {!! Html::decode(Form::label('city', 'Cidade', array('class' => 'col-form-label'))) !!}
+        {!! Html::decode(Form::label('city', 'Cidade', array('class' => 'col-form-label require'))) !!}
         {{Form::select('city_id', [], '', ['placeholder' => 'Escolha a Cidade', 'class'=>'form-control select2_single','id' => 'select-city', 'required'])}}
         <div class="invalid-feedback"></div>
     </div>

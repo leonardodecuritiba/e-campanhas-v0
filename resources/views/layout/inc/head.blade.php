@@ -47,6 +47,19 @@
     .badge a:hover {
         color: #4d5259 !important;
     }
+    .form-control {
+        border-color: #cacaca !important;
+    }
+    .select2-container .select2-selection--single {
+        border-color: #cacaca !important;
+    }
+    .noUi-handle {
+        background-color:#e4e7ea !important;
+        border-color: #cacaca !important;
+    }
+    .noUi-horizontal {
+        background: #e4e7ea !important;
+    }
 </style>
 <!-- Select2 -->
 @include('layout.inc.select2.css')

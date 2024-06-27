@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-8">
-                                {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label'))) !!}
+                                {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label require'))) !!}
                                 {{Form::text('name', $Voter->name, ['id'=>'name','placeholder'=>'Nome completo','class'=>'form-control','minlength'=>'3','maxlength'=>'191','required'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
