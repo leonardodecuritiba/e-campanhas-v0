@@ -26,7 +26,9 @@
                 @if($Voter->image)
                     <div class="col-2" data-provide="photoswipe">
                         <a href="#">
-                            <img style="max-width: 240px;" class="img-fluid" data-original-src="{{$Voter->link_download}}" src="{{$Voter->link_download}}" alt="">
+                            <img class="avatar avatar-xxxl avatar-bordered"
+                                 data-original-src="{{$Voter->link_download}}"
+                                 src="{{$Voter->link_download}}" alt="">
                         </a>
                     </div>
                 @endif

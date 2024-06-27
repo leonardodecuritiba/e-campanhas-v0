@@ -41,3 +41,27 @@
 
     });
 </script>
+
+
+<script>
+    app.ready(function () {
+
+        $('input[name="hasnt_birthday"]').change(function () {
+            const $parent = $(this).closest('div.form-row');
+            if ($(this).prop('checked')) {
+                //HABILITAR E REQUIRED
+                $($parent).find('div.birthday').hide();
+                $('input[name=birthday]').attr("required", false);
+                $($parent).find('div.years_approximate').show();
+                $('input[name=years_approximate]').attr("required", true);
+            } else {
+                //DESABILITAR E NÃO REQUIRED
+                $($parent).find('div.birthday').show();
+                $('input[name=birthday]').attr("required", true);
+                $($parent).find('div.years_approximate').hide();
+                $('input[name=years_approximate]').attr("required", false);
+            }
+        });
+
+    });
+</script>

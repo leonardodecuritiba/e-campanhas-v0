@@ -62,7 +62,7 @@
                             @if($Voter->image)
                                 <div class="col-2" data-provide="photoswipe">
                                     <a href="#">
-                                        <img style="max-width: 240px;" class="avatar avatar-xxxl avatar-bordered"
+                                        <img class="avatar avatar-xxxl avatar-bordered"
                                              data-original-src="{{$Voter->link_download}}"
                                              src="{{$Voter->link_download}}" alt="">
                                     </a>
@@ -103,23 +103,24 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-2">
-                                {!! Html::decode(Form::label('birthday', 'Data Nascimento', array('class' => 'col-form-label'))) !!}
+                                {!! Html::decode(Form::label('hasnt_birthday', 'Sabe a Data Nascimento?', array('class' => 'col-form-label'))) !!}
+                                <div class="form-group">
+                                    <input type="checkbox" data-provide="switchery" name="hasnt_birthday" data-size="small"> Não sei
+                                </div>
+                            </div>
+                            <div class="form-group col-2 birthday">
+                                {!! Html::decode(Form::label('birthday', 'Data Nascimento', array('class' => 'col-form-label require'))) !!}
                                 <i class="fa fa-question-circle"
                                    data-provide="tooltip"
                                    data-placement="top"
                                    data-tooltip-color="primary"
-                                   data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
-                                {{Form::text('birthday', $Voter->birthday_formatted, ['placeholder'=>'Data Nascimento','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR"])}}
+                                   data-original-title="Caso não saiba a data de nascimento, marque como Não sei."></i>
+                                {{Form::text('birthday', $Voter->birthday_formatted, ['placeholder'=>'Data Nascimento','class'=>'form-control show-date','data-provide'=>"datepicker",'data-language'=>"pt-BR", 'required'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-group col-2">
-                                {!! Html::decode(Form::label('years_approximate', 'Idade Aproximada', array('class' => 'col-form-label'))) !!}
-                                <i class="fa fa-question-circle"
-                                   data-provide="tooltip"
-                                   data-placement="top"
-                                   data-tooltip-color="primary"
-                                   data-original-title="Caso não saiba a data de nascimento, insira a idade aproximada."></i>
-                                {{Form::number('years_approximate',$Voter->years_approximate, ['placeholder'=>'Idade Aprox.','class'=>'form-control','min'=>0, 'max'=>150])}}
+                            <div class="form-group col-2 years_approximate" style="display: none;">
+                                {!! Html::decode(Form::label('years_approximate', 'Idade Aproximada', array('class' => 'col-form-label require'))) !!}
+                                {{Form::number('years_approximate', $Voter->years_approximate, ['placeholder'=>'Idade Aprox.','class'=>'form-control','min'=>0, 'max'=>150])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-2">
@@ -317,7 +318,16 @@
 
     @include('pages.human_resources.voters.scripts.js')
 
+    @if($Voter->years_approximate != null)
+        <script>
+            app.ready(function () {
+                $('input[name="hasnt_birthday"]').trigger("click");
+            });
+        </script>
+    @endif
+
     <script>
+
         app.ready(function () {
 
             $('#group_id').select2({
