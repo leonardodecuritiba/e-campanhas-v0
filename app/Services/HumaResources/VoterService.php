@@ -3,6 +3,8 @@ namespace App\Services\HumaResources;
 
 use App\Models\HumanResources\User;
 use App\Models\HumanResources\Voter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class VoterService{
@@ -55,8 +57,13 @@ class VoterService{
         return $query->findOrFail( $id );
     }
 
-    public function createVoter(array $data): Voter
+    public function createVoter(array $data, User $user ): Voter
     {
+        if($user->hasRole('registrar')){
+            unset($data['admin_observations']);
+        } else {
+            unset($data['registrar_observations']);
+        }
         $voter = Voter::create($data );
         return $voter;
     }
@@ -64,6 +71,11 @@ class VoterService{
     public function updateVoter(int $id, array $data, User $user): Voter
     {
         $voter = $this->findVoter( $id, $user );
+        if($user->hasRole('registrar')){
+            unset($data['admin_observations']);
+        } else {
+            unset($data['registrar_observations']);
+        }
         $voter->update($data);
         return $voter;
     }

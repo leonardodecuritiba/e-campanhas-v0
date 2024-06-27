@@ -59,6 +59,9 @@ class Voter extends Model
         'social_history',
         'votes_estimate',
         'votes_degree_certainty',
+        'polling_place',
+        'admin_observations',
+        'registrar_observations',
 
         'status',
 	];

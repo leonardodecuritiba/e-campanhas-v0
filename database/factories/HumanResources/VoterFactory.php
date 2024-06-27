@@ -61,6 +61,8 @@ class VoterFactory extends Factory
             'social_history'   => $this->faker->text(),
             'votes_estimate'   => $this->faker->numberBetween(0, 1000),
             'votes_degree_certainty'   => $this->faker->numberBetween(0, 10),
+            'admin_observations'   => 'ADMIN '.$this->faker->text(),
+            'registrar_observations'   => 'REGISTRAR '.$this->faker->text(),
         ];
     }
 

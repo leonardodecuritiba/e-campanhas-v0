@@ -17,6 +17,7 @@ use App\Http\Controllers\HumanResources\Settings\GroupController;
 use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
 use App\Http\Controllers\HumanResources\VoterController;
 use App\Http\Controllers\HumanResources\UserController;
+use App\Http\Controllers\HumanResources\Settings\PollingPlaceController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -61,6 +62,9 @@ Route::group( [ 'namespace' => 'HumanResources','prefix' => 'human_resources', '
             Route::get( 'states', [CepStateController::class, 'index'] )->name( 'ceps.get.states' );
             Route::get( 'cities', [CepCityController::class, 'index'] )->name( 'ceps.get.cities' );
         } );
+
+        Route::get( 'polling_places', [PollingPlaceController::class, 'index'] )->name( 'polling_places.index' );
+
     } );
 
     Route::group( ['prefix' => 'voters'], function () {

@@ -62,6 +62,7 @@
     }
     label.require::after, label.required::after {
         content: '* Obrigatório' !important;
+        font-size: 11px !important;
     }
 </style>
 <!-- Select2 -->

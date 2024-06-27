@@ -62,32 +62,37 @@
                             @if($Voter->image)
                                 <div class="col-2" data-provide="photoswipe">
                                     <a href="#">
-                                        <img style="max-width: 240px;" class="img-fluid"
+                                        <img style="max-width: 240px;" class="avatar avatar-xxxl avatar-bordered"
                                              data-original-src="{{$Voter->link_download}}"
                                              src="{{$Voter->link_download}}" alt="">
                                     </a>
                                 </div>
                             @endif
-                            <div class="form-group @if($Voter->image) col-10 @else col-12 @endif">
-                                {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
-                                    data-height="100"
-                                    data-provide="tooltip"
-                                    data-placement="right"
-                                    data-tooltip-color="primary"
-                                    data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
-                                <input name="image" type="file" data-provide="dropify" data-height="100">
-                                <div class="invalid-feedback"></div>
-                            </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-8">
+                            <div class="form-group col-6">
                                 {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label require'))) !!}
                                 {{Form::text('name', $Voter->name, ['id'=>'name','placeholder'=>'Nome completo','class'=>'form-control','minlength'=>'3','maxlength'=>'191','required'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="form-group col-3">
                                 {!! Html::decode(Form::label('surname', 'Apelido', array('class' => 'col-form-label'))) !!}
                                 {{Form::text('surname', $Voter->surname, ['placeholder'=>'Apelido','class'=>'form-control','minlength'=>'3', 'maxlength'=>'191'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-3">
+                                {!! Html::decode(Form::label('image', 'Foto <i class="fa fa-question-circle"
+                                    data-provide="tooltip"
+                                    data-placement="right"
+                                    data-tooltip-color="primary"
+                                    data-original-title="'.config('system.pictures.message').'"></i>', array('class' => 'col-form-label'))) !!}
+                                <div class="input-group file-group">
+                                    <input type="text" class="form-control file-value" placeholder="Choose file..." readonly="">
+                                    <input name="image" type="file" multiple="">
+                                    <span class="input-group-append">
+                                            <button class="btn btn-light file-browser" type="button"><i class="fa fa-upload"></i></button>
+                                        </span>
+                                </div>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -170,17 +175,24 @@
                         <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
                         <hr class="hr-sm mb-2">
                         <div class="form-row">
-                            <div class="form-group col-2">
+                            <div class="form-group col-6">
+                                {!! Html::decode(Form::label('polling_place', 'Local de Votação ', array('class' => 'col-form-label require'))) !!}
+                                {{Form::select('polling_place', [], '', ['placeholder' => 'Escolha o Local de Votação', 'class'=>'form-control select2_single', 'required'])}}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-3">
                                 {!! Html::decode(Form::label('voter_registration_zone', 'nº Zona Eleitoral', array('class' => 'col-form-label'))) !!}
                                 {{Form::text('voter_registration_zone', $Voter->voter_registration_zone, ['placeholder' => 'nº Zona Eleitoral', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-group col-2">
+                            <div class="form-group col-3">
                                 {!! Html::decode(Form::label('voter_registration_session', 'nº Seção Eleitoral', array('class' => 'col-form-label'))) !!}
                                 {{Form::text('voter_registration_session', $Voter->voter_registration_session, ['placeholder' => 'nº Seção Eleitoral', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-group col-4">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
                                 {!! Html::decode(Form::label('location_of_operation', 'Regiões da cidade que tem influência', array('class' => 'col-form-label'))) !!}
                                 {{Form::text('location_of_operation', $Voter->location_of_operation, ['placeholder' => 'Regiões da cidade que tem influência', 'class'=>'form-control', 'maxlength'=>'191'])}}
                                 <div class="invalid-feedback"></div>
@@ -193,17 +205,32 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group col-4">
-                                {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
-                                <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
-                                <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10"
-                                     data-value="{{$Voter->votes_degree_certainty}}" data-target="prev"
-                                     class="mr-3 ml-3"></div>
+                                {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label require'))) !!}
+                                {{Form::select('votes_degree_certainty', range(0,10), $Voter->votes_degree_certainty, ['placeholder' => 'Escolha o Grau de certeza de voto', 'class'=>'form-control select2_single', 'required'])}}
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
+                        @role('registrar')
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    {!! Html::decode(Form::label('registrar_observations', 'Observações gerais do Cabo Eleitoral ', array('class' => 'col-form-label'))) !!}
+                                    {{Form::textarea('registrar_observations', $Voter->registrar_observations, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'65000'])}}
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    {!! Html::decode(Form::label('admin_observations', 'Observações gerais da Coordenação ', array('class' => 'col-form-label'))) !!}
+                                    {{Form::textarea('admin_observations', $Voter->admin_observations, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'65000'])}}
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        @endrole
                         <div class="form-row">
                             <div class="form-group col-12">
                                 {!! Html::decode(Form::label('social_history', 'Histórico Função Social ', array('class' => 'col-form-label'))) !!}
-                                {{Form::textarea('social_history', $Voter->social_history, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'16777'])}}
+                                {{Form::textarea('social_history', $Voter->social_history, ['class'=>'form-control','rows'=>5, 'minlength'=>'3', 'maxlength'=>'65000'])}}
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -284,7 +311,11 @@
 
     @include('layout.inc.inputmask.js')
 
-    @include('pages.human_resources.voters.js.script')
+    <script>
+        const _POOLING_PLACE_ = '{{$Voter->polling_place}}'
+    </script>
+
+    @include('pages.human_resources.voters.scripts.js')
 
     <script>
         app.ready(function () {
@@ -319,11 +350,11 @@
     @include('layout.inc.sweetalert.js')
 
     <script>
-        var _STATE_ = {
+        const _STATE_ = {
             id: "{{$Voter->address->state_id}}",
             text: "{{$Voter->address->state->name}}"
         };
-        var _CITY_ = {
+        const _CITY_ = {
             id: "{{$Voter->address->city_id}}",
             text: "{{$Voter->address->city->name}}"
         };

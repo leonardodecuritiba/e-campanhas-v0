@@ -143,7 +143,7 @@ class VoterController extends Controller {
     public function store( VoterRequest $request )
     {
         $this->hasPermission('voters.create');
-        $data = $this->voterService->createVoter( $request->all() );
+        $data = $this->voterService->createVoter( $request->all(), $this->user );
         return $this->redirect( 'STORE', $data );
     }
 

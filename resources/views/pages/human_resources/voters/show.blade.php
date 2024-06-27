@@ -99,6 +99,10 @@
                 <h6 class="text-uppercase mt-3">Dados eleitorais</h6>
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
+                    <label class="col-1 col-form-label">Local de Votação</label>
+                    <div class="col-6">
+                        <p class="form-control-plaintext">{{$Voter->polling_place}}</p>
+                    </div>
                     <label class="col-1 col-form-label">nº Zona Eleitoral</label>
                     <div class="col-1">
                         <p class="form-control-plaintext">{{$Voter->voter_registration_zone}}</p>
@@ -122,6 +126,27 @@
                         <p class="form-control-plaintext">{{$Voter->votes_estimate}}</p>
                     </div>
                 </div>
+                @role('registrar')
+                    <div class="form-row">
+                        <label class="col-2 col-form-label">Observações gerais do Cabo Eleitoral</label>
+                        <div class="col-10">
+                            <p class="form-control-plaintext">{{$Voter->registrar_observations}}</p>
+                        </div>
+                    </div>
+                @else
+                    <div class="form-row">
+                        <label class="col-2 col-form-label">Observações gerais da Coordenação</label>
+                        <div class="col-10">
+                            <p class="form-control-plaintext">{{$Voter->admin_observations}}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="col-2 col-form-label">Observações gerais do Cabo Eleitoral</label>
+                        <div class="col-10">
+                            <p class="form-control-plaintext">{{$Voter->registrar_observations}}</p>
+                        </div>
+                    </div>
+                @endrole
                 <div class="form-row">
                     <label class="col-2 col-form-label">Histórico Função Social</label>
                     <div class="col-10">

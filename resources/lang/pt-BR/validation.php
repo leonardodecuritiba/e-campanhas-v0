@@ -168,6 +168,9 @@ return [
         'votes_degree_certainty' => 'Grau de certeza de voto',
         'social_history' => 'Histórico Função Social',
         'location_of_operation' => 'Regiões da cidade que tem influência',
+        'polling_place' => 'Local de Votação',
+        'admin_observations' => 'Observações gerais da Coordenação',
+        'registrar_observations' => 'Observações gerais do Cabo Eleitoral',
 
     ],
 

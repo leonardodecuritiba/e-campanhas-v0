@@ -3,10 +3,18 @@
 namespace App\Http\Requests\HumanResources;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class VoterRequest extends FormRequest {
 	private $table = 'voters';
 
+    protected $user;
+
+    public function __construct(Request $request)
+    {
+        $this->user = $request->user();
+        parent::__construct();
+    }
 	/**
 	 * Determine if the user is authorized to make this request.
 	 *
@@ -25,6 +33,13 @@ class VoterRequest extends FormRequest {
         $this->merge([
             'death' => $this->has('death'),
         ]);
+
+        //Verificar o usuário e remover os campos de observações
+        if($this->user->hasRole('registrar')){
+            $this->request->remove('admin_observations');
+        } else {
+            $this->request->remove('registrar_observations');
+        }
     }
 
 	/**
@@ -38,6 +53,7 @@ class VoterRequest extends FormRequest {
             'surname'  => 'nullable|min:3|max:191',
             'location_of_operation'  => 'nullable|min:1|max:191',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'polling_place' => 'required',
 //            'cpf'  => 'nullable|min:1|max:191',
         ];
 
