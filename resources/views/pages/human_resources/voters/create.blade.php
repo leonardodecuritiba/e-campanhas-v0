@@ -132,18 +132,18 @@
                         {{Form::text('location_of_operation', old('location_of_operation'), ['placeholder' => 'Regiões da cidade que tem influência', 'class'=>'form-control', 'maxlength'=>'191'])}}
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-group col-4">
-                        {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
-                        <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
-                        <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="0"
-                             data-target="prev" class="mr-3 ml-3"></div>
-                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
                         {!! Html::decode(Form::label('votes_estimate', 'Potencial de votos do eleitor', array('class' => 'col-form-label'))) !!}
                         {{Form::number('votes_estimate', old('votes_estimate'), ['placeholder' => 'Potencial de votos do eleitor', 'class'=>'form-control','min'=>0])}}
                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-group col-4">
+                        {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
+                        <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
+                        <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="0"
+                             data-target="prev" class="mr-3 ml-3"></div>
                     </div>
                 </div>
                 <div class="form-row">
