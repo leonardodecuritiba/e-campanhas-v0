@@ -34,7 +34,7 @@
                 <h6 class="text-uppercase mt-3">Identificação</h6>
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
-                    <div class="form-group col-12">
+                    <div class="form-group col-3">
                         {!! Html::decode(Form::label('image', 'Imagem <i class="fa fa-question-circle"
                             data-provide="tooltip"
                             data-placement="right"
@@ -43,20 +43,16 @@
                         <input name="image" type="file" data-provide="dropify" data-height="100">
                         <div class="invalid-feedback"></div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-8">
+                    <div class="form-group col-6">
                         {!! Html::decode(Form::label('name', 'Nome', array('class' => 'col-form-label require'))) !!}
                         {{Form::text('name', old('name'), ['id'=>'name','placeholder'=>'Nome completo','class'=>'form-control','minlength'=>'3','maxlength'=>'191','required'])}}
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-3">
                         {!! Html::decode(Form::label('surname', 'Apelido', array('class' => 'col-form-label'))) !!}
                         {{Form::text('surname', old('surname'), ['placeholder'=>'Apelido','class'=>'form-control','minlength'=>'3', 'maxlength'=>'191'])}}
                         <div class="invalid-feedback"></div>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-4">
                         {!! Html::decode(Form::label('cpf', 'CPF', array('class' => 'col-form-label'))) !!}
                         {{Form::text('cpf', old('cpf'), ['placeholder'=>'CPF','class'=>'form-control show-cpf','minlength'=>'3', 'maxlength'=>'16'])}}
@@ -141,8 +137,8 @@
                     </div>
                     <div class="form-group col-4">
                         {!! Html::decode(Form::label('votes_degree_certainty', 'Grau de certeza de voto', array('class' => 'col-form-label'))) !!}
-                        <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500">
-                        <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10" data-value="5"
+                        <input type="hidden" name="votes_degree_certainty" class="text-primary ml-1 fw-500" >
+                        <div data-provide="slider" data-tooltips="true" data-min="0" data-max="10"
                              data-target="prev" class="mr-3 ml-3"></div>
                     </div>
                 </div>

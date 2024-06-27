@@ -21,7 +21,7 @@
             !-->
             <li class="menu-item @if(Menu::isRoute(
             [
-            'users.index','users.create','users.edit','users.show','users.removeds',
+            'users.index','users.create','users.edit','users.show','users.removeds', 'users.my.profile',
             'voters.index','voters.create','voters.edit','voters.show','voters.removeds',
             'groups.index','groups.create','groups.edit','groups.show','groups.removeds',
             'permissions.index',
@@ -51,7 +51,7 @@
                     @endrole
 
                     @can('users.menu')
-                        <li class="menu-item @if(Menu::isRoute(['users.index','users.create','users.edit','users.show','users.removeds'])) active @endif">
+                        <li class="menu-item @if(Menu::isRoute(['users.index','users.create','users.edit','users.show','users.removeds','users.my.profile'])) active @endif">
                             <a class="menu-link" href="{{route('users.index')}}">
                                 <span class="icon ti-user"></span>
                                 <span class="title">Usuários</span>

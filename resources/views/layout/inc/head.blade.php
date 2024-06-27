@@ -60,6 +60,9 @@
     .noUi-horizontal {
         background: #e4e7ea !important;
     }
+    label.require::after, label.required::after {
+        content: '* Obrigatório' !important;
+    }
 </style>
 <!-- Select2 -->
 @include('layout.inc.select2.css')
