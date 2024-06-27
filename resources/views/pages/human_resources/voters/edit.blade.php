@@ -284,22 +284,8 @@
 
     @include('layout.inc.inputmask.js')
 
-    <script>
-        app.ready(function () {
+    @include('pages.human_resources.voters.js.script')
 
-            $('input[name="death"]').change(function () {
-                const $input_death_date = $(this).closest('div.card-body').find('input[name=death_date]');
-                if ($(this).prop('checked')) {
-                    //HABILITAR E REQUIRED
-                    $($input_death_date).val("").attr("required", true).attr("disabled", false);
-                } else {
-                    //DESABILITAR E NÃO REQUIRED
-                    $($input_death_date).val("").attr("required", false).attr("disabled", true);
-                }
-            });
-
-        });
-    </script>
     <script>
         app.ready(function () {
 
@@ -344,4 +330,5 @@
     </script>
     
     @include('layout.inc.address.js')
+
 @endsection

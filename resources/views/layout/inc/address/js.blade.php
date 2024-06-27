@@ -50,13 +50,16 @@
             });
         })
 
-        if(typeof _STATE_ !== 'undefined' ){
+        if(typeof _STATE_ !== 'undefined' )
+        {
             if (_STATE_.id !== '') {
                 $($_INPUT_STATE_).append(
                     new Option(_STATE_.text, _STATE_.id, true, true)
                 ).trigger('change');
             }
-
+        }
+        if(typeof _CITY_ !== 'undefined' )
+        {
             if (_CITY_.id !== '') {
                 $($_INPUT_CITY_).append(
                     new Option(_CITY_.text, _CITY_.id, true, true)

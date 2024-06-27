@@ -172,6 +172,15 @@
     <!-- Jquery Validation Plugin Js -->
     @include('layout.inc.inputmask.js')
 
+    @include('pages.human_resources.voters.js.script')
+
+    <script>
+        const _STATE_ = {
+            id: "24",
+            text: "Santa Catarina"
+        };
+    </script>
+
     @include('layout.inc.address.js')
 
 @endsection
