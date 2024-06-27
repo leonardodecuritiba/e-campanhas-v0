@@ -9,9 +9,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class VoterController extends Controller {
@@ -198,12 +196,12 @@ class VoterController extends Controller {
      *
      * @param int $id
      *
-     * @return RedirectResponse
+     * @return string
      */
     public function restore( int $id )
     {
         $this->hasPermission('voters.restore');
-        $this->voterService->restoreVoter( $id, $this->user );
-        return Redirect::route('voters.edit', $id);
+        $voter = $this->voterService->restoreVoter( $id, $this->user );
+        return $this->redirect( 'RESTORE', $voter );
     }
 }

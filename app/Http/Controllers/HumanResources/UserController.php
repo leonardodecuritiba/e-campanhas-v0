@@ -216,15 +216,15 @@ class UserController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param int $id
      *
-     * @return RedirectResponse
+     * @return string
      */
-    public function restore( $id )
+    public function restore( int $id )
     {
         $this->hasPermission('users.restore');
-        $this->userService->restoreUser( $id, $this->user );
-        return Redirect::route('users.edit', $id);
+        $user = $this->userService->restoreUser( $id, $this->user );
+        return $this->redirect( 'RESTORE', $user );
     }
 
     /**

@@ -16,12 +16,13 @@ use App\Http\Controllers\HumanResources\Settings\CepStateController;
 use App\Http\Controllers\HumanResources\Settings\GroupController;
 use App\Http\Controllers\HumanResources\Settings\GroupVoterController;
 use App\Http\Controllers\HumanResources\VoterController;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 use App\Http\Controllers\HumanResources\UserController;
 use App\Http\Controllers\HumanResources\Settings\PollingPlaceController;
 
 
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('logs', [LogViewerController::class, 'index'])->middleware(['role:root']);
 
 /*
 |--------------------------------------------------------------------------

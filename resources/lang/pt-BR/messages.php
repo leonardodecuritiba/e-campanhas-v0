@@ -51,6 +51,13 @@ return [
 				'ERROR'        => 'Falha ao atualizar o :name, tente novamente.',
 				'ERROR-MANY'   => 'Falha ao atualizar os :name, tente novamente.',
 			],
+			//RESTORE
+			'RESTORE' => [
+				'SUCCESS'      => ':name restaurado com sucesso!',
+				'SUCCESS-MANY' => ':name restaurados com sucesso!',
+				'ERROR'        => 'Falha ao restaurar o :name, tente novamente.',
+				'ERROR-MANY'   => 'Falha ao restaurar os :name, tente novamente.',
+			],
 			//DELETE
 			'DELETE' => [
 				'SUCCESS'      => ':name removido com sucesso!',
@@ -141,6 +148,13 @@ return [
 				'ERROR'        => 'Falha ao atualizar a :name, tente novamente.',
 				'ERROR-MANY'   => 'Falha ao atualizar as :name, tente novamente.',
 			],
+            //RESTORE
+            'RESTORE' => [
+                'SUCCESS'      => ':name restaurada com sucesso!',
+                'SUCCESS-MANY' => ':name restauradas com sucesso!',
+                'ERROR'        => 'Falha ao restaurar a :name, tente novamente.',
+                'ERROR-MANY'   => 'Falha ao restaurar as :name, tente novamente.',
+            ],
 			//DELETE
 			'DELETE' => [
 				'SUCCESS'      => ':name removida com sucesso!',
