@@ -256,21 +256,21 @@
                                 </h4>
 
                                 <div class="card-body">
-                                    <table class="table table-striped table-bordered table-responsive-sm"
+                                    <table class="table table-striped table-bordered table-sm table-responsive-sm"
                                            data-provide="datatables">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Adicionado em</th>
                                             <th>Descrição</th>
+                                            <th>Adicionado em</th>
                                             <th>Ações</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Adicionado em</th>
                                             <th>Descrição</th>
+                                            <th>Adicionado em</th>
                                             <th>Ações</th>
                                         </tr>
                                         </tfoot>
@@ -279,8 +279,8 @@
                                             <tr>
                                                 <td><a href="{{route('groups.show',$group->id)}}"
                                                        target="_blank">{{$group->id}}</a></td>
-                                                <td data-order="{{$group->pivot->created_at_time_formatted}}">{{$group->pivot->created_at_formatted}}</td>
                                                 <td>{{$group->description}}</td>
+                                                <td data-order="{{$group->pivot->created_at_time_formatted}}">{{$group->pivot->created_at_formatted}}</td>
                                                 <td>
                                                     @include('layout.inc.buttons.delete',
                                                         [

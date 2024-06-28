@@ -41,9 +41,9 @@
         padding: 0rem 1rem 0rem;
     }
 
-     .badge a {
-         color: #ffffff ;
-     }
+    .badge a {
+        color: #ffffff ;
+    }
     .badge a:hover {
         color: #4d5259 !important;
     }

@@ -85,7 +85,8 @@
 
         // $(anSelected).remove();
     }
+
 </script>
 
-{!! Html::script('https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js') !!}
-{!! Html::script('https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js') !!}
+{{--{!! Html::script('https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js') !!}--}}
+{{--{!! Html::script('https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js') !!}--}}

@@ -46,11 +46,21 @@ trait FileTrait {
         return public_path($this->getPath( $id ) . $this->getAttribute( self::$field_filename ));
     }
 
-	public function getLinkDownloadAttribute()
-	{
+    public function getLinkDownloadAttribute()
+    {
         $id = null;//$this->getIdFileAttribute();
-		return asset('storage' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . DIRECTORY_SEPARATOR . $this->getAttribute( self::$field_filename ));
-	}
+        return asset('storage' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . DIRECTORY_SEPARATOR . $this->getAttribute( self::$field_filename ));
+    }
+
+    public function getImageViewAttribute()
+    {
+        $id = null;//$this->getIdFileAttribute();
+        $image = $this->getAttribute( self::$field_filename );
+        if($image != NULL){
+            return asset('storage' . DIRECTORY_SEPARATOR . $this->getPath( $id ) . DIRECTORY_SEPARATOR . $image);
+        }
+        return asset('assets' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR . 'default.jpg');
+    }
 
 	public function getLinkPrintAttribute()
 	{
