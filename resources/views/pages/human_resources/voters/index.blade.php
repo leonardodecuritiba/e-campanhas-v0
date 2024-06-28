@@ -10,13 +10,11 @@
 
 @endsection
 
-@section('style_content')
-
-@endsection
-
 @section('page_content')
 
     <div class="main-content">
+
+        @include('layout.inc.alerts')
 
         <div class="card">
             <h4 class="card-title"><strong>{{count($Page->response)}}</strong> {{$Page->names}}</h4>
@@ -57,10 +55,12 @@
                                 <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
                                 <td data-order="{{$sel['name']}}">
                                     @if($sel['surname'] != null)
-                                        <p class="lh-1">{{$sel['surname']}}</p>
-                                        <small>{{$sel['name']}}</small>
+                                        <span data-provide="tooltip"
+                                              data-placement="top"
+                                              data-tooltip-color="primary"
+                                              data-original-title="{{$sel['name']}}">{{$sel['surname']}}</span>
                                     @else
-                                        <p class="lh-3">{{$sel['name']}}</p>
+                                        {{$sel['name']}}
                                     @endif
                                 </td>
                                 <td>{{$sel['whatsapp_formatted']}}</td>

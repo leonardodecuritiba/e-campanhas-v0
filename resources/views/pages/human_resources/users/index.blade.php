@@ -14,6 +14,8 @@
 
     <div class="main-content">
 
+        @include('layout.inc.alerts')
+
         <div class="card">
             <h4 class="card-title">
                 <strong>{{count($Page->response)}}</strong> {{$Page->names}}

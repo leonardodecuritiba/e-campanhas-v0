@@ -12,6 +12,8 @@ use App\Observers\HumanResources\Settings\GroupObserver;
 use App\Observers\HumanResources\Settings\GroupVoterObserver;
 use App\Observers\HumanResources\UserObserver;
 use App\Observers\HumanResources\VoterObserver;
+use App\View\Components\InfoShow;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Faker\Generator as FakerGenerator;
@@ -45,6 +47,9 @@ class AppServiceProvider extends ServiceProvider
         Address::observe( AddressObserver::class );
         Group::observe( GroupObserver::class );
         GroupVoter::observe( GroupVoterObserver::class );
+
+        Blade::component('info-show', InfoShow::class);
+
 
     }
 }

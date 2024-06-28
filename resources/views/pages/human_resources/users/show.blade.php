@@ -14,7 +14,6 @@
     <!-- Main container -->
     <div class="main-content">
 
-
         @include('layout.inc.alerts')
 
         <div class="card">
