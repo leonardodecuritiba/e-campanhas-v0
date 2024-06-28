@@ -15,14 +15,8 @@
     <!-- Main container -->
     <div class="main-content">
 
+        @include('layout.inc.alerts')
 
-    @include('layout.inc.alerts')
-
-    <!--
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        | Zero configuration
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        !-->
         <div class="card">
             @if(isset($Role))
                 <h4 class="card-title"><strong>#{{$Role->id}} - {{$Role->getShortName()}}</strong></h4>

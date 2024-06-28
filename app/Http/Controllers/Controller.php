@@ -68,15 +68,14 @@ class Controller extends BaseController {
     /**
      * Define getMessageFront.
      *
-     * @param $type
+     * @param string $type
      * @param $data
-     * @param $route
+     * @param string|null $route
      *
      * @return string
-     *
      */
-    public function redirect( $type, $data, $route = NULL ) {
-        return response()->success( $this->getMessageFront( $type ), $data, ($route == NULL) ? route( $this->entity . '.edit', $data->id ) : $route);
+    public function redirect( string $type, $data, string $route = NULL ) {
+        return response()->success( $this->getMessageFront( $type ), $data, ($route == NULL) ? route( $this->entity . '.index', $data->id ) : $route);
     }
 
     /**

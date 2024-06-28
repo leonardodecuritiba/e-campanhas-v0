@@ -14,6 +14,8 @@
 
     <div class="main-content">
 
+        @include('layout.inc.alerts')
+
         <div class="card">
             <h4 class="card-title">
                 <strong>{{count($Page->response)}}</strong> {{$Page->names}}
@@ -23,24 +25,24 @@
             <div class="card-content">
                 <div class="card-body">
 
-                    <table class="table table-striped table-bordered table-responsive-sm" data-provide="datatables">
+                    <table class="table table-striped table-bordered table-sm table-responsive-sm" data-provide="datatables">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Cadastrado</th>
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Tipo</th>
+                            <th>Cadastrado</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Cadastrado</th>
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Tipo</th>
+                            <th>Cadastrado</th>
                             <th>Ações</th>
                         </tr>
                         </tfoot>
@@ -48,10 +50,10 @@
                         @foreach($Page->response as $sel)
                             <tr>
                                 <td data-order="{{$sel['id']}}">@include('layout.inc.buttons.show')</td>
-                                <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['email']}}</td>
                                 <td data-order="{{$sel['role_name_formatted']}}">{{$sel['role_name_formatted']}}</td>
+                                <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>
                                     @include('layout.inc.buttons.edit')
                                     @if(!$sel['its_me'])

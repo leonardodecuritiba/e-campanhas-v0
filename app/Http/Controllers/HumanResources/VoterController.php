@@ -202,6 +202,6 @@ class VoterController extends Controller {
     {
         $this->hasPermission('voters.restore');
         $voter = $this->voterService->restoreVoter( $id, $this->user );
-        return $this->redirect( 'RESTORE', $voter );
+        return $this->redirect( 'RESTORE', $voter, route( 'voters.removeds' ) );
     }
 }

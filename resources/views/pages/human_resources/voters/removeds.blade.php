@@ -14,6 +14,8 @@
 
     <div class="main-content">
 
+        @include('layout.inc.alerts')
+
         <div class="card">
             <h4 class="card-title">
                 <strong>{{count($Page->response)}}</strong> {{$Page->names}}
@@ -23,30 +25,30 @@
             <div class="card-content">
                 <div class="card-body">
 
-                    <table class="table table-striped table-bordered table-responsive-sm" cellspacing="0" data-provide="datatables">
+                    <table class="table table-striped table-bordered table-sm table-responsive-sm" data-provide="datatables">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Cadastrado</th>
-                            <th>Cadastrador</th>
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
                             <th>Whatsapp</th>
+                            <th>Cadastrador</th>
+                            <th>Cadastrado</th>
                             <th>Ações</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Cadastrado</th>
-                            <th>Cadastrador</th>
                             <th>Removido</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Email</th>
                             <th>Whatsapp</th>
+                            <th>Cadastrador</th>
+                            <th>Cadastrado</th>
                             <th>Ações</th>
                         </tr>
                         </tfoot>
@@ -54,13 +56,13 @@
                         @foreach($Page->response as $sel)
                             <tr>
                                 <td data-order="{{$sel['id']}}">{{$sel['id']}}</td>
-                                <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
-                                <td>{{$sel['register_id']}}</td>
                                 <td data-order="{{$sel['deleted_at_time']}}">{{$sel['deleted_at']}}</td>
                                 <td>{{$sel['name']}}</td>
                                 <td>{{$sel['cpf_formatted']}}</td>
                                 <td>{{$sel['email']}}</td>
                                 <td>{{$sel['whatsapp_formatted']}}</td>
+                                <td>{{$sel['register_id']}}</td>
+                                <td data-order="{{$sel['created_at_time']}}">{{$sel['created_at']}}</td>
                                 <td>
                                     @include('layout.inc.buttons.restore')
                                 </td>

@@ -224,7 +224,7 @@ class UserController extends Controller {
     {
         $this->hasPermission('users.restore');
         $user = $this->userService->restoreUser( $id, $this->user );
-        return $this->redirect( 'RESTORE', $user );
+        return $this->redirect( 'RESTORE', $user, route( 'users.removeds' ) );
     }
 
     /**

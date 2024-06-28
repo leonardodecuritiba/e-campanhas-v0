@@ -182,7 +182,7 @@ class GroupController extends Controller {
     {
         $this->hasPermission('groups.restore');
         $group = $this->groupService->restoreGroup( $id, $this->user );
-        return $this->redirect( 'RESTORE', $group );
+        return $this->redirect( 'RESTORE', $group, route( 'groups.removeds' ) );
     }
 
     /**

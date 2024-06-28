@@ -29,6 +29,8 @@ class VoterService{
                 'sponsor_id'        => $s->sponsor_id,
                 'register_id'       => $s->register_id,
                 'name'              => $s->name,
+                'surname'           => $s->surname,
+                'image'             => $s->image_view,
                 'cpf_formatted'     => $s->cpf_formatted,
                 'email'             => $s->email,
                 'whatsapp_formatted'=> $s->whatsapp_formatted,
