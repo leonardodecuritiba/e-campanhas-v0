@@ -12,7 +12,7 @@
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" href="{{asset('assets/img/apple-touch-icon.png')}}">
-<link rel="icon" href="{{asset('icon.png')}}">
+<link rel="icon" type="image/x-icon" href="{{asset('assets/img/favicon.png')}}">
 
 <style>
     .material-icons {
