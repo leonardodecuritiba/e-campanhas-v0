@@ -123,8 +123,8 @@
                 <hr class="hr-sm mb-2">
                 <div class="form-row">
                     <div class="form-group col-6">
-                        {!! Html::decode(Form::label('polling_place', 'Local de Votação ', array('class' => 'col-form-label require'))) !!}
-                        {{Form::select('polling_place', [], '', ['placeholder' => 'Escolha o Local de Votação', 'class'=>'form-control select2_single', 'required'])}}
+                        {!! Html::decode(Form::label('polling_place', 'Local de Votação ', array('class' => 'col-form-label'))) !!}
+                        {{Form::select('polling_place', [], '', ['placeholder' => 'Escolha o Local de Votação', 'class'=>'form-control select2_single'])}}
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-group col-3">
